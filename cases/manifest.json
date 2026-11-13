@@ -26,6 +26,12 @@
       "kind": "protected"
     },
     {
+      "id": "pyright",
+      "stage": 1,
+      "group": "Starter contract",
+      "kind": "pyright"
+    },
+    {
       "id": "contribution-record",
       "stage": 1,
       "group": "Starter contract",
