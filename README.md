@@ -1,6 +1,6 @@
 # CMSC 127 Lab Starter
 
-Your pair writes database code in this repository. Start Lab 1 by adding your schema to `migrations/`, adding your data to `load.sql`, and running `./check.sh 1`. The instructor grades the files that differ from the published starter. The published cases, the manifest, and the runner wiring stay unchanged.
+Your pair writes database code in this repository. Start Lab 1 with three steps. Add your schema to `migrations/`. Add your data to `load.sql`. Run `./check.sh 1`. The instructor grades the files that differ from the published starter. The published cases stay unchanged. The manifest and the runner wiring stay unchanged as well.
 
 ## Set Up on Windows
 
@@ -14,6 +14,8 @@ source .venv/Scripts/activate
 python -m pip install -r requirements.txt
 npm install --global pyright@1.1.414
 ```
+
+Pyright is a type checker for Python. The runner scores its result.
 
 Set `CMSC127_DATABASE_URL` in your shell. Use a local role that can create and drop databases. The runner creates a separate database for each run, so your working data stays unchanged.
 
@@ -49,7 +51,7 @@ The runner prints one line for each case and each invariant check. It ends with 
 
 ### Check the Form Without a Database
 
-`./check.sh --form-lint` checks the manifest and the case files. It needs no database and prints no expected answer. It exits 0 when the form is valid and 2 when it is not.
+`./check.sh --form-lint` checks the manifest and the case files. It needs no database and prints no expected answer. It exits 0 for a valid form and 2 for a form fault.
 
 ### Test the Runner
 
@@ -57,7 +59,7 @@ The runner prints one line for each case and each invariant check. It ends with 
 
 ## Migrations and Data
 
-Put schema changes in `migrations/`. Name each file `NNNN_lowercase_description.sql`, such as `0001_create_observer.sql`. Start at `0001` and do not skip a number. The runner applies the files in filename order to a new database. A missing number stops the run, because the runner cannot tell whether the missing file changes the schema.
+Put schema changes in `migrations/`. Use the filename form `NNNN_lowercase_description.sql`, such as `0001_create_observer.sql`. Start at `0001` and do not skip a number. The runner applies the files in filename order to a new database. A missing number stops the run. The runner cannot tell whether the missing file changes the schema.
 
 Put the data loader in `load.sql`. The runner calls `./run prepare` after it applies the migrations. The command runs this SQL file without changing your source files.
 
@@ -83,11 +85,11 @@ The case file holds one SQL statement or one command. The expected file holds a 
 
 The runner compares the result with that object. Use JSON `null` for SQL `NULL`. Numbers compare by value, so `1`, `1.0`, and `1.00` match. Column names and their order always match. Row order matches by default. Set `ordered` to `false` when the result has no required row order. The runner compares duplicate rows too.
 
-The six case kinds are `output`, `schema`, `reject`, `state`, `race`, and `query`. An `output` case compares the JSON from `./run`. A `schema` case compares the ERD with the live schema. A `reject` case requires SQL to fail. A `state` case checks the rows after an operation. A `race` case runs ordered steps on two sessions. A `query` case runs a SQL file directly.
+The six case kinds are `output`, `schema`, `reject`, `state`, `race`, and `query`. `output` compares the JSON from `./run`. `schema` compares the ERD with the live schema. `reject` requires SQL to fail. `state` checks the rows after an operation. `race` runs ordered steps on two sessions. `query` runs a SQL file directly.
 
-A skipped check prints `SKIP` with a reason. A skip does not count as a pass. A form fault stops the run before it creates a database. It reports the file, line, and column, and exits with status 2. The form check covers the manifest, each expected result, each state or race body, and each invariant's required fields.
+A skipped check prints `SKIP` with a reason. A skip does not count as a pass. A form fault stops the run before it creates a database. It reports the file, line, and column. It exits with status 2. The form check covers the manifest and each expected result. It also covers each state or race body and each invariant's required fields.
 
-The result file `.cmsc127/last-run.json` holds the case results. It is not the same as an `.expected` file. The expected file holds one dataset. The result file wraps every case result, with its status, expected value, actual value, and differences.
+The result file `.cmsc127/last-run.json` holds the case results. The expected file holds one dataset. The result file wraps every case result, with its status, expected value, actual value, and differences.
 
 ## Invariant Checks
 
