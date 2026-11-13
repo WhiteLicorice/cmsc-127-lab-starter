@@ -54,7 +54,7 @@ Self-tests use a separate temporary database. The runner writes the latest resul
 
 ## Migrations and Data
 
-Put schema changes in `migrations/`. Name each SQL file with a four-digit number, an underscore, and a lowercase description, such as `0001_create_student.sql`. Start at `0001` and do not skip a number. The runner applies these files in name order to a new database.
+Put schema changes in `migrations/`. Each migration file needs a four-digit number, an underscore, and a lowercase description, such as `0001_create_student.sql`. Start at `0001` and do not skip a number. The runner applies these files in sorted order to a new database.
 
 Put the data loader in `load.sql`. The runner calls `./run prepare` after it applies migrations. The command runs this SQL file without changing your source files.
 
