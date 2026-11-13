@@ -39,5 +39,13 @@ else
   fi
 fi
 
+if [[ " $* " == *" --self-test "* && ! -f "$runner_dir/dist/bundle/server.py" ]]; then
+  if ! command -v npm >/dev/null 2>&1; then
+    printf 'The self-test needs Node.js and npm to build the harness bundle.\n' >&2
+    exit 1
+  fi
+  ( cd "$runner_dir" && npm ci && npm run build )
+fi
+
 export PYTHONDONTWRITEBYTECODE=1
 exec python "$runner_dir/runner.py" "$@"
