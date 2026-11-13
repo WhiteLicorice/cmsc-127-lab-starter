@@ -63,7 +63,7 @@ Put schema changes in `migrations/`. Use the filename form `NNNN_lowercase_descr
 
 Put the data loader in `load.sql`. The runner calls `./run prepare` after it applies the migrations. The command runs this SQL file without changing your source files.
 
-`./run` is the pair command. The runner calls `./run prepare`, `./run backup`, `./run restore`, or `./run path/to/query.sql`. The connection helper runs one SQL file and prints its columns and rows as JSON.
+`./run` is the command script in your repository. The runner calls `./run prepare`, `./run backup`, `./run restore`, or `./run path/to/query.sql`. The connection helper runs one SQL file and prints its columns and rows as JSON.
 
 ## Cases and Results
 
@@ -93,7 +93,17 @@ The result file `.cmsc127/last-run.json` holds the case results. The expected fi
 
 ## Invariant Checks
 
-After the cases, the runner checks claims that a case cannot show. A normal-form rule says that one column determines another, such as a supplier determines its city. The runner reads the catalog, PostgreSQL's own description of the tables, and confirms that a key enforces each rule. It also checks that each report ran as SQL, that a view contains a required construct, that a migration created the required index, that a backup restores the same rows, that the protected files match, that the written sections have content, and that your Python passes strict type checking. It prints a contribution table with commits and changed lines by member and week. The table is information for the instructor and adds no score.
+After the cases, the runner checks claims that a case cannot show. The course specification explains each check and its limits. The checks are:
+
+- **Normal form.** A rule says that one column determines another, such as a supplier determines its city. The runner reads the catalog, PostgreSQL's own description of the tables, and confirms that a key enforces each rule.
+- **Work in SQL.** Each report must run as SQL.
+- **Required features.** A view must contain a named construct.
+- **Index.** A migration must create the required index.
+- **Backup and restore.** A backup must restore the same rows.
+- **Protected files.** The published files must match.
+- **Written sections.** Each required section must hold text.
+- **Type checking.** Your Python must pass strict Pyright.
+- **Contribution.** The runner prints a table of commits and changed lines by member and week. The table is information for the instructor and adds no score.
 
 The runner prints each result, a count for each group, and one final count:
 
