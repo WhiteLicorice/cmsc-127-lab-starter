@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+*.py[cod]
+.cmsc127/last-run.json
+*.dump

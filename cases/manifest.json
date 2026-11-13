@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "lab1/health",
+      "stage": 1,
+      "group": "Lab 1",
+      "kind": "output",
+      "file": "cases/lab1/health.sql",
+      "ordered": true
+    },
+    {
+      "id": "lab2/health",
+      "stage": 2,
+      "group": "Lab 2",
+      "kind": "query",
+      "file": "cases/lab2/health.sql",
+      "ordered": true
+    }
+  ],
+  "invariants": [
+    {
+      "id": "protected-files",
+      "stage": 1,
+      "group": "Starter contract",
+      "kind": "protected"
+    },
+    {
+      "id": "contribution-record",
+      "stage": 1,
+      "group": "Starter contract",
+      "kind": "contribution"
+    }
+  ]
+}

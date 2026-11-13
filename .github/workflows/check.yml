@@ -1,0 +1,156 @@
+name: Check
+
+on:
+  push:
+    branches: [main, t*]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18.6
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 55435:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      CMSC127_DATABASE_URL: postgresql://postgres@127.0.0.1:55435/postgres
+      PGHOST: 127.0.0.1
+      PGPORT: 55435
+      PGUSER: postgres
+      PGDATABASE: postgres
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: 3.15.2
+      - name: Install Python packages
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install -r requirements.txt
+          echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
+      - name: Check Python types
+        run: pyright
+      - name: Add the empty reference loader
+        run: touch load.sql
+      - name: Run harness self-tests
+        run: bash ./check.sh --self-test
+      - name: Run staged checks
+        run: bash ./check.sh 2
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: cmsc127-result-ubuntu
+          path: .cmsc127/last-run.json
+          if-no-files-found: warn
+
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      CMSC127_DATABASE_URL: postgresql://postgres@127.0.0.1:55435/postgres
+      PGHOST: 127.0.0.1
+      PGPORT: 55435
+      PGUSER: postgres
+      PGDATABASE: postgres
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: 3.15.2
+      - name: Find PostgreSQL tools on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $pgBin = $env:PGBIN
+          if (-not $pgBin -or -not (Test-Path (Join-Path $pgBin 'initdb.exe'))) {
+            $install = Get-ChildItem 'C:\Program Files\PostgreSQL' -Directory |
+              Sort-Object Name -Descending |
+              Select-Object -First 1
+            if ($install) {
+              $pgBin = Join-Path $install.FullName 'bin'
+            }
+          }
+          if (-not $pgBin -or -not (Test-Path (Join-Path $pgBin 'initdb.exe'))) {
+            $initdb = Get-Command initdb.exe -ErrorAction Stop
+            $pgBin = Split-Path $initdb.Source
+          }
+          "PG_BIN=$pgBin" >> $env:GITHUB_ENV
+          $pgBin >> $env:GITHUB_PATH
+      - name: Install PostgreSQL on macOS
+        if: runner.os == 'macOS'
+        run: |
+          brew install postgresql@18
+          echo "$(brew --prefix postgresql@18)/bin" >> "$GITHUB_PATH"
+      - name: Start PostgreSQL on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $data = Join-Path $env:RUNNER_TEMP 't13-pg'
+          & "$env:PG_BIN\initdb.exe" -D $data -U postgres -A trust
+          & "$env:PG_BIN\pg_ctl.exe" -D $data -l (Join-Path $env:RUNNER_TEMP 't13-pg.log') -o '-h 127.0.0.1 -p 55435' -w start
+      - name: Start PostgreSQL on macOS
+        if: runner.os == 'macOS'
+        run: |
+          initdb -D "$RUNNER_TEMP/t13-pg" -U postgres -A trust
+          pg_ctl -D "$RUNNER_TEMP/t13-pg" -l "$RUNNER_TEMP/t13-pg.log" -o '-h 127.0.0.1 -p 55435' -w start
+      - name: Install Python packages on macOS
+        if: runner.os == 'macOS'
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install -r requirements.txt
+          echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
+      - name: Install Python packages on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          python -m venv .venv
+          .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+          "$env:GITHUB_WORKSPACE\.venv\Scripts" >> $env:GITHUB_PATH
+      - name: Check Python types
+        run: pyright
+      - name: Add the empty reference loader
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: New-Item -ItemType File -Path load.sql | Out-Null
+      - name: Add the empty reference loader
+        if: runner.os == 'macOS'
+        run: touch load.sql
+      - name: Run harness self-tests
+        run: bash ./check.sh --self-test
+      - name: Run staged checks
+        run: bash ./check.sh 2
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: cmsc127-result-${{ matrix.os }}
+          path: .cmsc127/last-run.json
+          if-no-files-found: warn
+      - name: Stop PostgreSQL on Windows
+        if: always() && runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $data = Join-Path $env:RUNNER_TEMP 't13-pg'
+          if (Test-Path (Join-Path $data 'postmaster.pid')) {
+            & "$env:PG_BIN\pg_ctl.exe" -D $data -m fast -w stop
+          }
+      - name: Stop PostgreSQL on macOS
+        if: always() && runner.os == 'macOS'
+        run: |
+          if [ -f "$RUNNER_TEMP/t13-pg/postmaster.pid" ]; then
+            pg_ctl -D "$RUNNER_TEMP/t13-pg" -m fast -w stop
+          fi

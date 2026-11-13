@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mode="${1:-}"
+if [[ -z "$mode" ]]; then
+  printf '%s\n' 'Usage: ./run prepare | backup | restore | path/to/query.sql' >&2
+  exit 2
+fi
+
+database_url="${CMSC127_DATABASE_URL:-}"
+if [[ -z "$database_url" ]]; then
+  printf '%s\n' 'Set CMSC127_DATABASE_URL before running the harness.' >&2
+  exit 2
+fi
+
+case "$mode" in
+  prepare)
+    if [[ ! -f load.sql ]]; then
+      printf '%s\n' 'Add load.sql before running the Lab 1 cases.' >&2
+      exit 2
+    fi
+    psql "$database_url" --set ON_ERROR_STOP=1 --file load.sql
+    ;;
+  backup)
+    backup_file="${CMSC127_BACKUP_FILE:-}"
+    if [[ -z "$backup_file" ]]; then
+      printf '%s\n' 'Set CMSC127_BACKUP_FILE before running backup.' >&2
+      exit 2
+    fi
+    pg_dump --format=custom --file "$backup_file" "$database_url"
+    ;;
+  restore)
+    backup_file="${CMSC127_BACKUP_FILE:-}"
+    if [[ -z "$backup_file" || ! -f "$backup_file" ]]; then
+      printf '%s\n' 'Set CMSC127_BACKUP_FILE to an existing backup.' >&2
+      exit 2
+    fi
+    pg_restore --clean --if-exists --no-owner --dbname "$database_url" "$backup_file"
+    ;;
+  *)
+    python_executable="${CMSC127_PYTHON:-python}"
+    if command -v cygpath >/dev/null 2>&1; then
+      python_executable="$(cygpath -u "$python_executable")"
+    fi
+    exec "$python_executable" connection.py "$mode"
+    ;;
+esac

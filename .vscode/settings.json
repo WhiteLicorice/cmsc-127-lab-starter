@@ -1,0 +1,5 @@
+{
+  "python.analysis.typeCheckingMode": "strict",
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.exclude": [".venv", "**/__pycache__"]
+}
