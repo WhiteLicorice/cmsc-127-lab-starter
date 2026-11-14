@@ -29,11 +29,10 @@ line.
   After step 2 activates it, `python` means the environment's interpreter. If
   `python` still reports the system version, the environment is not active.
   Rerun the activation command from step 2.
-- Pyright 1.1.414, which type-checks your Python. It installs through npm,
-  which comes with Node.js. Check it with `pyright --version`. The reply starts
-  with `pyright 1.1.414`. If the check fails, install Node.js 26.13.1 over the
-  vendor route for your platform: the Windows MSI, Homebrew on macOS, or the
-  Linux tarball. Then run `npm install --global pyright@1.1.414`.
+- Pyright 1.1.414, which type-checks your Python. It installs with the Python
+  packages from `requirements.txt`. Check it with `pyright --version`. The reply
+  starts with `pyright 1.1.414`. If the check fails, activate the environment and
+  run `python -m pip install -r requirements.txt` again.
 
 In PowerShell, replace the activation command with
 `.\.venv\Scripts\Activate.ps1` and the `export` command with
@@ -71,20 +70,18 @@ contents with the originals.
 
 ### Set Up on Windows
 
-PostgreSQL is the database server that holds your tables. Node.js runs
-JavaScript outside a browser. npm installs JavaScript packages. Install Git,
-Python 3.15 or newer, PostgreSQL, and Node.js. Install npm with Node.js. Start
-the PostgreSQL server before you run the checks.
+PostgreSQL is the database server that holds your tables. Install Git, Python
+3.15 or newer, and PostgreSQL. Start the PostgreSQL server before you run the
+checks.
 
 Open Git Bash, the Git shell for Windows. A Python environment is a private
-folder that holds Python packages. Create the environment, install the Python
-packages, and install Pyright:
+folder that holds Python packages. Create the environment and install the Python
+packages, including Pyright:
 
 ```bash
 py -3.15 -m venv .venv
 source .venv/Scripts/activate
 python -m pip install -r requirements.txt
-npm install --global pyright@1.1.414
 ```
 
 Pyright is a type checker for Python. The runner reports its result.
@@ -109,7 +106,6 @@ Use the same steps with the macOS and Linux activation path:
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-npm install --global pyright@1.1.414
 export CMSC127_DATABASE_URL='postgresql://your_user:your_password@127.0.0.1:5432/your_database'
 ```
 
