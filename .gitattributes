@@ -4,3 +4,7 @@ run text eol=lf
 *.sql text eol=lf
 *.json text eol=lf
 *.md text eol=lf
+
+# The shell scripts are course-supplied tooling, not project source. Mark them
+# vendored so GitHub's language bar shows the student's own code.
+*.sh linguist-vendored
