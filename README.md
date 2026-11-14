@@ -1,75 +1,180 @@
 # CMSC 127 Lab Starter
 
-Your pair writes database code in this repository. Start Lab 1 with three steps. Add your schema to `migrations/`. Add your data to `load.sql`. Run `./check.sh 1`. The instructor grades the files that differ from the published starter. The published cases stay unchanged. The manifest and the runner wiring stay unchanged as well.
+This folder holds your pair's database work. A pair is two students who work
+together.
 
-## Set Up on Windows
+## Quick Start
 
-Install Git, Python 3.15 or newer, PostgreSQL, and Node.js. Install npm with Node.js. Start the PostgreSQL server before you run the checks.
+The steps below run the Lab 1 checks. They use Git Bash, the shell that comes
+with Git for Windows, and they run in this folder.
 
-In Git Bash on Windows, create the environment, install the Python packages, and install Pyright:
+### Before You Start
+
+Each line gives one requirement, why the checks need it, and how to check it.
+Skip a line when the check passes. A failed check states its repair on the same
+line.
+
+- Git, which fetches the pinned runner on the first run. Check it with
+  `git --version`. If the command is missing, install Git from
+  <https://git-scm.com/downloads>.
+- PostgreSQL 18, the database server that holds your tables. The runner creates
+  a scratch database on it. Check it with `pg_isready`. The reply is
+  `accepting connections`. If the command is missing, add the PostgreSQL `bin`
+  folder to `PATH`.
+- Python 3.15 or newer, which runs the runner and your code. Check it with
+  `python --version`. The reply starts with `Python 3.15` or a later version.
+  If the reply is lower, install Python 3.15 from
+  <https://www.python.org/downloads/>. On Windows, `py -3.15 --version` selects
+  an installed 3.15, and step 1 uses `py -3.15` to create the environment.
+  After step 2 activates it, `python` means the environment's interpreter. If
+  `python` still reports the system version, the environment is not active.
+  Rerun the activation command from step 2.
+- Pyright 1.1.414, which type-checks your Python. It installs through npm,
+  which comes with Node.js. Check it with `pyright --version`. The reply starts
+  with `pyright 1.1.414`. If the check fails, install Node.js 26.13.1 over the
+  vendor route for your platform: the Windows MSI, Homebrew on macOS, or the
+  Linux tarball. Then run `npm install --global pyright@1.1.414`.
+
+In PowerShell, replace the activation command with
+`.\.venv\Scripts\Activate.ps1` and the `export` command with
+`$env:CMSC127_DATABASE_URL = '...'`. An activated environment provides
+`python` in PowerShell too. Run `bash check.sh` from Git Bash, since
+PowerShell may find a different `bash`.
+
+### Steps
+
+1. Create the Python environment. Run `python -m venv .venv`. On Windows, run
+   `py -3.15 -m venv .venv`. Skip this step when the folder already holds
+   `.venv`.
+2. Activate it. Run `source .venv/Scripts/activate`. On macOS and Linux, run
+   `source .venv/bin/activate`.
+3. Install the Python packages into the environment. Run
+   `python -m pip install -r requirements.txt`. The file holds the PostgreSQL
+   driver.
+4. Set the database URL. Run
+   `export CMSC127_DATABASE_URL='postgresql://your_user:your_password@127.0.0.1:5432/your_database'`.
+   Replace `your_user`, `your_password`, and `your_database` with your
+   PostgreSQL role, its password, and your database. The password is the one
+   you set for the role when you installed PostgreSQL.
+5. Run the checks. Run `bash check.sh 1`. The count line prints when the run
+   ends. The first run fails until you add your schema and data.
+
+## The Details
+
+A schema is the set of tables and their columns. Add your schema to
+`migrations/`. A migration is a SQL file that creates or changes tables. The
+data loader is the SQL file that fills the tables with rows. Add your data to
+`load.sql`. Create the file if it is missing.
+
+Do not edit the files that came with this folder. The runner compares their
+contents with the originals.
+
+### Set Up on Windows
+
+PostgreSQL is the database server that holds your tables. Node.js runs
+JavaScript outside a browser. npm installs JavaScript packages. Install Git,
+Python 3.15 or newer, PostgreSQL, and Node.js. Install npm with Node.js. Start
+the PostgreSQL server before you run the checks.
+
+Open Git Bash, the Git shell for Windows. A Python environment is a private
+folder that holds Python packages. Create the environment, install the Python
+packages, and install Pyright:
 
 ```bash
-python -m venv .venv
+py -3.15 -m venv .venv
 source .venv/Scripts/activate
 python -m pip install -r requirements.txt
 npm install --global pyright@1.1.414
 ```
 
-Pyright is a type checker for Python. The runner scores its result.
+Pyright is a type checker for Python. The runner reports its result.
 
-Set `CMSC127_DATABASE_URL` in your shell. Use a local role that can create and drop databases. The runner creates a separate database for each run, so your working data stays unchanged.
+A role is a PostgreSQL user account. Set `CMSC127_DATABASE_URL` in your shell,
+the window where you type commands. Use a local role that can create and drop
+databases. The runner creates a separate database for each run, so your working
+data stays unchanged.
 
 ```bash
-export CMSC127_DATABASE_URL='postgresql://your_user@127.0.0.1:5432/your_database'
+export CMSC127_DATABASE_URL='postgresql://your_user:your_password@127.0.0.1:5432/your_database'
 ```
 
-Add a password to the URL only in your local shell when your server needs one. Do not save a password in this repository.
+Add a password to the URL only in your local shell when your server needs one.
+Do not save a password in this folder.
 
-## Set Up on macOS and Linux
+### Set Up on macOS and Linux
 
-Use the same steps with the Unix activation path:
+Use the same steps with the macOS and Linux activation path:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
 npm install --global pyright@1.1.414
-export CMSC127_DATABASE_URL='postgresql://your_user@127.0.0.1:5432/your_database'
+export CMSC127_DATABASE_URL='postgresql://your_user:your_password@127.0.0.1:5432/your_database'
 ```
 
-## Run the Checks
+### Run the Checks
 
-Run stage 1 with `./check.sh 1`. Run stage 2 with `./check.sh 2`. Stage 2 includes stage 1, so a failure in Lab 1 still fails during Lab 2.
+A stage is one group of checks, one for each lab. The runner is the program
+that runs them. Run stage 1 with `bash check.sh 1`. Run stage 2 with
+`bash check.sh 2`. Stage 2 includes stage 1, so a failure in Lab 1 still fails
+during Lab 2.
 
-The first run downloads the pinned runner. Later runs use the local copy and need no network.
+The first run downloads the runner at a fixed version. Later runs use the
+local copy and need no network.
 
-The runner prints one line for each case and each invariant check. It ends with a count line. A failed check exits with a nonzero status.
+A case is one check with one expected result. The runner prints one line for
+each case and each invariant check. An invariant is a rule that must hold for
+every correct database. A failed check exits with a nonzero status. The runner
+ends with a count line.
 
-### Run One Case
+#### Run One Case
 
-`./check.sh --case lab1/health` runs one case. Use it while you debug one query. The command still creates a scratch database and applies your migrations. It exits 0 when the case passes, 1 when it fails, and 2 for a form fault or a usage error.
+`bash check.sh --case lab1/health` runs one case. Use it while you debug one
+query. The command still creates a scratch database, a temporary database for
+one run, and applies your migrations. It exits 0 when the case passes, 1 when
+it fails, and 2 for a form fault or a usage error.
 
-### Check the Form Without a Database
+#### Check the Form Without a Database
 
-`./check.sh --form-lint` checks the manifest and the case files. It needs no database and prints no expected answer. It exits 0 for a valid form and 2 for a form fault.
+`bash check.sh --form-lint` checks the manifest, the file that lists every case,
+and the case files. It needs no database and prints no expected answer. A form
+fault is a file with the wrong structure, such as a missing field. The command
+exits 0 for a valid form and 2 for a form fault.
 
-### Test the Runner
+#### Test the Runner
 
-`./check.sh --self-test` tests the runner itself. It uses a separate scratch database and does not check your schema. The activity result stays in `.cmsc127/last-run.json`.
+`bash check.sh --self-test` tests the runner itself. It uses a separate scratch
+database and does not check your schema. The result stays in
+`.cmsc127/last-run.json`.
 
-## Migrations and Data
+### Migrations and Data
 
-Put schema changes in `migrations/`. Use the filename form `NNNN_lowercase_description.sql`, such as `0001_create_observer.sql`. Start at `0001` and do not skip a number. The runner applies the files in filename order to a new database. A missing number stops the run. The runner cannot tell whether the missing file changes the schema.
+Put schema changes in `migrations/`. Use the filename form
+`NNNN_lowercase_description.sql`, such as `0001_create_observer.sql`. Start at
+`0001` and do not skip a number. The runner applies the files in filename order
+to a new database. A missing number stops the run. The runner cannot tell
+whether the missing file changes the schema.
 
-Put the data loader in `load.sql`. The runner calls `./run prepare` after it applies the migrations. The command runs this SQL file without changing your source files.
+Put the data loader in `load.sql`. The runner calls `./run prepare` after it
+applies the migrations. The command runs this SQL file without changing your
+source files.
 
-`./run` is the command script in your repository. The runner calls `./run prepare`, `./run backup`, `./run restore`, or `./run path/to/query.sql`. The connection helper runs one SQL file and prints its columns and rows as JSON.
+`./run` is the command script in this folder. The runner calls `./run prepare`,
+`./run backup`, `./run restore`, or `./run path/to/query.sql`. The connection
+helper runs one SQL file and prints its columns and rows as JSON.
 
-## Cases and Results
+### Cases and Results
 
-The runner reads `cases/manifest.json`. The manifest is a JSON file that lists each case, its stage, its group, and its kind. Each case needs an `.expected` JSON file beside it. An optional `.exit` file holds the expected exit status. Every case file must appear in the manifest.
+The runner reads `cases/manifest.json`. JSON is a text format for structured
+data. The manifest lists each case, its stage, its group, and its kind. Each
+case needs an `.expected` JSON file beside it. An optional `.exit` file holds
+the expected exit status, the number a command returns when it ends. Every case
+file must appear in the manifest.
 
-Add your own cases in `cases/pair/manifest.json`. Use the same fields, and keep the files inside `cases/pair/`. The published manifest stays unchanged, so the protected-file check still passes.
+Add your own cases in `cases/pair/manifest.json`. Use the same fields, and keep
+the files inside `cases/pair/`. The manifest that came with this folder stays
+unchanged, so the protected-file check still passes.
 
 A minimal case entry:
 
@@ -77,33 +182,53 @@ A minimal case entry:
 {"id": "lab1/observers", "stage": 1, "kind": "query", "file": "cases/lab1/observers.sql"}
 ```
 
-The case file holds one SQL statement or one command. The expected file holds a `columns` list and a `rows` list:
+The case file holds one SQL statement or one command. The expected file holds a
+`columns` list and a `rows` list:
 
 ```json
 {"columns": ["observer_id", "observer_name"], "rows": [[1, "Ada"], [2, null]]}
 ```
 
-The runner compares the result with that object. Use JSON `null` for SQL `NULL`. Numbers compare by value, so `1`, `1.0`, and `1.00` match. Column names and their order always match. Row order matches by default. Set `ordered` to `false` when the result has no required row order. The runner compares duplicate rows too.
+The runner compares the result with that object. Use JSON `null` for SQL
+`NULL`. Numbers compare by value, so `1`, `1.0`, and `1.00` match. Column names
+and their order must match. Row order must match unless the manifest sets
+`ordered` to `false`. Set `ordered` to `false` when the result has no required
+row order. The runner compares duplicate rows too.
 
-The six case kinds are `output`, `schema`, `reject`, `state`, `race`, and `query`. `output` compares the JSON from `./run`. `schema` compares the ERD with the live schema. `reject` requires SQL to fail. `state` checks the rows after an operation. `race` runs ordered steps on two sessions. `query` runs a SQL file directly.
+The six case kinds are `output`, `schema`, `reject`, `state`, `race`, and
+`query`. `output` compares the JSON from `./run`. `schema` compares the ERD
+with the live schema. `reject` requires SQL to fail. `state` checks the rows
+after an operation. `race` runs ordered steps on two sessions, each one an open
+connection to the database. `query` runs a SQL file directly.
 
-A skipped check prints `SKIP` with a reason. A skip does not count as a pass. A form fault stops the run before it creates a database. It reports the file, line, and column. It exits with status 2. The form check covers the manifest and each expected result. It also covers each state or race body and each invariant's required fields.
+A skipped check prints `SKIP` with a reason. A skip does not count as a pass. A
+form fault stops the run before it creates a database. It reports the file,
+line, and column. It exits with status 2. The form check covers the manifest
+and each expected result. It also covers each state or race body and each
+invariant's required fields.
 
-The result file `.cmsc127/last-run.json` holds the case results. The expected file holds one dataset. The result file wraps every case result, with its status, expected value, actual value, and differences.
+The result file `.cmsc127/last-run.json` holds every case result, with its
+status, expected value, actual value, and differences. The expected file holds
+one result.
 
-## Invariant Checks
+### Invariant Checks
 
-After the cases, the runner checks claims that a case cannot show. The course specification explains each check and its limits. The checks are:
+After the cases, the runner checks each invariant. The checks are:
 
-- **Normal form.** A rule says that one column determines another, such as a supplier determines its city. The runner reads the catalog, PostgreSQL's own description of the tables, and confirms that a key enforces each rule.
+- **Normal form.** A rule says that one column determines another, such as a
+  supplier determining its city. The runner reads the catalog, PostgreSQL's own
+  description of the tables, and confirms that a key enforces each rule.
 - **Work in SQL.** Each report must run as SQL.
-- **Required features.** A view must contain a named construct.
-- **Index.** A migration must create the required index.
+- **Required features.** A view, a saved query that acts like a table, must
+  contain a named SQL feature.
+- **Index.** A migration must create the required index, a lookup structure
+  that speeds up a query.
 - **Backup and restore.** A backup must restore the same rows.
-- **Protected files.** The published files must match.
+- **Protected files.** The files that came with this folder must match.
 - **Written sections.** Each required section must hold text.
 - **Type checking.** Your Python must pass strict Pyright.
-- **Contribution.** The runner prints a table of commits and changed lines by member and week. The table is information for the instructor and adds no score.
+- **Contribution.** The runner prints a table of commits and changed lines by
+  member and week.
 
 The runner prints each result, a count for each group, and one final count:
 
@@ -116,11 +241,17 @@ SKIP lab3/race: this platform cannot run two sessions
 1/2 checks passed, 1 failed, 1 skipped; Pyright: 0 errors
 ```
 
-A `PASS` line means the result matched. A `FAIL` line shows the difference and the expected and actual values. A `SKIP` line gives a reason and does not enter the count. The `Pyright` part of the count line reports the type-check result.
+A `PASS` line means the result matched. A `FAIL` line shows the difference and
+the expected and actual values. A `SKIP` line gives a reason and does not enter
+the count. The `Pyright` part of the count line reports the type-check result.
 
-## Write the ERD
+### Write the ERD
 
-An entity-relationship diagram (ERD) shows tables and their relationships. Edit the ERD block in this README to match your schema. The runner compares table names, column names, primary keys, foreign keys, and relationship endpoints.
+An entity-relationship diagram (ERD) shows tables and their relationships. Edit
+the ERD block in this README to match your schema. The runner compares table
+names, column names, primary keys, foreign keys, and the tables at each end of
+a relationship. A primary key identifies a row. A foreign key points to a row
+in another table.
 
 ```mermaid
 erDiagram

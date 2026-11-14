@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-runner_tag="v1.4"
+runner_tag="v1.6"
 runner_url="https://github.com/WhiteLicorice/cmsc-127-harness.git"
 cache_root="${CMSC127_RUNNER_CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/cmsc127-runner}"
 runner_dir="$cache_root/$runner_tag"
@@ -39,9 +39,9 @@ else
   fi
 fi
 
-if [[ " $* " == *" --self-test "* && ! -f "$runner_dir/dist/bundle/server.py" ]]; then
+if [[ " $* " == *" --self-test "* && ! -f "$runner_dir/public/app.js" ]]; then
   if ! command -v npm >/dev/null 2>&1; then
-    printf 'The self-test needs Node.js and npm to build the harness bundle.\n' >&2
+    printf 'The self-test needs Node.js and npm to build the page assets.\n' >&2
     exit 1
   fi
   ( cd "$runner_dir" && npm ci && npm run build )
