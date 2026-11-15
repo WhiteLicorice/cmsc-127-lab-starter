@@ -36,6 +36,80 @@
       "stage": 1,
       "group": "Starter contract",
       "kind": "contribution"
+    },
+    {
+      "id": "lab2/outer-join",
+      "stage": 2,
+      "group": "SQL Craft",
+      "kind": "feature",
+      "file": "reports/room_assignments.sql",
+      "features": ["left_join"]
+    },
+    {
+      "id": "lab2/null-handling",
+      "stage": 2,
+      "group": "SQL Craft",
+      "kind": "feature",
+      "file": "reports/room_assignments.sql",
+      "features": ["coalesce"]
+    },
+    {
+      "id": "lab2/self-join",
+      "stage": 2,
+      "group": "SQL Craft",
+      "kind": "feature",
+      "file": "reports/instructor_course_pairs.sql",
+      "features": ["self_join"]
+    },
+    {
+      "id": "lab2/set-operation",
+      "stage": 2,
+      "group": "SQL Craft",
+      "kind": "feature",
+      "file": "reports/students_in_both_courses.sql",
+      "features": ["intersect"]
+    },
+    {
+      "id": "lab2/group-having",
+      "stage": 2,
+      "group": "SQL Craft",
+      "kind": "feature",
+      "file": "reports/high_enrollment_terms.sql",
+      "features": ["having"]
+    },
+    {
+      "id": "lab2/where-subquery",
+      "stage": 2,
+      "group": "SQL Craft",
+      "kind": "feature",
+      "file": "reports/above_average_units.sql",
+      "features": ["where_subquery"]
+    },
+    {
+      "id": "lab2/correlated-subquery",
+      "stage": 2,
+      "group": "SQL Craft",
+      "kind": "feature",
+      "file": "reports/multi_payment_terms.sql",
+      "features": ["correlated_subquery"]
+    },
+    {
+      "id": "lab2/view",
+      "stage": 2,
+      "group": "SQL Craft",
+      "kind": "feature",
+      "schema": "public",
+      "view": "lab2_section_roster",
+      "features": ["left_join"]
+    },
+    {
+      "id": "lab2/index",
+      "stage": 2,
+      "group": "SQL Craft",
+      "kind": "index",
+      "file": "reports/term_payment_totals.sql",
+      "index": "idx_payment_paid_on",
+      "key_column": "paid_on"
     }
   ]
 }

@@ -157,8 +157,10 @@ applies the migrations. The command runs this SQL file without changing your
 source files.
 
 `./run` is the command script in this folder. The runner calls `./run prepare`,
-`./run backup`, `./run restore`, or `./run path/to/query.sql`. The connection
-helper runs one SQL file and prints its columns and rows as JSON.
+`./run backup`, `./run restore`, or `./run path/to/query.sql`. A report name runs
+`reports/<name>.sql`, so `./run room_assignments` runs
+`reports/room_assignments.sql`. The connection helper runs one SQL file and
+prints its columns and rows as JSON.
 
 ### Cases and Results
 
@@ -191,11 +193,14 @@ and their order must match. Row order must match unless the manifest sets
 `ordered` to `false`. Set `ordered` to `false` when the result has no required
 row order. The runner compares duplicate rows too.
 
-The six case kinds are `output`, `schema`, `reject`, `state`, `race`, and
-`query`. `output` compares the JSON from `./run`. `schema` compares the ERD
-with the live schema. `reject` requires SQL to fail. `state` checks the rows
-after an operation. `race` runs ordered steps on two sessions, each one an open
-connection to the database. `query` runs a SQL file directly.
+The nine case kinds are `output`, `schema`, `reject`, `state`, `race`, `query`,
+`document`, `report`, and `view`. `output` compares the JSON from `./run`.
+`schema` compares the ERD with the live schema. `reject` requires SQL to fail.
+`state` checks the rows after an operation. `race` runs ordered steps on two
+sessions, each one an open connection to the database. `query` runs a SQL file
+directly. `document` checks the structure of a Markdown file. `report` runs a
+report SQL file named in a JSON body. `view` reads the catalog to prove that a
+report reads a required view.
 
 A skipped check prints `SKIP` with a reason. A skip does not count as a pass. A
 form fault stops the run before it creates a database. It reports the file,

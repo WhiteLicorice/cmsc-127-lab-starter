@@ -3,7 +3,7 @@ set -euo pipefail
 
 mode="${1:-}"
 if [[ -z "$mode" ]]; then
-  printf '%s\n' 'Usage: ./run prepare | backup | restore | path/to/query.sql' >&2
+  printf '%s\n' 'Usage: ./run prepare | backup | restore | <report> | path/to/query.sql' >&2
   exit 2
 fi
 
@@ -38,10 +38,19 @@ case "$mode" in
     pg_restore --clean --if-exists --no-owner --dbname "$database_url" "$backup_file"
     ;;
   *)
+    report_file="reports/$mode.sql"
+    if [[ "$mode" == */* || "$mode" == *.sql ]]; then
+      report_file="$mode"
+    fi
+    if [[ ! -f "$report_file" ]]; then
+      printf 'Unknown report or query file: %s\n' "$mode" >&2
+      printf '%s\n' 'Usage: ./run prepare | backup | restore | <report> | path/to/query.sql' >&2
+      exit 2
+    fi
     python_executable="${CMSC127_PYTHON:-python}"
     if command -v cygpath >/dev/null 2>&1; then
       python_executable="$(cygpath -u "$python_executable")"
     fi
-    exec "$python_executable" connection.py "$mode"
+    exec "$python_executable" connection.py "$report_file"
     ;;
 esac
