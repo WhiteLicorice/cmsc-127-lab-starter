@@ -3,7 +3,7 @@ set -euo pipefail
 
 mode="${1:-}"
 if [[ -z "$mode" ]]; then
-  printf '%s\n' 'Usage: ./run prepare | backup | restore | <report> | path/to/query.sql' >&2
+  printf '%s\n' 'Usage: ./run prepare | dump | restore | enroll | payment | race | <report> | path/to/query.sql' >&2
   exit 2
 fi
 
@@ -21,7 +21,7 @@ case "$mode" in
     fi
     psql "$database_url" --set ON_ERROR_STOP=1 --file load.sql
     ;;
-  backup)
+  dump|backup)
     backup_file="${CMSC127_BACKUP_FILE:-}"
     if [[ -z "$backup_file" ]]; then
       printf '%s\n' 'Set CMSC127_BACKUP_FILE before running backup.' >&2
@@ -37,6 +37,9 @@ case "$mode" in
     fi
     pg_restore --clean --if-exists --no-owner --dbname "$database_url" "$backup_file"
     ;;
+  enroll|payment|race)
+    exec python answers/operations.py "$mode" "${@:2}"
+    ;;
   *)
     report_file="reports/$mode.sql"
     if [[ "$mode" == */* || "$mode" == *.sql ]]; then
@@ -44,7 +47,7 @@ case "$mode" in
     fi
     if [[ ! -f "$report_file" ]]; then
       printf 'Unknown report or query file: %s\n' "$mode" >&2
-      printf '%s\n' 'Usage: ./run prepare | backup | restore | <report> | path/to/query.sql' >&2
+      printf '%s\n' 'Usage: ./run prepare | dump | restore | enroll | payment | race | <report> | path/to/query.sql' >&2
       exit 2
     fi
     python_executable="${CMSC127_PYTHON:-python}"

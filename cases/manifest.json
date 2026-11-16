@@ -34,7 +34,7 @@
     {
       "id": "contribution-record",
       "stage": 1,
-      "group": "Starter contract",
+      "group": "Collaboration",
       "kind": "contribution"
     },
     {
@@ -110,6 +110,14 @@
       "file": "reports/term_payment_totals.sql",
       "index": "idx_payment_paid_on",
       "key_column": "paid_on"
+    },
+    {
+      "id": "lab3/nosql-answers",
+      "stage": 3,
+      "group": "Technical Defense",
+      "kind": "written",
+      "file": "answers/nosql.md",
+      "sections": ["Document storage", "Relational comparison"]
     }
   ]
 }

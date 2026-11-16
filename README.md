@@ -162,6 +162,28 @@ source files.
 `reports/room_assignments.sql`. The connection helper runs one SQL file and
 prints its columns and rows as JSON.
 
+### Lab 3 Operations
+
+Set `CMSC127_REGISTRAR_DATABASE_URL` for enrollment. Set
+`CMSC127_CASHIER_DATABASE_URL` for payments. Each login role must belong to the
+matching `registrar` or `cashier` group role.
+
+Run `./run enroll STUDENT_ID SECTION_ID YYYY-MM-DD` to enroll a student. Run
+`./run payment STUDENT_ID TERM NUMBER AMOUNT YYYY-MM-DD RECEIPT_CODE` to record
+a payment. Both commands use parameterized SQL and a transaction.
+
+Run `./run race` to compare the unsafe and safe enrollment schedules. Set
+`CMSC127_SCHEMA=alt` to select the alternate table names.
+
+Set `CMSC127_BACKUP_FILE` to a file path. Run `./run dump` to save a custom
+format database dump. Run `./run restore` to restore it. A dump holds database
+objects, rows, and grant statements. It does not hold role definitions,
+memberships, tablespace definitions, or cluster settings. Without `--create`,
+it also does not hold database-level settings.
+
+Write the two No-SQL responses in `answers/nosql.md` under its headings. The
+check confirms that both sections contain text. It does not grade the answers.
+
 ### Cases and Results
 
 The runner reads `cases/manifest.json`. JSON is a text format for structured
