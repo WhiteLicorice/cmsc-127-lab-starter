@@ -1,1 +1,1 @@
--- Runs the bundled enrollment race driver through ./run race.
+-- Runs the enrollment race driver through ./run race.
