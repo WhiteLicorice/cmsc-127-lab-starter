@@ -1,0 +1,164 @@
+{
+  "columns": [
+    "student_id",
+    "student_name",
+    "term"
+  ],
+  "rows": [
+    [
+      223,
+      "Ben Flores",
+      "2024-1S"
+    ],
+    [
+      555,
+      "Lito Javier",
+      "2024-1S"
+    ],
+    [
+      1827,
+      "Xy Javier",
+      "2024-1S"
+    ],
+    [
+      679,
+      "Vera Flores",
+      "2024-2S"
+    ],
+    [
+      1381,
+      "Vera Zamora",
+      "2024-2S"
+    ],
+    [
+      1684,
+      "Kara Ubaldo",
+      "2024-2S"
+    ],
+    [
+      1693,
+      "Vera Zamora",
+      "2024-2S"
+    ],
+    [
+      2442,
+      "Mara Garcia",
+      "2024-2S"
+    ],
+    [
+      60,
+      "Ella Mabini",
+      "2025-1S"
+    ],
+    [
+      433,
+      "Paolo Ledesma",
+      "2025-1S"
+    ],
+    [
+      1145,
+      "Hugo Tolentino",
+      "2025-1S"
+    ],
+    [
+      1702,
+      "Gina Cruz",
+      "2025-1S"
+    ],
+    [
+      2512,
+      "Iris Ilagan",
+      "2025-1S"
+    ],
+    [
+      3097,
+      "Vera Ledesma",
+      "2025-1S"
+    ],
+    [
+      131,
+      "Hugo Basa",
+      "2025-2S"
+    ],
+    [
+      986,
+      "Mara Yap",
+      "2025-2S"
+    ],
+    [
+      1035,
+      "Rosa Javier",
+      "2025-2S"
+    ],
+    [
+      1688,
+      "Mara Quisumbing",
+      "2025-2S"
+    ],
+    [
+      1721,
+      "Joel Tolentino",
+      "2025-2S"
+    ],
+    [
+      1814,
+      "Kara Kalaw",
+      "2025-2S"
+    ],
+    [
+      1936,
+      "Gina Ilagan",
+      "2025-2S"
+    ],
+    [
+      3073,
+      "Joel Ledesma",
+      "2025-2S"
+    ],
+    [
+      1408,
+      "Cara Ilagan",
+      "2026-1S"
+    ],
+    [
+      654,
+      "Cara Salazar",
+      "2026-2S"
+    ],
+    [
+      1353,
+      "Hugo Dizon",
+      "2026-2S"
+    ],
+    [
+      1476,
+      "Kara Mabini",
+      "2026-2S"
+    ],
+    [
+      1530,
+      "Yuri Garcia",
+      "2027-1S"
+    ],
+    [
+      2231,
+      "Rosa Navarro",
+      "2027-1S"
+    ],
+    [
+      281,
+      "Rosa Tolentino",
+      "2027-2S"
+    ],
+    [
+      2338,
+      "Mara Ocampo",
+      "2027-2S"
+    ],
+    [
+      2988,
+      "Mara Mabini",
+      "2027-2S"
+    ]
+  ]
+}

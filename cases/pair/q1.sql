@@ -1,0 +1,2 @@
+-- Q1. How many enrollments does each term hold?
+-- The columns are term and enrollments. Order the rows by term.

@@ -208,6 +208,7 @@ A minimal pair manifest:
     {
       "id": "pair/observers",
       "stage": 1,
+      "group": "Query Correctness",
       "kind": "query",
       "file": "cases/pair/observers.sql"
     }

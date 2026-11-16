@@ -1,0 +1,3 @@
+-- Q2. Which sections have no assigned room?
+-- The columns are term and instructor_id. Order the rows by term, then
+-- instructor_id.

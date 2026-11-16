@@ -1,0 +1,49 @@
+{
+  "columns": [
+    "course_code",
+    "course_title",
+    "units"
+  ],
+  "rows": [
+    [
+      "CMSC 123",
+      "Data Structures",
+      4
+    ],
+    [
+      "CMSC 124",
+      "Programming Languages",
+      4
+    ],
+    [
+      "CMSC 125",
+      "Operating Systems",
+      4
+    ],
+    [
+      "CMSC 127",
+      "Database Systems",
+      4
+    ],
+    [
+      "MATH 100",
+      "Calculus I",
+      4
+    ],
+    [
+      "MATH 101",
+      "Calculus II",
+      4
+    ],
+    [
+      "PHYS 101",
+      "Physics for Computing",
+      4
+    ],
+    [
+      "PHYS 102",
+      "Electromagnetism",
+      4
+    ]
+  ]
+}

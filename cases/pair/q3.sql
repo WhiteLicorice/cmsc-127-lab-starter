@@ -1,0 +1,2 @@
+-- Q3. How many charges have no payment?
+-- The column is charges_without_payment.

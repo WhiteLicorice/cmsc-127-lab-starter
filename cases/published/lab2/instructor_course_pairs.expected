@@ -1,0 +1,431 @@
+{
+  "columns": [
+    "instructor_id",
+    "instructor_name",
+    "course_code",
+    "first_term",
+    "second_term"
+  ],
+  "rows": [
+    [
+      1,
+      "Prof. Fred Dizon",
+      "CMSC 101",
+      "2025-2S",
+      "2026-2S"
+    ],
+    [
+      2,
+      "Prof. Kara Garcia",
+      "CMSC 135",
+      "2025-1S",
+      "2026-1S"
+    ],
+    [
+      2,
+      "Prof. Kara Garcia",
+      "STAT 102",
+      "2024-2S",
+      "2027-2S"
+    ],
+    [
+      4,
+      "Prof. Uly Mabini",
+      "CMSC 125",
+      "2025-2S",
+      "2027-2S"
+    ],
+    [
+      6,
+      "Prof. Ella Salazar",
+      "MATH 120",
+      "2024-2S",
+      "2025-2S"
+    ],
+    [
+      7,
+      "Prof. Joel Valdez",
+      "MATH 122",
+      "2024-1S",
+      "2026-1S"
+    ],
+    [
+      9,
+      "Prof. Tala Dizon",
+      "CMSC 125",
+      "2024-2S",
+      "2026-2S"
+    ],
+    [
+      9,
+      "Prof. Tala Dizon",
+      "CMSC 141",
+      "2026-1S",
+      "2027-1S"
+    ],
+    [
+      10,
+      "Prof. Yuri Garcia",
+      "CMSC 142",
+      "2024-1S",
+      "2025-1S"
+    ],
+    [
+      12,
+      "Prof. Iris Mabini",
+      "CMSC 136",
+      "2026-2S",
+      "2027-2S"
+    ],
+    [
+      12,
+      "Prof. Iris Mabini",
+      "CMSC 141",
+      "2024-1S",
+      "2024-2S"
+    ],
+    [
+      14,
+      "Prof. Sito Salazar",
+      "CMSC 128",
+      "2026-2S",
+      "2027-1S"
+    ],
+    [
+      14,
+      "Prof. Sito Salazar",
+      "CMSC 129",
+      "2024-2S",
+      "2025-1S"
+    ],
+    [
+      15,
+      "Prof. Xy Valdez",
+      "CMSC 127",
+      "2025-1S",
+      "2026-1S"
+    ],
+    [
+      15,
+      "Prof. Xy Valdez",
+      "CMSC 138",
+      "2024-1S",
+      "2025-2S"
+    ],
+    [
+      17,
+      "Prof. Hugo Dizon",
+      "CMSC 134",
+      "2024-2S",
+      "2027-1S"
+    ],
+    [
+      17,
+      "Prof. Hugo Dizon",
+      "CMSC 144",
+      "2024-1S",
+      "2027-2S"
+    ],
+    [
+      18,
+      "Prof. Mara Garcia",
+      "CMSC 124",
+      "2024-1S",
+      "2027-2S"
+    ],
+    [
+      18,
+      "Prof. Mara Garcia",
+      "MATH 121",
+      "2025-1S",
+      "2025-2S"
+    ],
+    [
+      19,
+      "Prof. Rosa Javier",
+      "CMSC 137",
+      "2026-1S",
+      "2027-2S"
+    ],
+    [
+      19,
+      "Prof. Rosa Javier",
+      "PHYS 101",
+      "2024-1S",
+      "2027-1S"
+    ],
+    [
+      22,
+      "Prof. Gina Salazar",
+      "STAT 101",
+      "2024-2S",
+      "2026-1S"
+    ],
+    [
+      23,
+      "Prof. Lito Valdez",
+      "CMSC 130",
+      "2025-1S",
+      "2026-1S"
+    ],
+    [
+      26,
+      "Prof. Ana Garcia",
+      "CMSC 130",
+      "2024-2S",
+      "2025-2S"
+    ],
+    [
+      33,
+      "Prof. Joel Dizon",
+      "ELEC 101",
+      "2024-1S",
+      "2025-2S"
+    ],
+    [
+      33,
+      "Prof. Joel Dizon",
+      "ELEC 101",
+      "2024-1S",
+      "2026-1S"
+    ],
+    [
+      33,
+      "Prof. Joel Dizon",
+      "ELEC 101",
+      "2025-2S",
+      "2026-1S"
+    ],
+    [
+      37,
+      "Prof. Dino Padilla",
+      "CMSC 101",
+      "2025-2S",
+      "2026-2S"
+    ],
+    [
+      38,
+      "Prof. Iris Salazar",
+      "CMSC 135",
+      "2025-1S",
+      "2026-1S"
+    ],
+    [
+      38,
+      "Prof. Iris Salazar",
+      "STAT 102",
+      "2024-2S",
+      "2027-2S"
+    ],
+    [
+      40,
+      "Prof. Sito Abad",
+      "CMSC 125",
+      "2025-2S",
+      "2027-2S"
+    ],
+    [
+      42,
+      "Prof. Cara Garcia",
+      "MATH 120",
+      "2024-2S",
+      "2025-2S"
+    ],
+    [
+      43,
+      "Prof. Hugo Javier",
+      "MATH 122",
+      "2024-1S",
+      "2026-1S"
+    ],
+    [
+      45,
+      "Prof. Rosa Padilla",
+      "CMSC 125",
+      "2024-2S",
+      "2026-2S"
+    ],
+    [
+      45,
+      "Prof. Rosa Padilla",
+      "CMSC 141",
+      "2026-1S",
+      "2027-1S"
+    ],
+    [
+      46,
+      "Prof. Wes Salazar",
+      "CMSC 142",
+      "2024-1S",
+      "2025-1S"
+    ],
+    [
+      48,
+      "Prof. Gina Abad",
+      "CMSC 136",
+      "2026-2S",
+      "2027-2S"
+    ],
+    [
+      48,
+      "Prof. Gina Abad",
+      "CMSC 141",
+      "2024-1S",
+      "2024-2S"
+    ],
+    [
+      50,
+      "Prof. Quin Garcia",
+      "CMSC 128",
+      "2026-2S",
+      "2027-1S"
+    ],
+    [
+      50,
+      "Prof. Quin Garcia",
+      "CMSC 129",
+      "2024-2S",
+      "2025-1S"
+    ],
+    [
+      51,
+      "Prof. Vera Javier",
+      "CMSC 127",
+      "2025-1S",
+      "2026-1S"
+    ],
+    [
+      51,
+      "Prof. Vera Javier",
+      "CMSC 138",
+      "2024-1S",
+      "2025-2S"
+    ],
+    [
+      53,
+      "Prof. Fred Padilla",
+      "CMSC 134",
+      "2024-2S",
+      "2027-1S"
+    ],
+    [
+      53,
+      "Prof. Fred Padilla",
+      "CMSC 144",
+      "2024-1S",
+      "2027-2S"
+    ],
+    [
+      54,
+      "Prof. Kara Salazar",
+      "CMSC 124",
+      "2024-1S",
+      "2027-2S"
+    ],
+    [
+      54,
+      "Prof. Kara Salazar",
+      "MATH 121",
+      "2025-1S",
+      "2025-2S"
+    ],
+    [
+      55,
+      "Prof. Paolo Valdez",
+      "CMSC 137",
+      "2026-1S",
+      "2027-2S"
+    ],
+    [
+      55,
+      "Prof. Paolo Valdez",
+      "PHYS 101",
+      "2024-1S",
+      "2027-1S"
+    ],
+    [
+      58,
+      "Prof. Ella Garcia",
+      "STAT 101",
+      "2024-2S",
+      "2026-1S"
+    ],
+    [
+      59,
+      "Prof. Joel Javier",
+      "CMSC 130",
+      "2025-1S",
+      "2026-1S"
+    ],
+    [
+      62,
+      "Prof. Yuri Salazar",
+      "CMSC 130",
+      "2024-2S",
+      "2025-2S"
+    ],
+    [
+      69,
+      "Prof. Hugo Padilla",
+      "ELEC 101",
+      "2024-1S",
+      "2025-2S"
+    ],
+    [
+      69,
+      "Prof. Hugo Padilla",
+      "ELEC 101",
+      "2024-1S",
+      "2026-1S"
+    ],
+    [
+      69,
+      "Prof. Hugo Padilla",
+      "ELEC 101",
+      "2025-2S",
+      "2026-1S"
+    ],
+    [
+      73,
+      "Prof. Ben Dizon",
+      "CMSC 101",
+      "2025-2S",
+      "2026-2S"
+    ],
+    [
+      74,
+      "Prof. Gina Garcia",
+      "CMSC 135",
+      "2025-1S",
+      "2026-1S"
+    ],
+    [
+      74,
+      "Prof. Gina Garcia",
+      "STAT 102",
+      "2024-2S",
+      "2027-2S"
+    ],
+    [
+      76,
+      "Prof. Quin Mabini",
+      "CMSC 125",
+      "2025-2S",
+      "2027-2S"
+    ],
+    [
+      78,
+      "Prof. Ana Salazar",
+      "MATH 120",
+      "2024-2S",
+      "2025-2S"
+    ],
+    [
+      79,
+      "Prof. Fred Valdez",
+      "MATH 122",
+      "2024-1S",
+      "2026-1S"
+    ]
+  ]
+}

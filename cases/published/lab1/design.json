@@ -1,0 +1,10 @@
+{
+  "file": "DESIGN.md",
+  "headings": ["Tables", "Keys and Links", "Checker Warnings"],
+  "placeholders": {
+    "Tables": "Write one bullet per table: what it holds, and its key.",
+    "Keys and Links": "Describe how the tables connect, and why each link table exists.",
+    "Checker Warnings": "Write one `### <table>.<column>` entry for each warning that the checks print, saying whether the column is a copy or a separate fact and why. If no warning prints, write one line that says so."
+  },
+  "warning_sql": "cases/published/lab1/facts-bypass.sql"
+}

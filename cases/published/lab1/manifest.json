@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "lab1/erd",
+      "stage": 1,
+      "group": "Data Design",
+      "kind": "schema",
+      "file": "cases/pair/erd.md",
+      "ordered": true,
+      "expected_file": "cases/published/lab1/erd.expected"
+    },
+    {
+      "id": "lab1/business-rules",
+      "stage": 1,
+      "group": "Data Design",
+      "kind": "query",
+      "file": "cases/published/lab1/business-rules.sql",
+      "ordered": true
+    },
+    {
+      "id": "lab1/normal-form",
+      "stage": 1,
+      "group": "Data Design",
+      "kind": "query",
+      "file": "cases/published/lab1/normal-form.sql",
+      "ordered": true
+    },
+    {
+      "id": "lab1/row-counts",
+      "stage": 1,
+      "group": "Data Design",
+      "kind": "query",
+      "file": "cases/pair/counts.sql",
+      "ordered": true,
+      "expected_file": "cases/published/lab1/counts.expected"
+    },
+    {
+      "id": "lab1/facts",
+      "stage": 1,
+      "group": "Data Design",
+      "kind": "query",
+      "file": "cases/published/lab1/facts.sql",
+      "alternate_file": "cases/published/lab1/facts-alt.sql",
+      "ordered": true
+    },
+    {
+      "id": "lab1/facts-bypass",
+      "stage": 1,
+      "group": "Data Design",
+      "kind": "query",
+      "file": "cases/published/lab1/facts-bypass.sql",
+      "ordered": true
+    },
+    {
+      "id": "lab1/design",
+      "stage": 1,
+      "group": "Data Design",
+      "kind": "document",
+      "file": "cases/published/lab1/design.json",
+      "ordered": true
+    },
+    {
+      "id": "lab1/q1",
+      "stage": 1,
+      "group": "Query Correctness",
+      "kind": "query",
+      "file": "cases/pair/q1.sql",
+      "ordered": true,
+      "expected_file": "cases/published/lab1/q1.expected"
+    },
+    {
+      "id": "lab1/q2",
+      "stage": 1,
+      "group": "Query Correctness",
+      "kind": "query",
+      "file": "cases/pair/q2.sql",
+      "ordered": true,
+      "expected_file": "cases/published/lab1/q2.expected"
+    },
+    {
+      "id": "lab1/q3",
+      "stage": 1,
+      "group": "Query Correctness",
+      "kind": "query",
+      "file": "cases/pair/q3.sql",
+      "ordered": true,
+      "expected_file": "cases/published/lab1/q3.expected"
+    },
+    {
+      "id": "lab1/q4",
+      "stage": 1,
+      "group": "Query Correctness",
+      "kind": "query",
+      "file": "cases/pair/q4.sql",
+      "ordered": true,
+      "expected_file": "cases/published/lab1/q4.expected"
+    },
+    {
+      "id": "lab1/types",
+      "stage": 1,
+      "group": "SQL Craft",
+      "kind": "query",
+      "file": "cases/published/lab1/types.sql",
+      "ordered": true
+    },
+    {
+      "id": "lab1/reject-duplicate",
+      "stage": 1,
+      "group": "SQL Craft",
+      "kind": "reject",
+      "file": "cases/pair/reject_duplicate.sql",
+      "expected_file": "cases/published/lab1/reject_duplicate.expected"
+    },
+    {
+      "id": "lab1/reject-orphan",
+      "stage": 1,
+      "group": "SQL Craft",
+      "kind": "reject",
+      "file": "cases/pair/reject_orphan.sql",
+      "expected_file": "cases/published/lab1/reject_orphan.expected"
+    },
+    {
+      "id": "lab1/reject-check",
+      "stage": 1,
+      "group": "SQL Craft",
+      "kind": "reject",
+      "file": "cases/pair/reject_check.sql",
+      "expected_file": "cases/published/lab1/reject_check.expected"
+    },
+    {
+      "id": "lab1/reject-course",
+      "stage": 1,
+      "group": "SQL Craft",
+      "kind": "reject",
+      "file": "cases/pair/reject_course.sql",
+      "expected_file": "cases/published/lab1/reject_course.expected"
+    }
+  ]
+}

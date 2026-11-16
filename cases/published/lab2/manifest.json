@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "lab2/room-assignments",
+      "stage": 2,
+      "group": "Query Correctness",
+      "kind": "report",
+      "file": "cases/published/lab2/room_assignments.json",
+      "ordered": true
+    },
+    {
+      "id": "lab2/instructor-course-pairs",
+      "stage": 2,
+      "group": "Query Correctness",
+      "kind": "report",
+      "file": "cases/published/lab2/instructor_course_pairs.json",
+      "ordered": true
+    },
+    {
+      "id": "lab2/students-in-both-courses",
+      "stage": 2,
+      "group": "Query Correctness",
+      "kind": "report",
+      "file": "cases/published/lab2/students_in_both_courses.json",
+      "ordered": true
+    },
+    {
+      "id": "lab2/high-enrollment-terms",
+      "stage": 2,
+      "group": "Query Correctness",
+      "kind": "report",
+      "file": "cases/published/lab2/high_enrollment_terms.json",
+      "ordered": true
+    },
+    {
+      "id": "lab2/above-average-units",
+      "stage": 2,
+      "group": "Query Correctness",
+      "kind": "report",
+      "file": "cases/published/lab2/above_average_units.json",
+      "ordered": true
+    },
+    {
+      "id": "lab2/multi-payment-terms",
+      "stage": 2,
+      "group": "Query Correctness",
+      "kind": "report",
+      "file": "cases/published/lab2/multi_payment_terms.json",
+      "ordered": true
+    },
+    {
+      "id": "lab2/top-open-seats",
+      "stage": 2,
+      "group": "Query Correctness",
+      "kind": "report",
+      "file": "cases/published/lab2/top_open_seats.json",
+      "ordered": true
+    },
+    {
+      "id": "lab2/term-payment-totals",
+      "stage": 2,
+      "group": "Query Correctness",
+      "kind": "report",
+      "file": "cases/published/lab2/term_payment_totals.json",
+      "ordered": true
+    },
+    {
+      "id": "lab2/view-bypass",
+      "stage": 2,
+      "group": "SQL Craft",
+      "kind": "view",
+      "file": "cases/published/lab2/view_bypass.json",
+      "ordered": true
+    }
+  ]
+}

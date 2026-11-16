@@ -1,0 +1,3 @@
+-- Q4. The five largest courses. The columns are course_code and enrollments.
+-- Order by enrollments from largest to smallest, then by course_code. Keep
+-- five rows.

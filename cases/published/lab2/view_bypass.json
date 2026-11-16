@@ -1,0 +1,4 @@
+{
+  "report": "reports/top_open_seats.sql",
+  "view": "lab2_section_roster"
+}

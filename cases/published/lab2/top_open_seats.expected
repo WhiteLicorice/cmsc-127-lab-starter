@@ -1,0 +1,114 @@
+{
+  "columns": [
+    "term",
+    "section_id",
+    "course_code",
+    "instructor_id",
+    "instructor_name",
+    "section_capacity",
+    "enrollment_count",
+    "open_seats"
+  ],
+  "rows": [
+    [
+      "2024-1S",
+      3,
+      "STAT 101",
+      3,
+      "Prof. Paolo Javier",
+      60,
+      43,
+      17
+    ],
+    [
+      "2026-2S",
+      480,
+      "CMSC 144",
+      80,
+      "Prof. Kara Abad",
+      60,
+      48,
+      12
+    ],
+    [
+      "2027-1S",
+      523,
+      "ELEC 103",
+      43,
+      "Prof. Hugo Javier",
+      60,
+      48,
+      12
+    ],
+    [
+      "2024-2S",
+      85,
+      "CMSC 133",
+      5,
+      "Prof. Zara Padilla",
+      60,
+      50,
+      10
+    ],
+    [
+      "2026-2S",
+      437,
+      "CMSC 101",
+      37,
+      "Prof. Dino Padilla",
+      60,
+      50,
+      10
+    ],
+    [
+      "2025-1S",
+      198,
+      "CMSC 135",
+      38,
+      "Prof. Iris Salazar",
+      60,
+      51,
+      9
+    ],
+    [
+      "2026-1S",
+      321,
+      "CMSC 136",
+      1,
+      "Prof. Fred Dizon",
+      60,
+      52,
+      8
+    ],
+    [
+      "2025-1S",
+      234,
+      "CMSC 135",
+      74,
+      "Prof. Gina Garcia",
+      60,
+      53,
+      7
+    ],
+    [
+      "2026-1S",
+      357,
+      "CMSC 136",
+      37,
+      "Prof. Dino Padilla",
+      60,
+      53,
+      7
+    ],
+    [
+      "2026-2S",
+      439,
+      "CMSC 123",
+      39,
+      "Prof. Nico Valdez",
+      60,
+      53,
+      7
+    ]
+  ]
+}

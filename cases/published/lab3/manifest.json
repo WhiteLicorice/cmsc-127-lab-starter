@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "lab3/race-driver",
+      "stage": 3,
+      "group": "Query Correctness",
+      "kind": "output",
+      "file": "cases/published/lab3/race-driver.sql",
+      "args": [
+        "race"
+      ],
+      "ordered": true
+    },
+    {
+      "id": "lab3/race-bypass",
+      "stage": 3,
+      "group": "Query Correctness",
+      "kind": "output",
+      "file": "cases/published/lab3/race-bypass.sql",
+      "args": [
+        "race",
+        "--variant"
+      ],
+      "ordered": true
+    },
+    {
+      "id": "lab3/receipt-required",
+      "stage": 3,
+      "group": "SQL Craft",
+      "kind": "reject",
+      "file": "cases/published/lab3/receipt-required.sql",
+      "alternate_file": "cases/published/lab3/receipt-required-alt.sql"
+    },
+    {
+      "id": "lab3/receipt-format",
+      "stage": 3,
+      "group": "SQL Craft",
+      "kind": "reject",
+      "file": "cases/published/lab3/receipt-format.sql",
+      "alternate_file": "cases/published/lab3/receipt-format-alt.sql"
+    },
+    {
+      "id": "lab3/receipt-unique",
+      "stage": 3,
+      "group": "SQL Craft",
+      "kind": "reject",
+      "file": "cases/published/lab3/receipt-unique.sql",
+      "alternate_file": "cases/published/lab3/receipt-unique-alt.sql"
+    },
+    {
+      "id": "lab3/registrar-cannot-pay",
+      "stage": 3,
+      "group": "SQL Craft",
+      "kind": "reject",
+      "file": "cases/published/lab3/registrar-cannot-pay.sql",
+      "alternate_file": "cases/published/lab3/registrar-cannot-pay-alt.sql",
+      "role": "registrar",
+      "role_env": "CMSC127_ROLE_REGISTRAR"
+    },
+    {
+      "id": "lab3/cashier-cannot-enroll",
+      "stage": 3,
+      "group": "SQL Craft",
+      "kind": "reject",
+      "file": "cases/published/lab3/cashier-cannot-enroll.sql",
+      "alternate_file": "cases/published/lab3/cashier-cannot-enroll-alt.sql",
+      "role": "cashier",
+      "role_env": "CMSC127_ROLE_CASHIER"
+    },
+    {
+      "id": "lab3/restore-state",
+      "stage": 3,
+      "group": "Technical Defense",
+      "kind": "state",
+      "file": "cases/published/lab3/restore-state.json",
+      "alternate_file": "cases/published/lab3/restore-state-alt.json",
+      "alternate_expected_file": "cases/published/lab3/restore-state-alt.expected",
+      "ordered": true
+    },
+    {
+      "id": "lab3/facts",
+      "stage": 3,
+      "group": "Data Design",
+      "kind": "query",
+      "file": "cases/published/lab3/facts.sql",
+      "ordered": true,
+      "replaces": "lab1/facts"
+    },
+    {
+      "id": "lab3/design",
+      "stage": 3,
+      "group": "Data Design",
+      "kind": "document",
+      "file": "cases/published/lab3/design.json",
+      "ordered": true,
+      "replaces": "lab1/design"
+    }
+  ]
+}

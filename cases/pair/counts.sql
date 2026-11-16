@@ -1,0 +1,3 @@
+-- The row-count query. Return one row per fact, with columns fact and rows,
+-- ordered by fact. The eleven facts and their counts are under Required
+-- Features. Write it against your tables.

@@ -1,0 +1,1 @@
+{"operation":"restore","check_sql":"SELECT count(*) AS student_rows FROM student"}

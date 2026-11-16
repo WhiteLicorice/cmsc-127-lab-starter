@@ -1,0 +1,1131 @@
+{
+  "columns": [
+    "term",
+    "section_id",
+    "course_code",
+    "instructor_name",
+    "room"
+  ],
+  "rows": [
+    [
+      "2027-1S",
+      506,
+      "CMSC 100",
+      "Prof. Ana Garcia",
+      "LAB 104"
+    ],
+    [
+      "2027-1S",
+      542,
+      "CMSC 100",
+      "Prof. Yuri Salazar",
+      "LAB 111"
+    ],
+    [
+      "2027-1S",
+      555,
+      "CMSC 101",
+      "Prof. Lito Javier",
+      "LAB 119"
+    ],
+    [
+      "2027-1S",
+      519,
+      "CMSC 101",
+      "Prof. Nico Valdez",
+      "RM 145"
+    ],
+    [
+      "2027-1S",
+      483,
+      "CMSC 101",
+      "Prof. Paolo Javier",
+      "RM 162"
+    ],
+    [
+      "2027-1S",
+      532,
+      "CMSC 123",
+      "Prof. Ana Mabini",
+      "LAB 118"
+    ],
+    [
+      "2027-1S",
+      496,
+      "CMSC 123",
+      "Prof. Cara Abad",
+      "RM 131"
+    ],
+    [
+      "2027-1S",
+      546,
+      "CMSC 124",
+      "Prof. Sito Garcia",
+      "Unassigned"
+    ],
+    [
+      "2027-1S",
+      510,
+      "CMSC 124",
+      "Prof. Uly Salazar",
+      "RM 161"
+    ],
+    [
+      "2027-1S",
+      554,
+      "CMSC 125",
+      "Prof. Gina Garcia",
+      "RM 130"
+    ],
+    [
+      "2027-1S",
+      518,
+      "CMSC 125",
+      "Prof. Iris Salazar",
+      "RM 149"
+    ],
+    [
+      "2027-1S",
+      482,
+      "CMSC 125",
+      "Prof. Kara Garcia",
+      "Unassigned"
+    ],
+    [
+      "2027-1S",
+      536,
+      "CMSC 127",
+      "Prof. Uly Abad",
+      "RM 155"
+    ],
+    [
+      "2027-1S",
+      500,
+      "CMSC 127",
+      "Prof. Wes Mabini",
+      "LAB 116"
+    ],
+    [
+      "2027-1S",
+      530,
+      "CMSC 128",
+      "Prof. Quin Garcia",
+      "LAB 120"
+    ],
+    [
+      "2027-1S",
+      494,
+      "CMSC 128",
+      "Prof. Sito Salazar",
+      "RM 167"
+    ],
+    [
+      "2027-1S",
+      543,
+      "CMSC 129",
+      "Prof. Dino Valdez",
+      "RM 141"
+    ],
+    [
+      "2027-1S",
+      507,
+      "CMSC 129",
+      "Prof. Fred Javier",
+      "RM 148"
+    ],
+    [
+      "2027-1S",
+      550,
+      "CMSC 130",
+      "Prof. Mara Salazar",
+      "LAB 121"
+    ],
+    [
+      "2027-1S",
+      514,
+      "CMSC 130",
+      "Prof. Olga Garcia",
+      "RM 158"
+    ],
+    [
+      "2027-1S",
+      534,
+      "CMSC 131",
+      "Prof. Kara Salazar",
+      "RM 154"
+    ],
+    [
+      "2027-1S",
+      498,
+      "CMSC 131",
+      "Prof. Mara Garcia",
+      "RM 160"
+    ],
+    [
+      "2027-1S",
+      547,
+      "CMSC 132",
+      "Prof. Xy Javier",
+      "RM 137"
+    ],
+    [
+      "2027-1S",
+      511,
+      "CMSC 132",
+      "Prof. Zara Valdez",
+      "RM 144"
+    ],
+    [
+      "2027-1S",
+      548,
+      "CMSC 133",
+      "Prof. Cara Mabini",
+      "Unassigned"
+    ],
+    [
+      "2027-1S",
+      512,
+      "CMSC 133",
+      "Prof. Ella Abad",
+      "LAB 123"
+    ],
+    [
+      "2027-1S",
+      533,
+      "CMSC 134",
+      "Prof. Fred Padilla",
+      "RM 151"
+    ],
+    [
+      "2027-1S",
+      497,
+      "CMSC 134",
+      "Prof. Hugo Dizon",
+      "LAB 103"
+    ],
+    [
+      "2027-1S",
+      540,
+      "CMSC 135",
+      "Prof. Olga Mabini",
+      "LAB 122"
+    ],
+    [
+      "2027-1S",
+      504,
+      "CMSC 135",
+      "Prof. Quin Abad",
+      "LAB 102"
+    ],
+    [
+      "2027-1S",
+      527,
+      "CMSC 136",
+      "Prof. Ben Valdez",
+      "LAB 107"
+    ],
+    [
+      "2027-1S",
+      491,
+      "CMSC 136",
+      "Prof. Dino Javier",
+      "RM 159"
+    ],
+    [
+      "2027-1S",
+      552,
+      "CMSC 137",
+      "Prof. Wes Abad",
+      "RM 169"
+    ],
+    [
+      "2027-1S",
+      516,
+      "CMSC 137",
+      "Prof. Yuri Mabini",
+      "RM 156"
+    ],
+    [
+      "2027-1S",
+      556,
+      "CMSC 138",
+      "Prof. Quin Mabini",
+      "LAB 115"
+    ],
+    [
+      "2027-1S",
+      520,
+      "CMSC 138",
+      "Prof. Sito Abad",
+      "RM 135"
+    ],
+    [
+      "2027-1S",
+      484,
+      "CMSC 138",
+      "Prof. Uly Mabini",
+      "RM 166"
+    ],
+    [
+      "2027-1S",
+      557,
+      "CMSC 139",
+      "Prof. Vera Padilla",
+      "RM 165"
+    ],
+    [
+      "2027-1S",
+      521,
+      "CMSC 139",
+      "Prof. Xy Dizon",
+      "RM 143"
+    ],
+    [
+      "2027-1S",
+      485,
+      "CMSC 139",
+      "Prof. Zara Padilla",
+      "LAB 106"
+    ],
+    [
+      "2027-1S",
+      545,
+      "CMSC 140",
+      "Prof. Nico Dizon",
+      "RM 128"
+    ],
+    [
+      "2027-1S",
+      509,
+      "CMSC 140",
+      "Prof. Paolo Padilla",
+      "RM 134"
+    ],
+    [
+      "2027-1S",
+      525,
+      "CMSC 141",
+      "Prof. Rosa Padilla",
+      "RM 132"
+    ],
+    [
+      "2027-1S",
+      489,
+      "CMSC 141",
+      "Prof. Tala Dizon",
+      "RM 146"
+    ],
+    [
+      "2027-1S",
+      529,
+      "CMSC 142",
+      "Prof. Lito Dizon",
+      "LAB 117"
+    ],
+    [
+      "2027-1S",
+      493,
+      "CMSC 142",
+      "Prof. Nico Padilla",
+      "RM 170"
+    ],
+    [
+      "2027-1S",
+      528,
+      "CMSC 143",
+      "Prof. Gina Abad",
+      "Unassigned"
+    ],
+    [
+      "2027-1S",
+      492,
+      "CMSC 143",
+      "Prof. Iris Mabini",
+      "RM 153"
+    ],
+    [
+      "2027-1S",
+      549,
+      "CMSC 144",
+      "Prof. Hugo Padilla",
+      "RM 150"
+    ],
+    [
+      "2027-1S",
+      513,
+      "CMSC 144",
+      "Prof. Joel Dizon",
+      "LAB 114"
+    ],
+    [
+      "2027-1S",
+      501,
+      "CMSC 145",
+      "Prof. Ben Padilla",
+      "LAB 112"
+    ],
+    [
+      "2027-1S",
+      537,
+      "CMSC 145",
+      "Prof. Zara Dizon",
+      "LAB 124"
+    ],
+    [
+      "2027-1S",
+      560,
+      "ELEC 101",
+      "Prof. Kara Abad",
+      "RM 138"
+    ],
+    [
+      "2027-1S",
+      524,
+      "ELEC 101",
+      "Prof. Mara Mabini",
+      "LAB 108"
+    ],
+    [
+      "2027-1S",
+      488,
+      "ELEC 101",
+      "Prof. Olga Abad",
+      "LAB 101"
+    ],
+    [
+      "2027-1S",
+      544,
+      "ELEC 102",
+      "Prof. Iris Abad",
+      "RM 125"
+    ],
+    [
+      "2027-1S",
+      508,
+      "ELEC 102",
+      "Prof. Kara Mabini",
+      "RM 139"
+    ],
+    [
+      "2027-1S",
+      559,
+      "ELEC 103",
+      "Prof. Fred Valdez",
+      "RM 157"
+    ],
+    [
+      "2027-1S",
+      523,
+      "ELEC 103",
+      "Prof. Hugo Javier",
+      "LAB 110"
+    ],
+    [
+      "2027-1S",
+      487,
+      "ELEC 103",
+      "Prof. Joel Valdez",
+      "RM 136"
+    ],
+    [
+      "2027-1S",
+      531,
+      "MATH 100",
+      "Prof. Vera Javier",
+      "Unassigned"
+    ],
+    [
+      "2027-1S",
+      495,
+      "MATH 100",
+      "Prof. Xy Valdez",
+      "RM 163"
+    ],
+    [
+      "2027-1S",
+      551,
+      "MATH 101",
+      "Prof. Rosa Valdez",
+      "LAB 109"
+    ],
+    [
+      "2027-1S",
+      515,
+      "MATH 101",
+      "Prof. Tala Javier",
+      "RM 171"
+    ],
+    [
+      "2027-1S",
+      553,
+      "MATH 120",
+      "Prof. Ben Dizon",
+      "Unassigned"
+    ],
+    [
+      "2027-1S",
+      517,
+      "MATH 120",
+      "Prof. Dino Padilla",
+      "RM 127"
+    ],
+    [
+      "2027-1S",
+      481,
+      "MATH 120",
+      "Prof. Fred Dizon",
+      "RM 152"
+    ],
+    [
+      "2027-1S",
+      538,
+      "MATH 121",
+      "Prof. Ella Garcia",
+      "RM 126"
+    ],
+    [
+      "2027-1S",
+      502,
+      "MATH 121",
+      "Prof. Gina Salazar",
+      "RM 168"
+    ],
+    [
+      "2027-1S",
+      539,
+      "MATH 122",
+      "Prof. Joel Javier",
+      "RM 142"
+    ],
+    [
+      "2027-1S",
+      503,
+      "MATH 122",
+      "Prof. Lito Valdez",
+      "LAB 105"
+    ],
+    [
+      "2027-1S",
+      535,
+      "PHYS 101",
+      "Prof. Paolo Valdez",
+      "RM 129"
+    ],
+    [
+      "2027-1S",
+      499,
+      "PHYS 101",
+      "Prof. Rosa Javier",
+      "LAB 113"
+    ],
+    [
+      "2027-1S",
+      526,
+      "PHYS 102",
+      "Prof. Wes Salazar",
+      "RM 133"
+    ],
+    [
+      "2027-1S",
+      490,
+      "PHYS 102",
+      "Prof. Yuri Garcia",
+      "RM 172"
+    ],
+    [
+      "2027-1S",
+      558,
+      "STAT 101",
+      "Prof. Ana Salazar",
+      "RM 140"
+    ],
+    [
+      "2027-1S",
+      522,
+      "STAT 101",
+      "Prof. Cara Garcia",
+      "Unassigned"
+    ],
+    [
+      "2027-1S",
+      486,
+      "STAT 101",
+      "Prof. Ella Salazar",
+      "RM 164"
+    ],
+    [
+      "2027-1S",
+      541,
+      "STAT 102",
+      "Prof. Tala Padilla",
+      "Unassigned"
+    ],
+    [
+      "2027-1S",
+      505,
+      "STAT 102",
+      "Prof. Vera Dizon",
+      "RM 147"
+    ],
+    [
+      "2027-2S",
+      629,
+      "CMSC 100",
+      "Prof. Hugo Padilla",
+      "RM 151"
+    ],
+    [
+      "2027-2S",
+      593,
+      "CMSC 100",
+      "Prof. Joel Dizon",
+      "LAB 120"
+    ],
+    [
+      "2027-2S",
+      640,
+      "CMSC 101",
+      "Prof. Kara Abad",
+      "RM 170"
+    ],
+    [
+      "2027-2S",
+      604,
+      "CMSC 101",
+      "Prof. Mara Mabini",
+      "LAB 103"
+    ],
+    [
+      "2027-2S",
+      568,
+      "CMSC 101",
+      "Prof. Olga Abad",
+      "RM 150"
+    ],
+    [
+      "2027-2S",
+      618,
+      "CMSC 123",
+      "Prof. Ella Garcia",
+      "RM 146"
+    ],
+    [
+      "2027-2S",
+      582,
+      "CMSC 123",
+      "Prof. Gina Salazar",
+      "RM 143"
+    ],
+    [
+      "2027-2S",
+      614,
+      "CMSC 124",
+      "Prof. Kara Salazar",
+      "Unassigned"
+    ],
+    [
+      "2027-2S",
+      578,
+      "CMSC 124",
+      "Prof. Mara Garcia",
+      "LAB 110"
+    ],
+    [
+      "2027-2S",
+      636,
+      "CMSC 125",
+      "Prof. Quin Mabini",
+      "LAB 119"
+    ],
+    [
+      "2027-2S",
+      600,
+      "CMSC 125",
+      "Prof. Sito Abad",
+      "RM 163"
+    ],
+    [
+      "2027-2S",
+      564,
+      "CMSC 125",
+      "Prof. Uly Mabini",
+      "RM 171"
+    ],
+    [
+      "2027-2S",
+      606,
+      "CMSC 127",
+      "Prof. Wes Salazar",
+      "LAB 107"
+    ],
+    [
+      "2027-2S",
+      570,
+      "CMSC 127",
+      "Prof. Yuri Garcia",
+      "RM 148"
+    ],
+    [
+      "2027-2S",
+      627,
+      "CMSC 128",
+      "Prof. Xy Javier",
+      "RM 126"
+    ],
+    [
+      "2027-2S",
+      591,
+      "CMSC 128",
+      "Prof. Zara Valdez",
+      "RM 135"
+    ],
+    [
+      "2027-2S",
+      586,
+      "CMSC 129",
+      "Prof. Ana Garcia",
+      "LAB 109"
+    ],
+    [
+      "2027-2S",
+      622,
+      "CMSC 129",
+      "Prof. Yuri Salazar",
+      "RM 164"
+    ],
+    [
+      "2027-2S",
+      628,
+      "CMSC 130",
+      "Prof. Cara Mabini",
+      "LAB 111"
+    ],
+    [
+      "2027-2S",
+      592,
+      "CMSC 130",
+      "Prof. Ella Abad",
+      "RM 158"
+    ],
+    [
+      "2027-2S",
+      626,
+      "CMSC 131",
+      "Prof. Sito Garcia",
+      "LAB 122"
+    ],
+    [
+      "2027-2S",
+      590,
+      "CMSC 131",
+      "Prof. Uly Salazar",
+      "RM 169"
+    ],
+    [
+      "2027-2S",
+      621,
+      "CMSC 132",
+      "Prof. Tala Padilla",
+      "RM 152"
+    ],
+    [
+      "2027-2S",
+      585,
+      "CMSC 132",
+      "Prof. Vera Dizon",
+      "RM 155"
+    ],
+    [
+      "2027-2S",
+      633,
+      "CMSC 133",
+      "Prof. Ben Dizon",
+      "LAB 116"
+    ],
+    [
+      "2027-2S",
+      597,
+      "CMSC 133",
+      "Prof. Dino Padilla",
+      "RM 136"
+    ],
+    [
+      "2027-2S",
+      561,
+      "CMSC 133",
+      "Prof. Fred Dizon",
+      "RM 145"
+    ],
+    [
+      "2027-2S",
+      620,
+      "CMSC 134",
+      "Prof. Olga Mabini",
+      "RM 167"
+    ],
+    [
+      "2027-2S",
+      584,
+      "CMSC 134",
+      "Prof. Quin Abad",
+      "RM 142"
+    ],
+    [
+      "2027-2S",
+      637,
+      "CMSC 135",
+      "Prof. Vera Padilla",
+      "RM 168"
+    ],
+    [
+      "2027-2S",
+      601,
+      "CMSC 135",
+      "Prof. Xy Dizon",
+      "RM 139"
+    ],
+    [
+      "2027-2S",
+      565,
+      "CMSC 135",
+      "Prof. Zara Padilla",
+      "RM 127"
+    ],
+    [
+      "2027-2S",
+      608,
+      "CMSC 136",
+      "Prof. Gina Abad",
+      "RM 129"
+    ],
+    [
+      "2027-2S",
+      572,
+      "CMSC 136",
+      "Prof. Iris Mabini",
+      "RM 125"
+    ],
+    [
+      "2027-2S",
+      615,
+      "CMSC 137",
+      "Prof. Paolo Valdez",
+      "Unassigned"
+    ],
+    [
+      "2027-2S",
+      579,
+      "CMSC 137",
+      "Prof. Rosa Javier",
+      "RM 160"
+    ],
+    [
+      "2027-2S",
+      630,
+      "CMSC 138",
+      "Prof. Mara Salazar",
+      "LAB 102"
+    ],
+    [
+      "2027-2S",
+      594,
+      "CMSC 138",
+      "Prof. Olga Garcia",
+      "RM 149"
+    ],
+    [
+      "2027-2S",
+      635,
+      "CMSC 139",
+      "Prof. Lito Javier",
+      "LAB 101"
+    ],
+    [
+      "2027-2S",
+      599,
+      "CMSC 139",
+      "Prof. Nico Valdez",
+      "RM 140"
+    ],
+    [
+      "2027-2S",
+      563,
+      "CMSC 139",
+      "Prof. Paolo Javier",
+      "RM 131"
+    ],
+    [
+      "2027-2S",
+      632,
+      "CMSC 140",
+      "Prof. Wes Abad",
+      "RM 162"
+    ],
+    [
+      "2027-2S",
+      596,
+      "CMSC 140",
+      "Prof. Yuri Mabini",
+      "Unassigned"
+    ],
+    [
+      "2027-2S",
+      623,
+      "CMSC 141",
+      "Prof. Dino Valdez",
+      "RM 144"
+    ],
+    [
+      "2027-2S",
+      587,
+      "CMSC 141",
+      "Prof. Fred Javier",
+      "Unassigned"
+    ],
+    [
+      "2027-2S",
+      581,
+      "CMSC 142",
+      "Prof. Ben Padilla",
+      "Unassigned"
+    ],
+    [
+      "2027-2S",
+      617,
+      "CMSC 142",
+      "Prof. Zara Dizon",
+      "LAB 117"
+    ],
+    [
+      "2027-2S",
+      612,
+      "CMSC 143",
+      "Prof. Ana Mabini",
+      "LAB 121"
+    ],
+    [
+      "2027-2S",
+      576,
+      "CMSC 143",
+      "Prof. Cara Abad",
+      "Unassigned"
+    ],
+    [
+      "2027-2S",
+      613,
+      "CMSC 144",
+      "Prof. Fred Padilla",
+      "RM 172"
+    ],
+    [
+      "2027-2S",
+      577,
+      "CMSC 144",
+      "Prof. Hugo Dizon",
+      "LAB 112"
+    ],
+    [
+      "2027-2S",
+      625,
+      "CMSC 145",
+      "Prof. Nico Dizon",
+      "RM 153"
+    ],
+    [
+      "2027-2S",
+      589,
+      "CMSC 145",
+      "Prof. Paolo Padilla",
+      "RM 133"
+    ],
+    [
+      "2027-2S",
+      619,
+      "ELEC 101",
+      "Prof. Joel Javier",
+      "RM 132"
+    ],
+    [
+      "2027-2S",
+      583,
+      "ELEC 101",
+      "Prof. Lito Valdez",
+      "Unassigned"
+    ],
+    [
+      "2027-2S",
+      610,
+      "ELEC 102",
+      "Prof. Quin Garcia",
+      "RM 128"
+    ],
+    [
+      "2027-2S",
+      574,
+      "ELEC 102",
+      "Prof. Sito Salazar",
+      "RM 130"
+    ],
+    [
+      "2027-2S",
+      605,
+      "ELEC 103",
+      "Prof. Rosa Padilla",
+      "LAB 113"
+    ],
+    [
+      "2027-2S",
+      569,
+      "ELEC 103",
+      "Prof. Tala Dizon",
+      "LAB 118"
+    ],
+    [
+      "2027-2S",
+      639,
+      "MATH 100",
+      "Prof. Fred Valdez",
+      "LAB 115"
+    ],
+    [
+      "2027-2S",
+      603,
+      "MATH 100",
+      "Prof. Hugo Javier",
+      "RM 137"
+    ],
+    [
+      "2027-2S",
+      567,
+      "MATH 100",
+      "Prof. Joel Valdez",
+      "RM 165"
+    ],
+    [
+      "2027-2S",
+      611,
+      "MATH 101",
+      "Prof. Vera Javier",
+      "LAB 114"
+    ],
+    [
+      "2027-2S",
+      575,
+      "MATH 101",
+      "Prof. Xy Valdez",
+      "RM 154"
+    ],
+    [
+      "2027-2S",
+      616,
+      "MATH 120",
+      "Prof. Uly Abad",
+      "RM 159"
+    ],
+    [
+      "2027-2S",
+      580,
+      "MATH 120",
+      "Prof. Wes Mabini",
+      "LAB 123"
+    ],
+    [
+      "2027-2S",
+      609,
+      "MATH 121",
+      "Prof. Lito Dizon",
+      "RM 141"
+    ],
+    [
+      "2027-2S",
+      573,
+      "MATH 121",
+      "Prof. Nico Padilla",
+      "RM 161"
+    ],
+    [
+      "2027-2S",
+      638,
+      "MATH 122",
+      "Prof. Ana Salazar",
+      "RM 166"
+    ],
+    [
+      "2027-2S",
+      602,
+      "MATH 122",
+      "Prof. Cara Garcia",
+      "LAB 105"
+    ],
+    [
+      "2027-2S",
+      566,
+      "MATH 122",
+      "Prof. Ella Salazar",
+      "RM 134"
+    ],
+    [
+      "2027-2S",
+      631,
+      "PHYS 101",
+      "Prof. Rosa Valdez",
+      "RM 147"
+    ],
+    [
+      "2027-2S",
+      595,
+      "PHYS 101",
+      "Prof. Tala Javier",
+      "RM 138"
+    ],
+    [
+      "2027-2S",
+      607,
+      "PHYS 102",
+      "Prof. Ben Valdez",
+      "Unassigned"
+    ],
+    [
+      "2027-2S",
+      571,
+      "PHYS 102",
+      "Prof. Dino Javier",
+      "RM 156"
+    ],
+    [
+      "2027-2S",
+      624,
+      "STAT 101",
+      "Prof. Iris Abad",
+      "LAB 106"
+    ],
+    [
+      "2027-2S",
+      588,
+      "STAT 101",
+      "Prof. Kara Mabini",
+      "LAB 108"
+    ],
+    [
+      "2027-2S",
+      634,
+      "STAT 102",
+      "Prof. Gina Garcia",
+      "LAB 124"
+    ],
+    [
+      "2027-2S",
+      598,
+      "STAT 102",
+      "Prof. Iris Salazar",
+      "LAB 104"
+    ],
+    [
+      "2027-2S",
+      562,
+      "STAT 102",
+      "Prof. Kara Garcia",
+      "RM 157"
+    ]
+  ]
+}

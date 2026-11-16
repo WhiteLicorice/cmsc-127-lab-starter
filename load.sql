@@ -1,0 +1,2 @@
+-- Write your loader here, or run python answers/load.py to generate this file.
+-- The runner executes this file with psql before it runs the checks.

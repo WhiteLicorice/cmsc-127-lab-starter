@@ -1,0 +1,12 @@
+{
+  "file": "DESIGN.md",
+  "headings": ["Tables", "Keys and Links", "Checker Warnings", "Lab 2", "Lab 3"],
+  "placeholders": {
+    "Tables": "Write one bullet per table: what it holds, and its key.",
+    "Keys and Links": "Describe how the tables connect, and why each link table exists.",
+    "Checker Warnings": "Write one `### <table>.<column>` entry for each warning that the checks print, saying whether the column is a copy or a separate fact and why. If no warning prints, write one line that says so.",
+    "Lab 2": "Describe the Lab 2 schema changes and the index.",
+    "Lab 3": "Describe the Lab 3 constraints, role grants, and transaction boundary."
+  },
+  "warning_sql": "cases/published/lab1/facts-bypass.sql"
+}
