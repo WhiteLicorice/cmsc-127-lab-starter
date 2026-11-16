@@ -57,12 +57,6 @@ jobs:
         run: |
           stage="$(bash ./check.sh --select-stage)"
           printf 'Selected stage: %s\n' "$stage"
-      - uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: cmsc127-result-ubuntu
-          path: .cmsc127/last-run.json
-          if-no-files-found: warn
 
   native:
     strategy:
@@ -147,12 +141,6 @@ jobs:
         run: |
           stage="$(bash ./check.sh --select-stage)"
           printf 'Selected stage: %s\n' "$stage"
-      - uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: cmsc127-result-${{ matrix.os }}
-          path: .cmsc127/last-run.json
-          if-no-files-found: warn
       - name: Stop PostgreSQL on Windows
         if: always() && runner.os == 'Windows'
         shell: pwsh
