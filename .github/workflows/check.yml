@@ -49,7 +49,7 @@ jobs:
       - name: Run staged checks
         shell: bash
         run: |
-          stage="$(python -c 'import json; from pathlib import Path; p=Path("cases/pair/manifest.json"); data=json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}; print(max((case["stage"] for case in data.get("cases", [])), default=1))')"
+          stage="$(bash ./check.sh --select-stage)"
           printf 'Selected stage: %s\n' "$stage"
           bash ./check.sh "$stage"
       - uses: actions/upload-artifact@v7
@@ -139,7 +139,7 @@ jobs:
       - name: Run staged checks
         shell: bash
         run: |
-          stage="$(python -c 'import json; from pathlib import Path; p=Path("cases/pair/manifest.json"); data=json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}; print(max((case["stage"] for case in data.get("cases", [])), default=1))')"
+          stage="$(bash ./check.sh --select-stage)"
           printf 'Selected stage: %s\n' "$stage"
           bash ./check.sh "$stage"
       - uses: actions/upload-artifact@v7

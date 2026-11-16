@@ -115,8 +115,8 @@ A stage is one group of checks, one for each lab. The runner is the program
 that runs them. Run stage 1 with `bash check.sh 1`. Run stage 2 with
 `bash check.sh 2`. Stage 2 includes stage 1, so a failure in Lab 1 still fails
 during Lab 2. GitHub Actions reads the highest stage in
-`cases/pair/manifest.json` and runs checks through that stage. If the file is
-absent, it runs stage 1.
+`cases/published/*/manifest.json` and runs checks through that stage. If no
+published manifest exists, it runs stage 1. The workflow prints the stage.
 
 The first run downloads the runner at a fixed version. Later runs use the
 local copy and need no network.
@@ -188,20 +188,21 @@ check confirms that both sections contain text. It does not grade the answers.
 
 ### Cases and Results
 
-The runner reads `cases/manifest.json`. JSON is a text format for structured
-data. The manifest lists each case, its stage, its group, and its kind. Each
-case needs an `.expected` JSON file beside it. An optional `.exit` file holds
-the expected exit status, the number a command returns when it ends. Every case
-file must appear in the manifest.
+The runner reads `cases/manifest.json`, each
+`cases/published/<lab>/manifest.json`, and `cases/pair/manifest.json`. Each
+manifest lists its cases, stages, groups, and kinds. Each case needs an
+`.expected` JSON file. An optional `.exit` file holds its expected exit status.
+Every case file must appear in a manifest.
 
 Add your own cases in `cases/pair/manifest.json`. Use the same fields, and keep
-the files inside `cases/pair/`. The manifest that came with this folder stays
-unchanged, so the protected-file check still passes.
+the files inside `cases/pair/`. Each lab bundle installs its published files
+under `cases/published/<lab>/`. Keep those files unchanged. A bundle does not
+replace your pair manifest.
 
 A minimal case entry:
 
 ```json
-{"id": "lab1/observers", "stage": 1, "kind": "query", "file": "cases/lab1/observers.sql"}
+{"id": "pair/observers", "stage": 1, "kind": "query", "file": "cases/pair/observers.sql"}
 ```
 
 The case file holds one SQL statement or one command. The expected file holds a
