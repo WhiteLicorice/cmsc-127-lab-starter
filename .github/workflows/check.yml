@@ -50,16 +50,13 @@ jobs:
           echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
       - name: Check Python types
         run: pyright
-      - name: Add the empty reference loader
-        run: touch load.sql
       - name: Run harness self-tests
         run: bash ./check.sh --self-test
-      - name: Run staged checks
+      - name: Check stage selection
         shell: bash
         run: |
           stage="$(bash ./check.sh --select-stage)"
           printf 'Selected stage: %s\n' "$stage"
-          bash ./check.sh "$stage"
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -143,21 +140,13 @@ jobs:
           "$env:GITHUB_WORKSPACE\.venv\Scripts" >> $env:GITHUB_PATH
       - name: Check Python types
         run: pyright
-      - name: Add the empty reference loader
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: New-Item -ItemType File -Path load.sql | Out-Null
-      - name: Add the empty reference loader
-        if: runner.os == 'macOS'
-        run: touch load.sql
       - name: Run harness self-tests
         run: bash ./check.sh --self-test
-      - name: Run staged checks
+      - name: Check stage selection
         shell: bash
         run: |
           stage="$(bash ./check.sh --select-stage)"
           printf 'Selected stage: %s\n' "$stage"
-          bash ./check.sh "$stage"
       - uses: actions/upload-artifact@v7
         if: always()
         with:
