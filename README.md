@@ -199,10 +199,20 @@ the files inside `cases/pair/`. Each lab bundle installs its published files
 under `cases/published/<lab>/`. Keep those files unchanged. A bundle does not
 replace your pair manifest.
 
-A minimal case entry:
+A minimal pair manifest:
 
 ```json
-{"id": "pair/observers", "stage": 1, "kind": "query", "file": "cases/pair/observers.sql"}
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "pair/observers",
+      "stage": 1,
+      "kind": "query",
+      "file": "cases/pair/observers.sql"
+    }
+  ]
+}
 ```
 
 The case file holds one SQL statement or one command. The expected file holds a
@@ -259,12 +269,12 @@ After the cases, the runner checks each invariant. The checks are:
 The runner prints each result, a count for each group, and one final count:
 
 ```text
-PASS lab1/observers
-FAIL lab2/summary
+PASS lab1/health
+FAIL lab2/health
   row 1 differs: expected [3], actual [4]
-SKIP lab3/race: this platform cannot run two sessions
+SKIP lab3/race-driver: this platform cannot run two sessions
 == result ==
-1/2 checks passed, 1 failed, 1 skipped; Pyright: 0 errors
+1/3 checks passed, 1 failed, 1 skipped, 0 warnings; Pyright: 0 errors
 ```
 
 A `PASS` line means the result matched. A `FAIL` line shows the difference and
