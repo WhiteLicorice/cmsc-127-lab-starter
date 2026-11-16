@@ -47,7 +47,7 @@ jobs:
       - name: Run harness self-tests
         run: bash ./check.sh --self-test
       - name: Run staged checks
-        run: bash ./check.sh 2
+        run: bash ./check.sh 3
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -133,7 +133,7 @@ jobs:
       - name: Run harness self-tests
         run: bash ./check.sh --self-test
       - name: Run staged checks
-        run: bash ./check.sh 2
+        run: bash ./check.sh 3
       - uses: actions/upload-artifact@v7
         if: always()
         with:

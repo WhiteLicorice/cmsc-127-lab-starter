@@ -38,7 +38,11 @@ case "$mode" in
     pg_restore --clean --if-exists --no-owner --dbname "$database_url" "$backup_file"
     ;;
   enroll|payment|race)
-    exec python answers/operations.py "$mode" "${@:2}"
+    python_executable="${CMSC127_PYTHON:-python}"
+    if command -v cygpath >/dev/null 2>&1; then
+      python_executable="$(cygpath -u "$python_executable")"
+    fi
+    exec "$python_executable" answers/operations.py "$mode" "${@:2}"
     ;;
   *)
     report_file="reports/$mode.sql"
