@@ -100,7 +100,7 @@
       "kind": "feature",
       "schema": "public",
       "view": "lab2_section_roster",
-      "features": ["left_join"]
+      "features": []
     },
     {
       "id": "lab2/index",
