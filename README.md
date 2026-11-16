@@ -114,7 +114,9 @@ export CMSC127_DATABASE_URL='postgresql://your_user:your_password@127.0.0.1:5432
 A stage is one group of checks, one for each lab. The runner is the program
 that runs them. Run stage 1 with `bash check.sh 1`. Run stage 2 with
 `bash check.sh 2`. Stage 2 includes stage 1, so a failure in Lab 1 still fails
-during Lab 2.
+during Lab 2. GitHub Actions reads the highest stage in
+`cases/pair/manifest.json` and runs checks through that stage. If the file is
+absent, it runs stage 1.
 
 The first run downloads the runner at a fixed version. Later runs use the
 local copy and need no network.

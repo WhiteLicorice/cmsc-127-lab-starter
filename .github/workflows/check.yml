@@ -47,7 +47,11 @@ jobs:
       - name: Run harness self-tests
         run: bash ./check.sh --self-test
       - name: Run staged checks
-        run: bash ./check.sh 3
+        shell: bash
+        run: |
+          stage="$(python -c 'import json; from pathlib import Path; p=Path("cases/pair/manifest.json"); data=json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}; print(max((case["stage"] for case in data.get("cases", [])), default=1))')"
+          printf 'Selected stage: %s\n' "$stage"
+          bash ./check.sh "$stage"
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -133,7 +137,11 @@ jobs:
       - name: Run harness self-tests
         run: bash ./check.sh --self-test
       - name: Run staged checks
-        run: bash ./check.sh 3
+        shell: bash
+        run: |
+          stage="$(python -c 'import json; from pathlib import Path; p=Path("cases/pair/manifest.json"); data=json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}; print(max((case["stage"] for case in data.get("cases", [])), default=1))')"
+          printf 'Selected stage: %s\n' "$stage"
+          bash ./check.sh "$stage"
       - uses: actions/upload-artifact@v7
         if: always()
         with:
