@@ -37,10 +37,10 @@ jobs:
       PGDATABASE: postgres
     steps:
       - uses: actions/checkout@v7
-      - name: Fetch the v1.21 harness candidate
+      - name: Fetch the pinned harness
         shell: bash
         run: |
-          git clone --quiet --depth 1 --single-branch --branch v1.21 \
+          git clone --quiet --depth 1 --single-branch --branch v1.22 \
             https://github.com/WhiteLicorice/cmsc-127-harness.git \
             "$RUNNER_TEMP/cmsc127-runner"
           echo "CMSC127_RUNNER_DIR=$RUNNER_TEMP/cmsc127-runner" >> "$GITHUB_ENV"
@@ -164,10 +164,10 @@ jobs:
       PGDATABASE: postgres
     steps:
       - uses: actions/checkout@v7
-      - name: Fetch the v1.21 harness candidate
+      - name: Fetch the pinned harness
         shell: bash
         run: |
-          git clone --quiet --depth 1 --single-branch --branch v1.21 \
+          git clone --quiet --depth 1 --single-branch --branch v1.22 \
             https://github.com/WhiteLicorice/cmsc-127-harness.git \
             "$RUNNER_TEMP/cmsc127-runner"
           echo "CMSC127_RUNNER_DIR=$RUNNER_TEMP/cmsc127-runner" >> "$GITHUB_ENV"
