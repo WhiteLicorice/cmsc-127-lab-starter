@@ -65,10 +65,10 @@ A schema is the set of tables and their columns. Add your schema to
 data loader is the SQL file that fills the tables with rows. Add your data to
 `load.sql`.
 
-Do not edit the protected files. The runner compares their contents with the
-originals. The protected files are the ones that came with this folder, apart
-from the ones the labs tell you to edit. A new file outside the paths the labs
-name also fails.
+Edit only `README.md`, `DESIGN.md`, `.stage`, `load.sql`, and the folders
+`migrations/`, `cases/pair/`, `reports/`, `answers/`, `operations/`, `race/`,
+and `variants/`. The runner compares every other file that came with this
+folder with its original.
 
 ### Set Up on Windows
 
@@ -263,9 +263,8 @@ After the cases, the runner checks each invariant. The checks are:
 - **Index.** A migration must create the required index, a lookup structure
   that speeds up a query.
 - **Backup and restore.** A backup must restore the same rows.
-- **Protected files.** The files that came with this folder, apart from the ones
-  the labs tell you to edit, must match their originals. A new file outside the
-  paths the labs name also fails.
+- **Protected files.** Every file outside the writable paths matches its
+  original, and a new file outside those paths fails.
 - **Written sections.** Each required section must hold text.
 - **Type checking.** Your Python must pass strict Pyright.
 - **Contribution.** The runner prints a table of commits and changed lines by
