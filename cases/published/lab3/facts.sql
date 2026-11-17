@@ -45,6 +45,8 @@ known_mapping_facts AS (
     UNION
     SELECT 'default_column'
     UNION
+    SELECT 'document'
+    UNION
     SELECT 'payment_receipt_code'
 ),
 fact_rows AS (

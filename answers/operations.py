@@ -60,7 +60,7 @@ def _constraint_message(error: psycopg.Error, operation: str) -> str:
     if constraint == "payment_amount_check":
         return "Payment amount must be greater than zero."
     if constraint == "payment_receipt_code_check":
-        return "Receipt code must contain 1 to 40 characters without outer spaces."
+        return "Receipt code must contain 1 to 40 characters without leading or trailing spaces."
     if operation == "enroll":
         return "Enrollment failed. No rows changed."
     return "Payment failed. No row changed."

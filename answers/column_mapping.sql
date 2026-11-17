@@ -57,5 +57,6 @@ FROM (VALUES
     ('nf_section_term', NULL, NULL),
     ('nf_section_instructor', NULL, NULL),
     ('nf_section_course', NULL, NULL),
+    ('document', NULL, NULL),
     ('default_column', NULL, NULL)
 ) AS mapping (fact, table_name, column_name);

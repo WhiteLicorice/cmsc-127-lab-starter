@@ -44,6 +44,10 @@ known_mapping_facts AS (
     SELECT fact FROM fact_aliases
     UNION
     SELECT 'default_column'
+    UNION
+    SELECT 'document'
+    UNION
+    SELECT 'payment_receipt_code'
 ),
 fact_rows AS (
     SELECT export_groups.group_id, export_groups.expected_rows,
@@ -755,7 +759,7 @@ SELECT format(
 FROM no_home_tables
 UNION ALL
 SELECT format(
-           '%s.<row> has %s row%s, but 0 take part in any rebuilt export, so every link row must join a mapped fact table.',
+           '%s.<row> has %s row%s, but 0 take part in any rebuilt export, so every link row must join two tables that hold facts about the same entity.',
            unassigned_link_tables.table_name,
            unassigned_link_tables.row_count,
            CASE WHEN unassigned_link_tables.row_count = 1 THEN '' ELSE 's' END

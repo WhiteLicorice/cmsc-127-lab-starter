@@ -1,2 +1,3 @@
--- Write your loader here, or run python answers/load.py to generate this file.
+-- Write the SQL that fills your tables here. The loader you write in
+-- answers/load.py generates this file.
 -- The runner executes this file with psql before it runs the checks.

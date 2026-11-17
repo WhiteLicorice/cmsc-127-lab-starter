@@ -4,7 +4,7 @@ This file records the design you built and the reasons behind it. Update it when
 
 ## Tables
 
-- Write one bullet per table: what it holds, and its key.
+- Write one bullet per table: what it holds and its key.
 
 ## Keys and Links
 

@@ -9,7 +9,7 @@ fi
 
 database_url="${CMSC127_DATABASE_URL:-}"
 if [[ -z "$database_url" ]]; then
-  printf '%s\n' 'Set CMSC127_DATABASE_URL before running the harness.' >&2
+  printf '%s\n' 'Set CMSC127_DATABASE_URL before you run this command.' >&2
   exit 2
 fi
 

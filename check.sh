@@ -20,7 +20,7 @@ else
     git -C "$runner_dir" remote remove origin >/dev/null 2>&1 || true
     git -C "$runner_dir" remote add origin "$runner_url"
     if ! git -C "$runner_dir" fetch --quiet --depth 1 origin "refs/tags/$runner_tag:refs/tags/$runner_tag" 2>/dev/null; then
-      printf 'Could not fetch pinned runner tag %s. Check the network and try again.\n' "$runner_tag" >&2
+      printf 'Could not fetch runner version %s. Check the network and try again.\n' "$runner_tag" >&2
       exit 1
     fi
     if ! git -C "$runner_dir" checkout --quiet --detach "refs/tags/$runner_tag"; then
