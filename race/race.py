@@ -21,6 +21,9 @@ REPEATS = 10
 STUDENT_LIMIT = REPEATS * 2
 LOCK_WAIT_SECONDS = 5.0
 SCRATCH_PREFIX = "cmsc127_race_"
+FIXTURE_TERM = "2099-1S"
+FIXTURE_INSTRUCTOR_ID = 33
+FIXTURE_SECTION_ID = 900001
 DATE = "2099-08-01"
 WAIT_EVENT_SQL = """
 SELECT wait_event_type
@@ -89,9 +92,26 @@ def _execute(
         cursor.execute(cast(LiteralString, query), parameters)
 
 
+def _remove_race_fixture(
+    connection: psycopg.Connection[tuple[object, ...]],
+) -> None:
+    _execute(
+        connection,
+        "DELETE FROM enrollment WHERE term = %s AND instructor_id = %s",
+        (FIXTURE_TERM, FIXTURE_INSTRUCTOR_ID),
+    )
+    _execute(
+        connection,
+        "DELETE FROM section WHERE section_id = %s AND term = %s AND instructor_id = %s",
+        (FIXTURE_SECTION_ID, FIXTURE_TERM, FIXTURE_INSTRUCTOR_ID),
+    )
+    _execute(connection, "DELETE FROM term WHERE term = %s", (FIXTURE_TERM,))
+
+
 def _fixture(
     connection: psycopg.Connection[tuple[object, ...]],
 ) -> Fixture:
+    _remove_race_fixture(connection)
     sections_path = ROOT / "race" / "fixtures" / "sections.sql"
     students_path = ROOT / "race" / "fixtures" / "students.sql"
     update_sql = "UPDATE section SET section_capacity = %s WHERE section_id = %s"
@@ -332,8 +352,9 @@ def _run(
     first_name = f"cmsc127_race_a_{process_id}"
     second_name = f"cmsc127_race_b_{process_id}"
     with _connect(database, first_name) as first, _connect(database, second_name) as second:
-        fixture = _fixture(first)
+        fixture: Fixture | None = None
         try:
+            fixture = _fixture(first)
             if variant:
                 overbooked = _run_unsafe(first, second, fixture, True)
                 return {
@@ -362,8 +383,12 @@ def _run(
                 },
             }
         finally:
-            _cleanup(first, fixture, fixture.student_ids)
-            _restore_capacity(first, fixture)
+            try:
+                if fixture is not None:
+                    _cleanup(first, fixture, fixture.student_ids)
+                    _restore_capacity(first, fixture)
+            finally:
+                _remove_race_fixture(first)
 
 
 def main() -> int:

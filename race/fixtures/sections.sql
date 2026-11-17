@@ -8,24 +8,16 @@ race_section AS (
     INSERT INTO section (
         section_id, term, instructor_id, course_id, room_id, section_capacity
     )
-    SELECT 900001, race_term.term, 33, 1, NULL, 2
+    SELECT 900001, race_term.term, 33, 1, NULL, 1
       FROM race_term
     ON CONFLICT (term, instructor_id)
         DO UPDATE SET section_capacity = EXCLUDED.section_capacity
     RETURNING section_id, term, instructor_id, course_id, section_capacity
-),
-seed_enrollment AS (
-    INSERT INTO enrollment (student_id, term, instructor_id, enrolled_on)
-    SELECT 834, race_section.term, race_section.instructor_id, DATE '2099-08-01'
-      FROM race_section
-    ON CONFLICT (student_id, term, instructor_id)
-        DO UPDATE SET enrolled_on = EXCLUDED.enrolled_on
-    RETURNING student_id
 )
 SELECT race_section.section_id,
        race_section.term,
        race_section.instructor_id,
        race_section.course_id,
        race_section.section_capacity,
-       1::integer AS enrollment_count
+       0::integer AS enrollment_count
   FROM race_section;
