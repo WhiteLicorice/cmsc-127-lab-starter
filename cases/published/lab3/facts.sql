@@ -151,6 +151,7 @@ foreign_key_columns AS (
 unvalidated_foreign_keys AS (
     SELECT class_entry.relname::text AS table_name,
            constraint_entry.conname::text AS constraint_name,
+           key_columns.first_column,
            NOT EXISTS (
                SELECT 1
                FROM unnest(constraint_entry.conkey) AS key_column(attnum)
@@ -170,6 +171,15 @@ unvalidated_foreign_keys AS (
       ON class_entry.oid = constraint_entry.conrelid
     JOIN pg_namespace AS namespace_entry
       ON namespace_entry.oid = class_entry.relnamespace
+    CROSS JOIN LATERAL (
+        SELECT (array_agg(key_attribute.attname::text
+                          ORDER BY key_column.ordinality))[1] AS first_column
+        FROM unnest(constraint_entry.conkey) WITH ORDINALITY
+            AS key_column(attnum, ordinality)
+        JOIN pg_attribute AS key_attribute
+          ON key_attribute.attrelid = constraint_entry.conrelid
+         AND key_attribute.attnum = key_column.attnum
+    ) AS key_columns
     WHERE constraint_entry.contype = 'f'
       AND namespace_entry.nspname = 'public'
       AND NOT constraint_entry.convalidated
@@ -768,7 +778,10 @@ SELECT format(
 FROM self_referencing_foreign_keys
 UNION ALL
 SELECT format(
-           '%s.%s is not validated, so it can''t be a rebuild or bypass path.',
+           'warning: %s.%s is not validated, so the key %s can''t be a rebuild or bypass path. To validate it, run: ALTER TABLE %I VALIDATE CONSTRAINT %I; If the key must stay unvalidated, explain the column under Checker Warnings in DESIGN.md.',
+           unvalidated_foreign_keys.table_name,
+           unvalidated_foreign_keys.first_column,
+           unvalidated_foreign_keys.constraint_name,
            unvalidated_foreign_keys.table_name,
            unvalidated_foreign_keys.constraint_name
        )
