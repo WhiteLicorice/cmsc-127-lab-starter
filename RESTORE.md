@@ -2,7 +2,7 @@
 
 Run these commands from your repository root in Git Bash on Windows. Add the PostgreSQL 18 `bin` directory to `PATH`. Set `DB` to the name of your database. Set `PGPASSWORD` in the shell, and do not save the password in the repository. Change the host, port, and user in `CONN` to match your cluster.
 
-Write a `rows.sql` file with this query. It counts the rows in every table in `public`, so it works whatever your table names are.
+Write an `answers/rows.sql` file with this query. It counts the rows in every table in `public`, so it works whatever your table names are.
 
 ```sql
 SELECT table_name,
@@ -26,12 +26,12 @@ DB=your_database
 TMP="$(mktemp -d)"
 CONN=(-h 127.0.0.1 -p 5432 -U postgres -w)
 
-psql -X -v ON_ERROR_STOP=1 "${CONN[@]}" -d "$DB" -A -t -F '|' -f rows.sql > "$TMP/before.txt"
+psql -X -v ON_ERROR_STOP=1 "${CONN[@]}" -d "$DB" -A -t -F '|' -f answers/rows.sql > "$TMP/before.txt"
 pg_dump "${CONN[@]}" --no-owner -f "$TMP/lab3.dump.sql" "$DB"
 dropdb "${CONN[@]}" --if-exists --force "$DB"
 createdb "${CONN[@]}" "$DB"
 psql -X -v ON_ERROR_STOP=1 "${CONN[@]}" -d "$DB" -f "$TMP/lab3.dump.sql"
-psql -X -v ON_ERROR_STOP=1 "${CONN[@]}" -d "$DB" -A -t -F '|' -f rows.sql > "$TMP/after.txt"
+psql -X -v ON_ERROR_STOP=1 "${CONN[@]}" -d "$DB" -A -t -F '|' -f answers/rows.sql > "$TMP/after.txt"
 cmp "$TMP/before.txt" "$TMP/after.txt"
 ```
 
