@@ -41,7 +41,6 @@
       "group": "Data Design",
       "kind": "query",
       "file": "cases/published/lab1/facts.sql",
-      "alternate_file": "cases/published/lab1/facts-alt.sql",
       "ordered": true
     },
     {

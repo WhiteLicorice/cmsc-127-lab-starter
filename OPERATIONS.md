@@ -78,3 +78,5 @@ The application reads these files, except `operations/payment/unsafe/insert.sql`
 | `operations/payment/safe/insert.sql` | The insert inside a transaction | student ID, term, number, amount, date, receipt code |
 
 The race driver reads the enrollment files and the four files under `variants/race/`. It runs the two sessions in a fixed order, so the wrong result is repeatable. It sets `lock_timeout`, `statement_timeout`, and `connect_timeout`, so a lock wait cannot hold the driver indefinitely.
+
+You’ll use your Lab 2 roster view to fill `variants/race/count.sql`, which takes one section ID and returns capacity followed by the enrollment count.

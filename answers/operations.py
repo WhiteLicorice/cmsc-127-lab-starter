@@ -55,11 +55,11 @@ def _url(operation: str) -> str:
 
 def _constraint_message(error: psycopg.Error, operation: str) -> str:
     constraint = error.diag.constraint_name or ""
-    if constraint in {"payment_seq_check", "installment_number_check"}:
+    if constraint == "payment_seq_check":
         return "Payment number must be from 1 to 99."
-    if constraint in {"payment_amount_check", "installment_amount_check"}:
+    if constraint == "payment_amount_check":
         return "Payment amount must be greater than zero."
-    if constraint in {"payment_receipt_code_check", "installment_receipt_code_check"}:
+    if constraint == "payment_receipt_code_check":
         return "Receipt code must contain 1 to 40 characters without outer spaces."
     if operation == "enroll":
         return "Enrollment failed. No rows changed."
