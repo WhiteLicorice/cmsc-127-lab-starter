@@ -64,11 +64,11 @@ jobs:
           printf 'Selected stage: %s\n' "$stage"
           echo "CMSC127_STAGE=$stage" >> "$GITHUB_ENV"
       - name: Run the staged checks
-        if: github.repository != 'WhiteLicorice/cmsc-127-lab-starter' || (github.event_name != 'push' && github.event_name != 'workflow_dispatch')
+        if: github.repository != 'WhiteLicorice/cmsc-127-lab-starter'
         shell: bash
         run: bash ./check.sh "$CMSC127_STAGE"
       - name: Assert the bare starter result
-        if: github.repository == 'WhiteLicorice/cmsc-127-lab-starter' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        if: github.repository == 'WhiteLicorice/cmsc-127-lab-starter'
         shell: bash
         run: |
           set -euo pipefail
@@ -234,11 +234,11 @@ jobs:
           printf 'Selected stage: %s\n' "$stage"
           echo "CMSC127_STAGE=$stage" >> "$GITHUB_ENV"
       - name: Run the staged checks
-        if: github.repository != 'WhiteLicorice/cmsc-127-lab-starter' || (github.event_name != 'push' && github.event_name != 'workflow_dispatch')
+        if: github.repository != 'WhiteLicorice/cmsc-127-lab-starter'
         shell: bash
         run: bash ./check.sh "$CMSC127_STAGE"
       - name: Assert the bare starter result
-        if: github.repository == 'WhiteLicorice/cmsc-127-lab-starter' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        if: github.repository == 'WhiteLicorice/cmsc-127-lab-starter'
         shell: bash
         run: |
           set -euo pipefail
