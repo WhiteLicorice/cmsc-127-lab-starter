@@ -138,10 +138,17 @@ it fails, and 2 for a form fault or a usage error.
 
 #### Check the Form Without a Database
 
-`bash check.sh --form-lint` checks the manifest, the file that lists every case,
-and the case files. It needs no database and prints no expected answer. A form
-fault is a file with the wrong structure, such as a missing field. The command
-exits 0 for a valid form and 2 for a form fault.
+`./lint` checks the form of your files. The form covers a file's name, its
+headings, and the fields the checks read. The command reads the case
+manifests, `.stage`, the protected files, the `DESIGN.md` headings, the
+migration names, and the files each stage requires. It needs no database and
+prints no expected answer.
+
+`./lint` exits 0 when the form is clean and 1 when it finds a fault. Each fault
+gives the file, the line where one exists, and the change to make. `bash
+check.sh` runs the same checks first and prints them under a `== form ==`
+heading. Read that heading first when it appears. A fault under that heading is
+a typing mistake.
 
 #### Test the Runner
 

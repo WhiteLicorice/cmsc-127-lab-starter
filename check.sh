@@ -39,6 +39,18 @@ else
   fi
 fi
 
+if [[ " $* " == *" --lint "* ]]; then
+  export PYTHONDONTWRITEBYTECODE=1
+  exec python "$runner_dir/runner.py" --lint
+fi
+
+if [[ " $* " != *" --select-stage "* && " $* " != *" --self-test "* ]]; then
+  if ! lint_output="$(PYTHONDONTWRITEBYTECODE=1 python "$runner_dir/runner.py" --lint 2>&1)"; then
+    printf '%s\n' "$lint_output"
+    exit 1
+  fi
+fi
+
 if [[ " $* " == *" --self-test "* && ! -f "$runner_dir/public/app.js" ]]; then
   if ! command -v npm >/dev/null 2>&1; then
     printf 'The self-test needs Node.js and npm to build the page assets.\n' >&2

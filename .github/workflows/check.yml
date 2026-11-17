@@ -30,7 +30,6 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
-      CMSC127_RUNNER_TAG: v1.20
       CMSC127_DATABASE_URL: postgresql://postgres@127.0.0.1:55435/postgres
       PGHOST: 127.0.0.1
       PGPORT: 55435
@@ -38,10 +37,10 @@ jobs:
       PGDATABASE: postgres
     steps:
       - uses: actions/checkout@v7
-      - name: Fetch the v1.20 harness candidate
+      - name: Fetch the t19-lint harness candidate
         shell: bash
         run: |
-          git clone --quiet --depth 1 --single-branch --branch v1.20 \
+          git clone --quiet --depth 1 --single-branch --branch t19-lint \
             https://github.com/WhiteLicorice/cmsc-127-harness.git \
             "$RUNNER_TEMP/cmsc127-runner"
           echo "CMSC127_RUNNER_DIR=$RUNNER_TEMP/cmsc127-runner" >> "$GITHUB_ENV"
@@ -158,7 +157,6 @@ jobs:
         os: [windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     env:
-      CMSC127_RUNNER_TAG: v1.20
       CMSC127_DATABASE_URL: postgresql://postgres@127.0.0.1:55435/postgres
       PGHOST: 127.0.0.1
       PGPORT: 55435
@@ -166,10 +164,10 @@ jobs:
       PGDATABASE: postgres
     steps:
       - uses: actions/checkout@v7
-      - name: Fetch the v1.20 harness candidate
+      - name: Fetch the t19-lint harness candidate
         shell: bash
         run: |
-          git clone --quiet --depth 1 --single-branch --branch v1.20 \
+          git clone --quiet --depth 1 --single-branch --branch t19-lint \
             https://github.com/WhiteLicorice/cmsc-127-harness.git \
             "$RUNNER_TEMP/cmsc127-runner"
           echo "CMSC127_RUNNER_DIR=$RUNNER_TEMP/cmsc127-runner" >> "$GITHUB_ENV"
