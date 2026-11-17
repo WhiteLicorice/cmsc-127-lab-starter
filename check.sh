@@ -44,10 +44,11 @@ if [[ " $* " == *" --lint "* ]]; then
   exec python "$runner_dir/runner.py" --lint
 fi
 
+lint_status=0
 if [[ " $* " != *" --select-stage "* && " $* " != *" --self-test "* ]]; then
   if ! lint_output="$(PYTHONDONTWRITEBYTECODE=1 python "$runner_dir/runner.py" --lint 2>&1)"; then
+    lint_status=1
     printf '%s\n' "$lint_output"
-    exit 1
   fi
 fi
 
@@ -60,4 +61,9 @@ if [[ " $* " == *" --self-test "* && ! -f "$runner_dir/public/app.js" ]]; then
 fi
 
 export PYTHONDONTWRITEBYTECODE=1
-exec python "$runner_dir/runner.py" "$@"
+run_status=0
+python "$runner_dir/runner.py" "$@" || run_status=$?
+if [[ "$lint_status" -ne 0 && "$run_status" -eq 0 ]]; then
+  exit 1
+fi
+exit "$run_status"
