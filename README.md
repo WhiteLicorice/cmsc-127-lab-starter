@@ -63,10 +63,12 @@ PowerShell may find a different `bash`.
 A schema is the set of tables and their columns. Add your schema to
 `migrations/`. A migration is a SQL file that creates or changes tables. The
 data loader is the SQL file that fills the tables with rows. Add your data to
-`load.sql`. Create the file if it is missing.
+`load.sql`.
 
-Do not edit the files that came with this folder. The runner compares their
-contents with the originals.
+Do not edit the protected files. The runner compares their contents with the
+originals. The protected files are the ones that came with this folder, apart
+from the ones the labs tell you to edit. A new file outside the paths the labs
+name also fails.
 
 ### Set Up on Windows
 
@@ -114,9 +116,10 @@ export CMSC127_DATABASE_URL='postgresql://your_user:your_password@127.0.0.1:5432
 A stage is one group of checks, one for each lab. The runner is the program
 that runs them. Run stage 1 with `bash check.sh 1`. Run stage 2 with
 `bash check.sh 2`. Stage 2 includes stage 1, so a failure in Lab 1 still fails
-during Lab 2. GitHub Actions reads the highest stage in
-`cases/published/*/manifest.json` and runs checks through that stage. If no
-published manifest exists, it runs stage 1. The workflow prints the stage.
+during Lab 2. GitHub Actions reads `.stage` at the repository root and runs the
+checks through that stage. The workflow prints the stage. The starter ships
+`.stage` at `1`. Change it to `2` when you start Lab 2 and `3` when you start
+Lab 3, and commit the change.
 
 The first run downloads the runner at a fixed version. Later runs use the
 local copy and need no network.
@@ -194,9 +197,9 @@ manifest lists its cases, stages, groups, and kinds. Each case needs an
 Every case file must appear in a manifest.
 
 Add your own cases in `cases/pair/manifest.json`. Use the same fields, and keep
-the files inside `cases/pair/`. Each lab bundle installs its published files
-under `cases/published/<lab>/`. Keep those files unchanged. A bundle does not
-replace your pair manifest.
+the files inside `cases/pair/`. The starter holds each lab's published files
+under `cases/published/<lab>/`. Keep those files unchanged. Your pair manifest
+stays yours.
 
 A minimal pair manifest:
 
@@ -260,7 +263,9 @@ After the cases, the runner checks each invariant. The checks are:
 - **Index.** A migration must create the required index, a lookup structure
   that speeds up a query.
 - **Backup and restore.** A backup must restore the same rows.
-- **Protected files.** The files that came with this folder must match.
+- **Protected files.** The files that came with this folder, apart from the ones
+  the labs tell you to edit, must match their originals. A new file outside the
+  paths the labs name also fails.
 - **Written sections.** Each required section must hold text.
 - **Type checking.** Your Python must pass strict Pyright.
 - **Contribution.** The runner prints a table of commits and changed lines by

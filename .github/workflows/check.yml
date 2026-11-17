@@ -9,6 +9,11 @@ on:
 permissions:
   contents: read
 
+env:
+  # The bare starter fails its own published cases. Update this line when a
+  # published case changes.
+  CMSC127_EXPECTED_BARE_RESULT: "3/19 checks passed, 16 failed, 0 skipped, 0 warnings; Pyright: 0 errors"
+
 jobs:
   ubuntu:
     runs-on: ubuntu-latest
@@ -57,6 +62,39 @@ jobs:
         run: |
           stage="$(bash ./check.sh --select-stage)"
           printf 'Selected stage: %s\n' "$stage"
+          echo "CMSC127_STAGE=$stage" >> "$GITHUB_ENV"
+      - name: Run the staged checks
+        if: github.repository != 'WhiteLicorice/cmsc-127-lab-starter'
+        shell: bash
+        run: bash ./check.sh "$CMSC127_STAGE"
+      - name: Assert the bare starter result
+        if: github.repository == 'WhiteLicorice/cmsc-127-lab-starter'
+        shell: bash
+        run: |
+          set -euo pipefail
+          log="$RUNNER_TEMP/cmsc127-check.log"
+          status=0
+          bash ./check.sh "$CMSC127_STAGE" > "$log" 2>&1 || status=$?
+          cat "$log"
+          tr -d '\r' < "$log" > "$log.clean"
+          if [[ "$status" -ne 1 ]]; then
+            echo "Expected the bare starter to exit 1, got $status."
+            exit 1
+          fi
+          if ! grep -qxF "$CMSC127_EXPECTED_BARE_RESULT" "$log.clean"; then
+            echo "The bare starter did not print the expected count line."
+            exit 1
+          fi
+          if ! grep -qxF "PASS lab1/health" "$log.clean"; then
+            echo "The bare starter did not pass lab1/health."
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: cmsc127-result-ubuntu
+          path: .cmsc127/last-run.json
+          if-no-files-found: warn
 
   native:
     strategy:
@@ -141,6 +179,39 @@ jobs:
         run: |
           stage="$(bash ./check.sh --select-stage)"
           printf 'Selected stage: %s\n' "$stage"
+          echo "CMSC127_STAGE=$stage" >> "$GITHUB_ENV"
+      - name: Run the staged checks
+        if: github.repository != 'WhiteLicorice/cmsc-127-lab-starter'
+        shell: bash
+        run: bash ./check.sh "$CMSC127_STAGE"
+      - name: Assert the bare starter result
+        if: github.repository == 'WhiteLicorice/cmsc-127-lab-starter'
+        shell: bash
+        run: |
+          set -euo pipefail
+          log="$RUNNER_TEMP/cmsc127-check.log"
+          status=0
+          bash ./check.sh "$CMSC127_STAGE" > "$log" 2>&1 || status=$?
+          cat "$log"
+          tr -d '\r' < "$log" > "$log.clean"
+          if [[ "$status" -ne 1 ]]; then
+            echo "Expected the bare starter to exit 1, got $status."
+            exit 1
+          fi
+          if ! grep -qxF "$CMSC127_EXPECTED_BARE_RESULT" "$log.clean"; then
+            echo "The bare starter did not print the expected count line."
+            exit 1
+          fi
+          if ! grep -qxF "PASS lab1/health" "$log.clean"; then
+            echo "The bare starter did not pass lab1/health."
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: cmsc127-result-${{ matrix.os }}
+          path: .cmsc127/last-run.json
+          if-no-files-found: warn
       - name: Stop PostgreSQL on Windows
         if: always() && runner.os == 'Windows'
         shell: pwsh
