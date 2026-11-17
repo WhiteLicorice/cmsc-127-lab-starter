@@ -1,13 +1,31 @@
-SELECT section.section_id,
-       section.term,
-       section.instructor_id,
-       section.course_id,
-       section.section_capacity,
-       COUNT(enrollment.student_id)::integer AS enrollment_count
-  FROM section
-  LEFT JOIN enrollment
-    ON enrollment.term = section.term
-   AND enrollment.instructor_id = section.instructor_id
- GROUP BY section.section_id, section.term, section.instructor_id,
-          section.course_id, section.section_capacity
- ORDER BY section.section_id;
+WITH race_term AS (
+    INSERT INTO term (term, term_start)
+    VALUES ('2099-1S', DATE '2099-01-01')
+    ON CONFLICT (term) DO UPDATE SET term_start = EXCLUDED.term_start
+    RETURNING term
+),
+race_section AS (
+    INSERT INTO section (
+        section_id, term, instructor_id, course_id, room_id, section_capacity
+    )
+    SELECT 900001, race_term.term, 33, 1, NULL, 2
+      FROM race_term
+    ON CONFLICT (term, instructor_id)
+        DO UPDATE SET section_capacity = EXCLUDED.section_capacity
+    RETURNING section_id, term, instructor_id, course_id, section_capacity
+),
+seed_enrollment AS (
+    INSERT INTO enrollment (student_id, term, instructor_id, enrolled_on)
+    SELECT 834, race_section.term, race_section.instructor_id, DATE '2099-08-01'
+      FROM race_section
+    ON CONFLICT (student_id, term, instructor_id)
+        DO UPDATE SET enrolled_on = EXCLUDED.enrolled_on
+    RETURNING student_id
+)
+SELECT race_section.section_id,
+       race_section.term,
+       race_section.instructor_id,
+       race_section.course_id,
+       race_section.section_capacity,
+       1::integer AS enrollment_count
+  FROM race_section;

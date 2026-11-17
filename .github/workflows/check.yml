@@ -111,14 +111,14 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $data = Join-Path $env:RUNNER_TEMP 't13-pg'
+          $data = Join-Path $env:RUNNER_TEMP 'cmsc127-pg'
           & "$env:PG_BIN\initdb.exe" -D $data -U postgres -A trust
-          & "$env:PG_BIN\pg_ctl.exe" -D $data -l (Join-Path $env:RUNNER_TEMP 't13-pg.log') -o '-h 127.0.0.1 -p 55435' -w start
+          & "$env:PG_BIN\pg_ctl.exe" -D $data -l (Join-Path $env:RUNNER_TEMP 'cmsc127-pg.log') -o '-h 127.0.0.1 -p 55435' -w start
       - name: Start PostgreSQL on macOS
         if: runner.os == 'macOS'
         run: |
-          initdb -D "$RUNNER_TEMP/t13-pg" -U postgres -A trust
-          pg_ctl -D "$RUNNER_TEMP/t13-pg" -l "$RUNNER_TEMP/t13-pg.log" -o '-h 127.0.0.1 -p 55435' -w start
+          initdb -D "$RUNNER_TEMP/cmsc127-pg" -U postgres -A trust
+          pg_ctl -D "$RUNNER_TEMP/cmsc127-pg" -l "$RUNNER_TEMP/cmsc127-pg.log" -o '-h 127.0.0.1 -p 55435' -w start
       - name: Install Python packages on macOS
         if: runner.os == 'macOS'
         run: |
@@ -145,13 +145,13 @@ jobs:
         if: always() && runner.os == 'Windows'
         shell: pwsh
         run: |
-          $data = Join-Path $env:RUNNER_TEMP 't13-pg'
+          $data = Join-Path $env:RUNNER_TEMP 'cmsc127-pg'
           if (Test-Path (Join-Path $data 'postmaster.pid')) {
             & "$env:PG_BIN\pg_ctl.exe" -D $data -m fast -w stop
           }
       - name: Stop PostgreSQL on macOS
         if: always() && runner.os == 'macOS'
         run: |
-          if [ -f "$RUNNER_TEMP/t13-pg/postmaster.pid" ]; then
-            pg_ctl -D "$RUNNER_TEMP/t13-pg" -m fast -w stop
+          if [ -f "$RUNNER_TEMP/cmsc127-pg/postmaster.pid" ]; then
+            pg_ctl -D "$RUNNER_TEMP/cmsc127-pg" -m fast -w stop
           fi

@@ -29,24 +29,21 @@
       "stage": 3,
       "group": "SQL Craft",
       "kind": "reject",
-      "file": "cases/published/lab3/receipt-required.sql",
-      "alternate_file": "cases/published/lab3/receipt-required-alt.sql"
+      "file": "cases/published/lab3/receipt-required.sql"
     },
     {
       "id": "lab3/receipt-format",
       "stage": 3,
       "group": "SQL Craft",
       "kind": "reject",
-      "file": "cases/published/lab3/receipt-format.sql",
-      "alternate_file": "cases/published/lab3/receipt-format-alt.sql"
+      "file": "cases/published/lab3/receipt-format.sql"
     },
     {
       "id": "lab3/receipt-unique",
       "stage": 3,
       "group": "SQL Craft",
       "kind": "reject",
-      "file": "cases/published/lab3/receipt-unique.sql",
-      "alternate_file": "cases/published/lab3/receipt-unique-alt.sql"
+      "file": "cases/published/lab3/receipt-unique.sql"
     },
     {
       "id": "lab3/registrar-cannot-pay",
@@ -54,7 +51,6 @@
       "group": "SQL Craft",
       "kind": "reject",
       "file": "cases/published/lab3/registrar-cannot-pay.sql",
-      "alternate_file": "cases/published/lab3/registrar-cannot-pay-alt.sql",
       "role": "registrar",
       "role_env": "CMSC127_ROLE_REGISTRAR"
     },
@@ -64,7 +60,6 @@
       "group": "SQL Craft",
       "kind": "reject",
       "file": "cases/published/lab3/cashier-cannot-enroll.sql",
-      "alternate_file": "cases/published/lab3/cashier-cannot-enroll-alt.sql",
       "role": "cashier",
       "role_env": "CMSC127_ROLE_CASHIER"
     },
@@ -74,8 +69,6 @@
       "group": "Technical Defense",
       "kind": "state",
       "file": "cases/published/lab3/restore-state.json",
-      "alternate_file": "cases/published/lab3/restore-state-alt.json",
-      "alternate_expected_file": "cases/published/lab3/restore-state-alt.expected",
       "ordered": true
     },
     {

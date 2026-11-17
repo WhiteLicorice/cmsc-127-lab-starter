@@ -53,13 +53,6 @@ def _url(operation: str) -> str:
     return database_url
 
 
-def _schema() -> str:
-    schema = os.environ.get("CMSC127_SCHEMA", "reference")
-    if schema not in {"reference", "alt"}:
-        raise ValueError("CMSC127_SCHEMA must be reference or alt.")
-    return schema
-
-
 def _constraint_message(error: psycopg.Error, operation: str) -> str:
     constraint = error.diag.constraint_name or ""
     if constraint in {"payment_seq_check", "installment_number_check"}:
@@ -73,11 +66,8 @@ def _constraint_message(error: psycopg.Error, operation: str) -> str:
     return "Payment failed. No row changed."
 
 
-def _operation_path(schema: str, operation: str, mode: str, name: str) -> Path:
-    root = ROOT
-    if schema == "alt":
-        root = root / "alt"
-    return root / "operations" / operation / mode / f"{name}.sql"
+def _operation_path(operation: str, mode: str, name: str) -> Path:
+    return ROOT / "operations" / operation / mode / f"{name}.sql"
 
 
 def _enroll(arguments: list[str]) -> int:
@@ -87,39 +77,30 @@ def _enroll(arguments: list[str]) -> int:
     student_id = int(arguments[0])
     section_id = int(arguments[1])
     enrolled_on = date.fromisoformat(arguments[2])
-    schema = _schema()
     with psycopg.connect(_url("enroll")) as connection:
         with connection.transaction():
-            if schema == "reference":
-                student_sql = "SELECT student_id FROM student WHERE student_id = %s"
-                lock_sql = _operation_path(schema, "enroll", "safe", "lock")
-                insert_sql = _operation_path(schema, "enroll", "safe", "insert")
-            else:
-                student_sql = "SELECT learner_id FROM learner WHERE learner_id = %s"
-                lock_sql = _operation_path(schema, "enroll", "safe", "lock")
-                insert_sql = _operation_path(schema, "enroll", "safe", "insert")
+            student_sql = "SELECT student_id FROM student WHERE student_id = %s"
+            lock_sql = _operation_path("enroll", "safe", "lock")
+            insert_sql = _operation_path("enroll", "safe", "insert")
             student = _query_one(connection, student_sql, (student_id,))
             if student is None:
                 raise ValueError("Student not found.")
             _run_sql(
                 connection,
-                _operation_path(schema, "enroll", "safe", "lock_timeout"),
+                _operation_path("enroll", "safe", "lock_timeout"),
             )
             _run_sql(
                 connection,
-                _operation_path(schema, "enroll", "safe", "statement_timeout"),
+                _operation_path("enroll", "safe", "statement_timeout"),
             )
             _run_sql(connection, lock_sql, (section_id,))
-            if schema == "reference":
-                details_sql = "SELECT term, instructor_id FROM section WHERE section_id = %s"
-            else:
-                details_sql = "SELECT semester, teacher_id FROM class WHERE class_id = %s"
+            details_sql = "SELECT term, instructor_id FROM section WHERE section_id = %s"
             details = _query_one(connection, details_sql, (section_id,))
             if details is None:
                 raise ValueError("Section not found.")
             counts = _run_sql(
                 connection,
-                _operation_path(schema, "enroll", "safe", "count"),
+                _operation_path("enroll", "safe", "count"),
                 (section_id,),
             )
             if counts is None:
@@ -151,13 +132,9 @@ def _payment(arguments: list[str]) -> int:
     receipt_code = arguments[5]
     if not receipt_code:
         raise ValueError("Enter a receipt code.")
-    schema = _schema()
     with psycopg.connect(_url("payment")) as connection:
         with connection.transaction():
-            if schema == "reference":
-                charge_sql = "SELECT student_id FROM charge WHERE student_id = %s AND term = %s"
-            else:
-                charge_sql = "SELECT learner_id FROM bill WHERE learner_id = %s AND semester = %s"
+            charge_sql = "SELECT student_id FROM charge WHERE student_id = %s AND term = %s"
             with connection.cursor() as cursor:
                 cursor.execute(psycopg.sql.SQL(charge_sql), (student_id, term))
                 charge = cursor.fetchone()
@@ -167,7 +144,7 @@ def _payment(arguments: list[str]) -> int:
                 raise ValueError("Payment number must be from 1 to 99.")
             if amount <= 0:
                 raise ValueError("Payment amount must be greater than zero.")
-            path = _operation_path(schema, "payment", "safe", "insert")
+            path = _operation_path("payment", "safe", "insert")
             _run_sql(
                 connection,
                 path,
@@ -193,8 +170,6 @@ def _race(arguments: list[str]) -> int:
         sys.executable,
         str(ROOT / "race" / "race.py"),
         database,
-        "--schema",
-        _schema(),
         "--scratch",
     ]
     if variant:

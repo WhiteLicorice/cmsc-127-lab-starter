@@ -10,18 +10,18 @@ import os
 from pathlib import Path
 import sys
 import time
-from typing import Literal, LiteralString, cast
+from typing import LiteralString, cast
 
 import psycopg
 from psycopg.rows import tuple_row
 
 
-REFERENCE = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[1]
 REPEATS = 10
 STUDENT_LIMIT = REPEATS * 2
 LOCK_WAIT_SECONDS = 5.0
-SCRATCH_PREFIX = "c127_t18_"
-DATE = "2024-08-01"
+SCRATCH_PREFIX = "cmsc127_race_"
+DATE = "2099-08-01"
 WAIT_EVENT_SQL = """
 SELECT wait_event_type
   FROM pg_stat_activity
@@ -39,11 +39,6 @@ class Fixture:
     original_capacity: int
     enrollment_count: int
     student_ids: list[int]
-
-
-def _path(schema: Literal["reference", "alt"], relative: str) -> Path:
-    root = REFERENCE if schema == "reference" else REFERENCE / "alt"
-    return root / relative
 
 
 def _read(path: Path) -> str:
@@ -96,22 +91,15 @@ def _execute(
 
 def _fixture(
     connection: psycopg.Connection[tuple[object, ...]],
-    schema: Literal["reference", "alt"],
 ) -> Fixture:
-    if schema == "reference":
-        sections_path = REFERENCE / "race" / "fixtures" / "sections.sql"
-        students_path = REFERENCE / "race" / "fixtures" / "students.sql"
-        update_sql = "UPDATE section SET section_capacity = %s WHERE section_id = %s"
-    else:
-        sections_path = REFERENCE / "race" / "fixtures" / "alt_sections.sql"
-        students_path = REFERENCE / "race" / "fixtures" / "alt_students.sql"
-        update_sql = "UPDATE class SET capacity = %s WHERE class_id = %s"
+    sections_path = ROOT / "race" / "fixtures" / "sections.sql"
+    students_path = ROOT / "race" / "fixtures" / "students.sql"
+    update_sql = "UPDATE section SET section_capacity = %s WHERE section_id = %s"
 
     for row in _all(connection, _read(sections_path)):
         section_id = cast(int, row[0])
         term = cast(str, row[1])
         instructor_id = cast(int, row[2])
-        course_id = cast(int, row[3])
         original_capacity = cast(int, row[4])
         enrollment_count = cast(int, row[5])
         if enrollment_count >= 32767:
@@ -119,7 +107,7 @@ def _fixture(
         students = _all(
             connection,
             _read(students_path),
-            (term, instructor_id, term, course_id, STUDENT_LIMIT),
+            (STUDENT_LIMIT,),
         )
         if len(students) != STUDENT_LIMIT:
             continue
@@ -137,24 +125,19 @@ def _fixture(
 
 def _restore_capacity(
     connection: psycopg.Connection[tuple[object, ...]],
-    schema: Literal["reference", "alt"],
     fixture: Fixture,
 ) -> None:
-    if schema == "reference":
-        query = "UPDATE section SET section_capacity = %s WHERE section_id = %s"
-    else:
-        query = "UPDATE class SET capacity = %s WHERE class_id = %s"
+    query = "UPDATE section SET section_capacity = %s WHERE section_id = %s"
     _execute(connection, query, (fixture.original_capacity, fixture.section_id))
 
 
 def _operation_paths(
-    schema: Literal["reference", "alt"],
     variant: bool,
 ) -> tuple[Path, Path]:
     if variant:
-        directory = _path(schema, "variants/race")
+        directory = ROOT / "variants" / "race"
         return directory / "count.sql", directory / "insert.sql"
-    directory = _path(schema, "operations/enroll")
+    directory = ROOT / "operations" / "enroll"
     return (
         directory / "unsafe" / "count.sql",
         directory / "unsafe" / "insert.sql",
@@ -169,6 +152,15 @@ def _count(
     row = _one(connection, query, (section_id,))
     if row is None:
         raise RuntimeError(f"Section {section_id} does not exist.")
+    if len(row) == 1:
+        capacity = _one(
+            connection,
+            "SELECT section_capacity FROM section WHERE section_id = %s",
+            (section_id,),
+        )
+        if capacity is None:
+            raise RuntimeError(f"Section {section_id} does not exist.")
+        return cast(int, capacity[0]), cast(int, row[0])
     return cast(int, row[0]), cast(int, row[1])
 
 
@@ -189,14 +181,10 @@ def _enroll(
 
 def _cleanup(
     connection: psycopg.Connection[tuple[object, ...]],
-    schema: Literal["reference", "alt"],
     fixture: Fixture,
     student_ids: list[int],
 ) -> None:
-    if schema == "reference":
-        query = "DELETE FROM enrollment WHERE student_id = %s AND term = %s AND instructor_id = %s"
-    else:
-        query = "DELETE FROM registration WHERE learner_id = %s AND semester = %s AND teacher_id = %s"
+    query = "DELETE FROM enrollment WHERE student_id = %s AND term = %s AND instructor_id = %s"
     for student_id in student_ids:
         _execute(
             connection,
@@ -208,17 +196,16 @@ def _cleanup(
 def _run_unsafe(
     first: psycopg.Connection[tuple[object, ...]],
     second: psycopg.Connection[tuple[object, ...]],
-    schema: Literal["reference", "alt"],
     fixture: Fixture,
     variant: bool,
 ) -> int:
-    count_path, insert_path = _operation_paths(schema, variant)
+    count_path, insert_path = _operation_paths(variant)
     check_sql = _read(count_path)
     insert_sql = _read(insert_path)
     begin_sql = ""
     commit_sql = ""
     if variant:
-        directory = _path(schema, "variants/race")
+        directory = ROOT / "variants" / "race"
         begin_sql = _read(directory / "begin.sql")
         commit_sql = _read(directory / "commit.sql")
     overbooked = 0
@@ -256,7 +243,7 @@ def _run_unsafe(
         if actual_count != actual_capacity + 1:
             raise RuntimeError("The unsafe schedule did not overbook by one row.")
         overbooked += 1
-        _cleanup(first, schema, fixture, [first_student, second_student])
+        _cleanup(first, fixture, [first_student, second_student])
         _, clean_count = _count(first, check_sql, fixture.section_id)
         if clean_count != fixture.enrollment_count:
             raise RuntimeError("The unsafe run did not clean its enrollment rows.")
@@ -282,11 +269,10 @@ def _wait_for_lock(
 def _run_safe(
     first: psycopg.Connection[tuple[object, ...]],
     second: psycopg.Connection[tuple[object, ...]],
-    schema: Literal["reference", "alt"],
     fixture: Fixture,
     run_index: int,
 ) -> None:
-    directory = _path(schema, "operations/enroll/safe")
+    directory = ROOT / "operations" / "enroll" / "safe"
     begin_sql = _read(directory / "begin.sql")
     lock_timeout_sql = _read(directory / "lock_timeout.sql")
     statement_timeout_sql = _read(directory / "statement_timeout.sql")
@@ -296,7 +282,7 @@ def _run_safe(
     commit_sql = _read(directory / "commit.sql")
     rollback_sql = _read(directory / "rollback.sql")
     first_student = fixture.student_ids[run_index * 2]
-    second_name = f"c127_race_{schema}_race_b_{os.getpid()}"
+    second_name = f"cmsc127_race_b_{os.getpid()}"
     try:
         _execute(first, begin_sql)
         _execute(first, lock_timeout_sql)
@@ -328,7 +314,7 @@ def _run_safe(
         second.rollback()
         raise
 
-    _cleanup(first, schema, fixture, [first_student])
+    _cleanup(first, fixture, [first_student])
     _, clean_count = _count(first, count_sql, fixture.section_id)
     if clean_count != fixture.enrollment_count:
         raise RuntimeError("The safe run did not clean its enrollment row.")
@@ -336,7 +322,6 @@ def _run_safe(
 
 def _run(
     database: str,
-    schema: Literal["reference", "alt"],
     variant: bool,
     scratch: bool,
 ) -> dict[str, object]:
@@ -344,13 +329,13 @@ def _run(
         raise ValueError(f"The database name must start with {SCRATCH_PREFIX} when --scratch is set.")
 
     process_id = os.getpid()
-    first_name = f"c127_race_{schema}_race_a_{process_id}"
-    second_name = f"c127_race_{schema}_race_b_{process_id}"
+    first_name = f"cmsc127_race_a_{process_id}"
+    second_name = f"cmsc127_race_b_{process_id}"
     with _connect(database, first_name) as first, _connect(database, second_name) as second:
-        fixture = _fixture(first, schema)
+        fixture = _fixture(first)
         try:
             if variant:
-                overbooked = _run_unsafe(first, second, schema, fixture, True)
+                overbooked = _run_unsafe(first, second, fixture, True)
                 return {
                     "check": "safe enrollment",
                     "variant": "overbooked",
@@ -358,13 +343,12 @@ def _run(
                     "failed_runs": overbooked,
                 }
 
-            wrong_runs = _run_unsafe(first, second, schema, fixture, False)
+            wrong_runs = _run_unsafe(first, second, fixture, False)
             right_runs = 0
             for run_index in range(REPEATS):
-                _run_safe(first, second, schema, fixture, run_index)
+                _run_safe(first, second, fixture, run_index)
                 right_runs += 1
             return {
-                "schema": schema,
                 "unsafe": {
                     "runs": REPEATS,
                     "wrong_runs": wrong_runs,
@@ -378,28 +362,26 @@ def _run(
                 },
             }
         finally:
-            _cleanup(first, schema, fixture, fixture.student_ids)
-            _restore_capacity(first, schema, fixture)
+            _cleanup(first, fixture, fixture.student_ids)
+            _restore_capacity(first, fixture)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("database", help="scratch database with Lab 1 and Lab 2 data")
-    parser.add_argument("--schema", choices=("reference", "alt"), required=True)
     parser.add_argument("--variant", action="store_true", help="run the unlocked defect variant")
     parser.add_argument(
         "--scratch",
         action="store_true",
-        help="require a scratch database name with the c127_t18_ prefix",
+        help="require a scratch database name with the cmsc127_race_ prefix",
     )
     arguments = parser.parse_args()
     database = cast(str, arguments.database)
-    schema = cast(Literal["reference", "alt"], arguments.schema)
     variant = cast(bool, arguments.variant)
     scratch = cast(bool, arguments.scratch)
 
     try:
-        result = _run(database, schema, variant, scratch)
+        result = _run(database, variant, scratch)
     except Exception as error:
         print(f"race driver failed: {error}", file=sys.stderr)
         return 2

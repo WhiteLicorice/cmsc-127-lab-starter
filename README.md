@@ -174,8 +174,7 @@ Run `./run enroll STUDENT_ID SECTION_ID YYYY-MM-DD` to enroll a student. Run
 `./run payment STUDENT_ID TERM NUMBER AMOUNT YYYY-MM-DD RECEIPT_CODE` to record
 a payment. Both commands use parameterized SQL and a transaction.
 
-Run `./run race` to compare the unsafe and safe enrollment schedules. Set
-`CMSC127_SCHEMA=alt` to select the alternate table names.
+Run `./run race` to compare the unsafe and safe enrollment schedules.
 
 Set `CMSC127_BACKUP_FILE` to a file path. Run `./run dump` to save a custom
 format database dump. Run `./run restore` to restore it. A dump holds database
