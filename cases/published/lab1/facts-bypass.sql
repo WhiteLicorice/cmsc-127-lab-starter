@@ -1,8 +1,8 @@
--- Find an unmapped foreign key that repeats a value reached through another
--- declared foreign-key path in the same table, or that folds a fact into its
--- own key. A near copy that agrees on most rows prints a row that starts
--- `warning: <table>.<column>` instead of failing; the runner prints that row
--- and counts it apart from failures.
+-- Find an unmapped foreign key whose values all match a value reached through
+-- another declared foreign-key path in the same table, or that folds a fact
+-- into its own key. A near copy that agrees on most rows prints a row that
+-- starts `warning: <table>.<column>` instead of failing; the runner prints that
+-- row and counts it apart from failures.
 WITH RECURSIVE foreign_key_edges AS (
     SELECT constraint_entry.oid AS constraint_oid,
            constraint_entry.conrelid AS child_oid,
@@ -55,6 +55,16 @@ unmapped_foreign_key_columns AS (
           AND mapping.column_name = source_attribute.attname
           AND mapping.fact <> 'default_column'
     )
+      -- A one-column primary key may repeat a fact, so it is not a copy candidate.
+      AND NOT EXISTS (
+          SELECT 1
+          FROM pg_index AS index_entry
+          WHERE index_entry.indrelid = foreign_key_edges.child_oid
+            AND index_entry.indisprimary
+            AND index_entry.indisvalid
+            AND index_entry.indnkeyatts = 1
+            AND index_entry.indkey[0] = source_attribute.attnum
+      )
 ),
 folded_key_columns AS (
     SELECT constraint_entry.conname::text AS constraint_name,
@@ -274,20 +284,17 @@ path_results AS MATERIALIZED (
                format(
                    'SELECT count(*) FILTER (WHERE source_value IS NOT NULL) AS source_rows, '
                    'count(*) FILTER (WHERE source_value IS NOT NULL AND reached IS NOT NULL) AS reached_rows, '
-                   'count(*) FILTER (WHERE source_value IS NOT NULL AND reached IS NOT NULL AND source_value IS DISTINCT FROM reached_value) AS mismatch_rows, '
-                   'count(*) FILTER (WHERE source_value IS NOT NULL AND repeat_count > 1) AS repeated_rows '
+                   'count(*) FILTER (WHERE source_value IS NOT NULL AND reached IS NOT NULL AND source_value IS DISTINCT FROM reached_value) AS mismatch_rows '
                    'FROM ('
                    'SELECT to_jsonb(t0.%I) AS source_value, '
                    't%s.tableoid AS reached, '
-                   'to_jsonb(t%s.%I) AS reached_value, '
-                   'count(*) OVER (PARTITION BY to_jsonb(t0.%I)) AS repeat_count '
+                   'to_jsonb(t%s.%I) AS reached_value '
                    'FROM public.%I AS t0 %s'
                    ') AS pairs',
                    path_queries.source_column,
                    path_queries.depth,
                    path_queries.depth,
                    path_queries.target_parent_column,
-                   path_queries.source_column,
                    path_queries.source_table,
                    path_queries.joins_sql
                ),
@@ -304,9 +311,7 @@ path_agreement AS (
            (xpath('/row/reached_rows/text()',
                   path_results.result))[1]::text::bigint AS reached_rows,
            (xpath('/row/mismatch_rows/text()',
-                  path_results.result))[1]::text::bigint AS mismatch_rows,
-           (xpath('/row/repeated_rows/text()',
-                  path_results.result))[1]::text::bigint AS repeated_rows
+                  path_results.result))[1]::text::bigint AS mismatch_rows
     FROM path_results
 ),
 column_failures AS (
@@ -316,7 +321,6 @@ column_failures AS (
     WHERE path_agreement.source_rows > 0
       AND path_agreement.source_rows = path_agreement.reached_rows
       AND path_agreement.mismatch_rows = 0
-      AND path_agreement.repeated_rows > 0
 ),
 warning_paths AS (
     SELECT DISTINCT ON (path_agreement.source_table, path_agreement.source_column)
@@ -324,7 +328,6 @@ warning_paths AS (
            path_agreement.reached_rows - path_agreement.mismatch_rows AS agree_rows
     FROM path_agreement
     WHERE path_agreement.source_rows > 0
-      AND path_agreement.repeated_rows > 0
       AND NOT (
           path_agreement.source_rows = path_agreement.reached_rows
           AND path_agreement.mismatch_rows = 0
@@ -362,7 +365,6 @@ FROM (
     WHERE path_agreement.source_rows > 0
       AND path_agreement.source_rows = path_agreement.reached_rows
       AND path_agreement.mismatch_rows = 0
-      AND path_agreement.repeated_rows > 0
     UNION ALL
     SELECT format(
                '%s.%s copies a fact that the parent key %s(%s) already decides, because the foreign key %s references that key inside its parent columns.',
