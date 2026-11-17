@@ -264,7 +264,9 @@ After the cases, the runner checks each invariant. The checks are:
   that speeds up a query.
 - **Backup and restore.** A backup must restore the same rows.
 - **Protected files.** Every file outside the writable paths matches its
-  original, and a new file outside those paths fails.
+  original. A new tracked file, or a new untracked file that Git does not
+  ignore, fails when it sits outside those paths. An ignored generated file,
+  such as `.venv/` or `.cmsc127/last-run.json`, does not.
 - **Written sections.** Each required section must hold text.
 - **Type checking.** Your Python must pass strict Pyright.
 - **Contribution.** The runner prints a table of commits and changed lines by

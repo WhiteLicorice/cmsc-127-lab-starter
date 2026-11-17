@@ -12,7 +12,7 @@ permissions:
 env:
   # The bare starter fails its own published cases. Update this line when a
   # published case changes.
-  CMSC127_EXPECTED_BARE_RESULT: "3/19 checks passed, 16 failed, 0 skipped, 0 warnings; Pyright: 0 errors"
+  CMSC127_EXPECTED_BARE_RESULT: '{"passed":3,"failed":16,"skipped":0,"warnings":0,"total":19,"pyright_errors":0}'
 
 jobs:
   ubuntu:
@@ -64,11 +64,11 @@ jobs:
           printf 'Selected stage: %s\n' "$stage"
           echo "CMSC127_STAGE=$stage" >> "$GITHUB_ENV"
       - name: Run the staged checks
-        if: github.repository != 'WhiteLicorice/cmsc-127-lab-starter'
+        if: github.repository != 'WhiteLicorice/cmsc-127-lab-starter' || (github.event_name != 'push' && github.event_name != 'workflow_dispatch')
         shell: bash
         run: bash ./check.sh "$CMSC127_STAGE"
       - name: Assert the bare starter result
-        if: github.repository == 'WhiteLicorice/cmsc-127-lab-starter'
+        if: github.repository == 'WhiteLicorice/cmsc-127-lab-starter' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         shell: bash
         run: |
           set -euo pipefail
@@ -76,19 +76,72 @@ jobs:
           status=0
           bash ./check.sh "$CMSC127_STAGE" > "$log" 2>&1 || status=$?
           cat "$log"
-          tr -d '\r' < "$log" > "$log.clean"
           if [[ "$status" -ne 1 ]]; then
             echo "Expected the bare starter to exit 1, got $status."
             exit 1
           fi
-          if ! grep -qxF "$CMSC127_EXPECTED_BARE_RESULT" "$log.clean"; then
-            echo "The bare starter did not print the expected count line."
-            exit 1
-          fi
-          if ! grep -qxF "PASS lab1/health" "$log.clean"; then
-            echo "The bare starter did not pass lab1/health."
-            exit 1
-          fi
+          python - <<'PY'
+          import json
+          import os
+          import sys
+
+          expected = json.loads(os.environ["CMSC127_EXPECTED_BARE_RESULT"])
+          if not isinstance(expected, dict):
+              print("CMSC127_EXPECTED_BARE_RESULT is not a JSON object.")
+              sys.exit(1)
+          result_path = ".cmsc127/last-run.json"
+          try:
+              with open(result_path, encoding="utf-8") as handle:
+                  result = json.load(handle)
+          except (OSError, ValueError) as error:
+              print(f"Could not read {result_path}: {error}")
+              sys.exit(1)
+          if not isinstance(result, dict):
+              print(f"{result_path} is not a JSON object.")
+              sys.exit(1)
+
+          def count(name: str) -> int | None:
+              value = result.get(name)
+              return value if isinstance(value, int) and not isinstance(value, bool) else None
+
+          counts = [count("passed"), count("failed"), count("skipped")]
+          total = (
+              sum(value for value in counts if isinstance(value, int))
+              if all(isinstance(value, int) for value in counts)
+              else None
+          )
+          pyright = result.get("pyright")
+          actual = {
+              "passed": counts[0],
+              "failed": counts[1],
+              "skipped": counts[2],
+              "warnings": count("warnings"),
+              "total": total,
+              "pyright_errors": pyright.get("errors") if isinstance(pyright, dict) else None,
+          }
+          problems = [
+              f"{key}: expected {value!r}, actual {actual.get(key)!r}"
+              for key, value in expected.items()
+              if actual.get(key) != value
+          ]
+          results = result.get("results")
+          health = [
+              item
+              for item in (results if isinstance(results, list) else [])
+              if isinstance(item, dict) and item.get("id") == "lab1/health"
+          ]
+          if len(health) != 1 or health[0].get("status") != "pass":
+              problems.append(
+                  "lab1/health: expected one pass, actual "
+                  + repr([item.get("status") for item in health])
+              )
+          if problems:
+              print("The bare starter result does not match the expected result.")
+              for problem in problems:
+                  print(f"  {problem}")
+              sys.exit(1)
+          print("The bare starter result matches the expected result.")
+          PY
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -181,11 +234,11 @@ jobs:
           printf 'Selected stage: %s\n' "$stage"
           echo "CMSC127_STAGE=$stage" >> "$GITHUB_ENV"
       - name: Run the staged checks
-        if: github.repository != 'WhiteLicorice/cmsc-127-lab-starter'
+        if: github.repository != 'WhiteLicorice/cmsc-127-lab-starter' || (github.event_name != 'push' && github.event_name != 'workflow_dispatch')
         shell: bash
         run: bash ./check.sh "$CMSC127_STAGE"
       - name: Assert the bare starter result
-        if: github.repository == 'WhiteLicorice/cmsc-127-lab-starter'
+        if: github.repository == 'WhiteLicorice/cmsc-127-lab-starter' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         shell: bash
         run: |
           set -euo pipefail
@@ -193,19 +246,72 @@ jobs:
           status=0
           bash ./check.sh "$CMSC127_STAGE" > "$log" 2>&1 || status=$?
           cat "$log"
-          tr -d '\r' < "$log" > "$log.clean"
           if [[ "$status" -ne 1 ]]; then
             echo "Expected the bare starter to exit 1, got $status."
             exit 1
           fi
-          if ! grep -qxF "$CMSC127_EXPECTED_BARE_RESULT" "$log.clean"; then
-            echo "The bare starter did not print the expected count line."
-            exit 1
-          fi
-          if ! grep -qxF "PASS lab1/health" "$log.clean"; then
-            echo "The bare starter did not pass lab1/health."
-            exit 1
-          fi
+          python - <<'PY'
+          import json
+          import os
+          import sys
+
+          expected = json.loads(os.environ["CMSC127_EXPECTED_BARE_RESULT"])
+          if not isinstance(expected, dict):
+              print("CMSC127_EXPECTED_BARE_RESULT is not a JSON object.")
+              sys.exit(1)
+          result_path = ".cmsc127/last-run.json"
+          try:
+              with open(result_path, encoding="utf-8") as handle:
+                  result = json.load(handle)
+          except (OSError, ValueError) as error:
+              print(f"Could not read {result_path}: {error}")
+              sys.exit(1)
+          if not isinstance(result, dict):
+              print(f"{result_path} is not a JSON object.")
+              sys.exit(1)
+
+          def count(name: str) -> int | None:
+              value = result.get(name)
+              return value if isinstance(value, int) and not isinstance(value, bool) else None
+
+          counts = [count("passed"), count("failed"), count("skipped")]
+          total = (
+              sum(value for value in counts if isinstance(value, int))
+              if all(isinstance(value, int) for value in counts)
+              else None
+          )
+          pyright = result.get("pyright")
+          actual = {
+              "passed": counts[0],
+              "failed": counts[1],
+              "skipped": counts[2],
+              "warnings": count("warnings"),
+              "total": total,
+              "pyright_errors": pyright.get("errors") if isinstance(pyright, dict) else None,
+          }
+          problems = [
+              f"{key}: expected {value!r}, actual {actual.get(key)!r}"
+              for key, value in expected.items()
+              if actual.get(key) != value
+          ]
+          results = result.get("results")
+          health = [
+              item
+              for item in (results if isinstance(results, list) else [])
+              if isinstance(item, dict) and item.get("id") == "lab1/health"
+          ]
+          if len(health) != 1 or health[0].get("status") != "pass":
+              problems.append(
+                  "lab1/health: expected one pass, actual "
+                  + repr([item.get("status") for item in health])
+              )
+          if problems:
+              print("The bare starter result does not match the expected result.")
+              for problem in problems:
+                  print(f"  {problem}")
+              sys.exit(1)
+          print("The bare starter result matches the expected result.")
+          PY
       - uses: actions/upload-artifact@v7
         if: always()
         with:
