@@ -41,7 +41,7 @@ jobs:
       - name: Fetch the v1.20 harness candidate
         shell: bash
         run: |
-          git clone --quiet --depth 1 --single-branch --branch t18x-phase-a \
+          git clone --quiet --depth 1 --single-branch --branch v1.20 \
             https://github.com/WhiteLicorice/cmsc-127-harness.git \
             "$RUNNER_TEMP/cmsc127-runner"
           echo "CMSC127_RUNNER_DIR=$RUNNER_TEMP/cmsc127-runner" >> "$GITHUB_ENV"
@@ -169,7 +169,7 @@ jobs:
       - name: Fetch the v1.20 harness candidate
         shell: bash
         run: |
-          git clone --quiet --depth 1 --single-branch --branch t18x-phase-a \
+          git clone --quiet --depth 1 --single-branch --branch v1.20 \
             https://github.com/WhiteLicorice/cmsc-127-harness.git \
             "$RUNNER_TEMP/cmsc127-runner"
           echo "CMSC127_RUNNER_DIR=$RUNNER_TEMP/cmsc127-runner" >> "$GITHUB_ENV"
