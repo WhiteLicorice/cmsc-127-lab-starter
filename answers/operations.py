@@ -225,8 +225,10 @@ def main() -> int:
             message = _constraint_message(error, operation)
         elif isinstance(error, psycopg.errors.NotNullViolation):
             message = "Enter a receipt code."
-        elif isinstance(error, psycopg.errors.QueryCanceled):
+        elif isinstance(error, psycopg.errors.LockNotAvailable):
             message = "The section lock timed out. Try again."
+        elif isinstance(error, psycopg.errors.QueryCanceled):
+            message = "Enrollment failed. No rows changed." if operation == "enroll" else "Payment failed. No row changed."
         elif isinstance(error, psycopg.errors.InsufficientPrivilege):
             message = "This database role cannot perform that operation."
         elif isinstance(error, ValueError):
