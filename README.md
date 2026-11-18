@@ -56,7 +56,11 @@ PowerShell may find a different `bash`.
    PostgreSQL role, its password, and your database. The password is the one
    you set for the role when you installed PostgreSQL. On macOS, the URL uses
    your account name and no password. Platform Differences gives that form.
-5. Run the checks. Run `bash check.sh 1`. The last line reports the count when
+5. Generate the data file. Write `answers/load.py` to read
+   `registration_export.csv` and write `load.sql` in this folder. Run
+   `python answers/load.py` whenever you change the loader. The checks load
+   `load.sql`, so a placeholder file makes them fail on the missing tables.
+6. Run the checks. Run `bash check.sh 1`. The last line reports the count when
    the run ends. The first run fails until you add your schema and data.
 
 ## The Details
@@ -177,7 +181,11 @@ Run `./run enroll STUDENT_ID SECTION_ID YYYY-MM-DD` to enroll a student. Run
 `./run payment STUDENT_ID TERM NUMBER AMOUNT YYYY-MM-DD RECEIPT_CODE` to record
 a payment. Both commands use parameterized SQL and a transaction.
 
-Run `./run race` to compare the unsafe and safe enrollment schedules.
+Run `bash check.sh 3 --case lab3/race-driver` to compare the unsafe and safe
+enrollment schedules. The check creates the scratch database the race needs. To
+run the driver directly, create a scratch database whose name starts with
+`cmsc127_race_`, apply your migrations and `load.sql`, point
+`CMSC127_DATABASE_URL` at it, and run `./run race`.
 
 Set `CMSC127_BACKUP_FILE` to a file path. Run `./run dump` to save a custom
 format database dump. Run `./run restore` to refresh the database
@@ -300,11 +308,14 @@ the type-check result.
 
 ### Write the ERD
 
-An entity-relationship diagram (ERD) shows tables and their relationships. Edit
-the ERD block in this README to match your schema. The runner compares table
-names, column names, primary keys, foreign keys, and the tables at each end of
-a relationship. A primary key identifies a row. A foreign key points to a row
-in another table.
+An entity-relationship diagram (ERD) shows tables and their relationships.
+Write the ERD block in `cases/pair/erd.md`. The runner compares that block with
+your schema. It checks table names, column names, primary keys, foreign keys,
+and the tables at each end of a relationship. A primary key identifies a row. A
+foreign key points to a row in another table. Copy the finished block into the
+ERD block in this README so this page and your defense show the same diagram.
+
+The block below shows how one diagram is laid out.
 
 ```mermaid
 erDiagram
