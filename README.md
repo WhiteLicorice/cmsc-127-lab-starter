@@ -5,8 +5,10 @@ together.
 
 ## Quick Start
 
-The steps below run the Lab 1 checks. They run in this folder. On Windows, use
-Git Bash, the shell that comes with Git for Windows.
+The steps below run the Lab 1 checks. They run in this folder, in one shell
+window. On Windows, that window is Git Bash, the shell that comes with Git for
+Windows. Keep the same window for every step. The environment and the URL
+belong to the window that holds them.
 
 ### Before You Start
 
@@ -33,12 +35,6 @@ line.
   packages from `requirements.txt`. Check it with `pyright --version`. The reply
   starts with `pyright 1.1.414`. If the check fails, activate the environment and
   run `python -m pip install -r requirements.txt` again.
-
-In PowerShell, replace the activation command with
-`.\.venv\Scripts\Activate.ps1` and the `export` command with
-`$env:CMSC127_DATABASE_URL = '...'`. An activated environment provides
-`python` in PowerShell too. Run `bash check.sh` from Git Bash, since
-PowerShell may find a different `bash`.
 
 ### Steps
 
@@ -312,7 +308,7 @@ An entity-relationship diagram (ERD) shows tables and their relationships.
 Write the ERD block in `cases/pair/erd.md`. The runner compares that block with
 your schema. It checks table names, column names, primary keys, foreign keys,
 and the tables at each end of a relationship. A primary key identifies a row. A
-foreign key points to a row in another table. Copy the finished block into the
+foreign key refers to a row in another table. Copy the finished block into the
 ERD block in this README so this page and your defense show the same diagram.
 
 The block below shows how one diagram is laid out.
