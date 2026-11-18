@@ -143,8 +143,11 @@ a typing mistake.
 #### Test the Runner
 
 `bash check.sh --self-test` tests the runner itself. It uses a separate scratch
-database and doesn't check your schema. It prints the test output and exits
-with the test result.
+database and doesn't check your schema. The first self-test also builds the
+runner's page, which needs Node.js 26.13.1 and npm 11 on `PATH` and a network
+connection for `npm ci`. It prints the test output and exits with the test
+result. The harness setup lists both:
+<https://github.com/WhiteLicorice/cmsc-127-harness#before-you-start>.
 
 ### Migrations and Data
 
