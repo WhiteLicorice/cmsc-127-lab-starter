@@ -16,7 +16,7 @@ SELECT table_name,
  ORDER BY table_name;
 ```
 
-Then run this sequence. It saves the counts, dumps the database, drops it, creates an empty database with the same name, restores the dump, and saves the counts again.
+Then run this sequence. It saves the counts, dumps the database, drops it, creates an empty database with the same name, restores the dump, and saves the counts again. The drop and create step rebuilds the database from empty.
 
 ```bash
 set -euo pipefail
@@ -32,13 +32,17 @@ dropdb "${CONN[@]}" --if-exists --force "$DB"
 createdb "${CONN[@]}" "$DB"
 psql -X -v ON_ERROR_STOP=1 "${CONN[@]}" -d "$DB" -f "$TMP/lab3.dump.sql"
 psql -X -v ON_ERROR_STOP=1 "${CONN[@]}" -d "$DB" -A -t -F '|' -f answers/rows.sql > "$TMP/after.txt"
-cmp "$TMP/before.txt" "$TMP/after.txt"
+diff -u "$TMP/before.txt" "$TMP/after.txt"
 ```
 
-The database must hold the Lab 1 data, the Lab 2 migrations, and the Lab 3 migrations before the first comparison. The `cmp` command prints nothing and exits 0 when the two files match. A difference shows the table whose row count changed.
+The database must hold the Lab 1 data, the Lab 2 migrations, and the Lab 3 migrations before the count check. `diff -u` prints nothing and exits 0 when the two lists match. A difference prints the table line whose count changed.
 
-`pg_dump` saves the database and its grant statements. It does not save cluster role definitions or memberships, tablespace definitions, or cluster settings. This command also omits database-level settings because it does not use `--create`. PostgreSQL 18 documents these limits in [`pg_dump`](https://www.postgresql.org/docs/18/app-pgdump.html) and its [backup guide](https://www.postgresql.org/docs/18/backup-dump.html). The `--create` option includes database-level settings. Cluster settings live in files such as `postgresql.conf` and `postgresql.auto.conf`, which `pg_dump` does not copy. See [PostgreSQL configuration settings](https://www.postgresql.org/docs/18/config-setting.html).
+That sequence is one of two restore destinations. `./run restore` is the other. It restores into the database named by `CMSC127_DATABASE_URL` with `pg_restore --clean`, which drops only the objects in the archive. A table added after the dump stays, so that route returns a database to the dumped state. The drop and create route above is the one that proves a rebuild from empty.
 
-Roles belong to the cluster. This route keeps them when it drops and recreates the database. On a new cluster, run the migration that creates the group roles before the restore. Do not run the grants migration yet, because its tables do not exist. The dump's grant statements can then use those roles. The checks create temporary probe roles. Those roles are not application roles. They do not belong in the dump.
+The counts prove that each table kept its row count. They don't prove that each row kept its values. For row equality, `bash check.sh 3` runs `lab3/restore-state`: it records every row, dumps, empties the tables, restores, and compares the rows.
 
-The dump file and comparison files belong in the temporary directory. Keep them out of Git. The dump holds every row, and a public repository is the wrong place for that data.
+`pg_dump` saves the database and its grant statements. It doesn't save cluster role definitions or memberships, tablespace definitions, or cluster settings. This command also omits database-level settings because it doesn't use `--create`. PostgreSQL 18 documents these limits in [`pg_dump`](https://www.postgresql.org/docs/18/app-pgdump.html) and its [backup guide](https://www.postgresql.org/docs/18/backup-dump.html). The `--create` option includes database-level settings. Cluster settings live in files such as `postgresql.conf` and `postgresql.auto.conf`, which `pg_dump` doesn't copy. See [PostgreSQL configuration settings](https://www.postgresql.org/docs/18/config-setting.html).
+
+Roles belong to the cluster. This route keeps them when it drops and recreates the database. On a new cluster, run the migration that creates the group roles before the restore. Don't run the grants migration yet, because its tables don't exist. The dump's grant statements can then use those roles. The checks create temporary probe roles. Those roles aren't application roles. They don't belong in the dump.
+
+The dump file and comparison files belong in the temporary directory. Keep them out of Git. The dump holds every row. A public repository is the wrong place for that data.

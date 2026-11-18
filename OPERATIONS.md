@@ -42,7 +42,7 @@ Errors:
 - `Payment number must be from 1 to 99.`
 - `Payment amount must be greater than zero.`
 - `Enter a receipt code.`
-- `Receipt code must contain 1 to 40 characters without outer spaces.`
+- `Receipt code must contain 1 to 40 characters without leading or trailing spaces.`
 - `That receipt code is already in use.`
 - `Payment failed. No row changed.`
 
@@ -52,7 +52,7 @@ The unsafe form runs one `INSERT` in autocommit mode. A transaction wraps the sa
 
 ## Roles
 
-Registrars may read student, section, and enrollment details and insert enrollments. They may not insert payments. Cashiers may read charges and payments and insert payments. They may not insert enrollments. The application connects with a login role that is a member of the registrar or cashier group role. The group roles stay `NOLOGIN`.
+Registrars may read student, section, and enrollment details and insert enrollments. They may not insert payments. Cashiers may read charges and payments and insert payments. They may not insert enrollments. The application connects with a login role that's a member of the registrar or cashier group role. The group roles stay `NOLOGIN`.
 
 The grants migration gives no direct write access to the course-choice helper table. It marks the existing trigger function as `SECURITY DEFINER` and fixes its search path. The trigger can then maintain that table when the registrar inserts an enrollment.
 
@@ -77,6 +77,6 @@ Two programs read these files. `answers/operations.py` runs the enroll and payme
 | `operations/payment/unsafe/insert.sql` | The insert without a transaction | student ID, term, number, amount, date, receipt code | never |
 | `operations/payment/safe/insert.sql` | The insert inside a transaction | student ID, term, number, amount, date, receipt code | command |
 
-The race driver reads the enrollment files and the four files under `variants/race/`. It runs the two sessions in a fixed order, so the wrong result is repeatable. It sets `lock_timeout`, `statement_timeout`, and `connect_timeout`, so a lock wait cannot hold the driver indefinitely.
+The race driver reads the enrollment files and the four files under `variants/race/`. It runs the two sessions in a fixed order, so the wrong result is repeatable. It sets `lock_timeout`, `statement_timeout`, and `connect_timeout`, so a lock wait can't hold the driver indefinitely.
 
-You’ll use your Lab 2 roster view to fill `variants/race/count.sql`, which takes one section ID and returns capacity followed by the enrollment count.
+You'll use your Lab 2 roster view to fill `variants/race/count.sql`, which takes one section ID and returns capacity followed by the enrollment count.
