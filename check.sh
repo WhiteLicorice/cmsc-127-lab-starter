@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-runner_tag="v1.26"
+runner_tag="v1.27"
 runner_url="https://github.com/WhiteLicorice/cmsc-127-harness.git"
 cache_root="${CMSC127_RUNNER_CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/cmsc127-runner}"
 runner_dir="$cache_root/$runner_tag"
@@ -52,6 +52,10 @@ if [[ " $* " != *" --select-stage "* && " $* " != *" --self-test "* ]]; then
   fi
 fi
 
+if [[ "$lint_status" -ne 0 ]]; then
+  exit 2
+fi
+
 if [[ " $* " == *" --self-test "* && ! -f "$runner_dir/public/app.js" ]]; then
   if ! command -v npm >/dev/null 2>&1; then
     printf 'The self-test needs Node.js and npm to build the page assets.\n' >&2
@@ -63,7 +67,4 @@ fi
 export PYTHONDONTWRITEBYTECODE=1
 run_status=0
 python "$runner_dir/runner.py" "$@" || run_status=$?
-if [[ "$lint_status" -ne 0 && "$run_status" -eq 0 ]]; then
-  exit 1
-fi
 exit "$run_status"
