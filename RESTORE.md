@@ -37,7 +37,7 @@ diff -u "$TMP/before.txt" "$TMP/after.txt"
 
 The database must hold the Lab 1 data, the Lab 2 migrations, and the Lab 3 migrations before the count check. `diff -u` prints nothing and exits 0 when the two lists match. A difference prints the table line whose count changed.
 
-That sequence is one of two restore destinations. `./run restore` is the other. It writes into the database named by `CMSC127_DATABASE_URL` with `pg_restore --clean`, so it refreshes the database you already have. `--clean` drops the objects the archive holds and recreates them. A table you added after the dump isn't in the archive, so the wrapper leaves it in place. The drop and create route above is the one that proves a rebuild from empty.
+That sequence is one of two restore destinations. `./run restore` is the other. It writes into the database named by `CMSC127_DATABASE_URL` with `pg_restore --clean --single-transaction`. `--clean` drops the objects the archive holds and recreates them. `--single-transaction` runs the whole restore as one transaction, so an error rolls every change back. A common error starts with a child table whose foreign key points at a table in the dump. The child is a newer object that depends on an archived one, so PostgreSQL won't drop the archived table while the child exists. The restore stops. The wrapper prints one line that states the cause. When that happens, use the drop and create route above to restore into an empty database.
 
 The counts prove that each table kept its row count. They don't prove that each row kept its values. For row equality, `bash check.sh 3` runs `lab3/restore-state`: it records every row, dumps, empties the tables, restores, and compares the rows.
 

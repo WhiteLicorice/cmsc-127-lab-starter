@@ -96,6 +96,7 @@
       "kind": "query",
       "file": "cases/published/lab3/facts.sql",
       "ordered": true,
+      "document": true,
       "replaces": "lab1/facts"
     },
     {

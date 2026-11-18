@@ -109,6 +109,20 @@ def _enroll(arguments: list[str]) -> int:
             enrolled = cast(int, counts[1])
             if enrolled >= capacity:
                 raise ValueError("The section is full.")
+            # The trigger writes the course choice before the enrollment row lands,
+            # so a repeat enrollment reaches the helper key first. Check the exact
+            # enrollment under the section lock, before the insert.
+            existing_sql = (
+                "SELECT 1 FROM enrollment "
+                "WHERE student_id = %s AND term = %s AND instructor_id = %s"
+            )
+            existing = _query_one(
+                connection,
+                existing_sql,
+                (student_id, cast(str, details[0]), cast(int, details[1])),
+            )
+            if existing is not None:
+                raise ValueError("The student is already enrolled in this section.")
             insert_values: tuple[object, ...] = (
                 student_id,
                 cast(str, details[0]),

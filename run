@@ -35,9 +35,22 @@ case "$mode" in
       printf '%s\n' 'Set CMSC127_BACKUP_FILE to an existing backup.' >&2
       exit 2
     fi
-    # Restore into the database named by CMSC127_DATABASE_URL. --clean drops
-    # only the objects in this archive, so a table added after the dump stays.
-    pg_restore --clean --if-exists --no-owner --dbname "$database_url" "$backup_file"
+    # Restore into the database named by CMSC127_DATABASE_URL. --clean drops the
+    # objects in this archive. --single-transaction rolls the whole restore back
+    # on the first error, so a failed restore leaves the database unchanged.
+    restore_output=""
+    if ! restore_output="$(pg_restore --clean --if-exists --single-transaction \
+      --no-owner --dbname "$database_url" "$backup_file" 2>&1)"; then
+      if [[ "$restore_output" == *"depend on it"* ||
+            "$restore_output" == *"depends on it"* ]]; then
+        printf '%s\n' \
+          'Restore failed: a newer object depends on an archived one, so PostgreSQL dropped nothing and the database is unchanged. Restore into an empty database with the drop and create route in RESTORE.md.' >&2
+      else
+        first_line="$(printf '%s\n' "$restore_output" | head -n 1)"
+        printf 'Restore failed and the database is unchanged: %s\n' "$first_line" >&2
+      fi
+      exit 1
+    fi
     ;;
   enroll|payment|race)
     python_executable="${CMSC127_PYTHON:-python}"
