@@ -215,8 +215,12 @@ def main() -> int:
         if isinstance(error, psycopg.errors.ForeignKeyViolation):
             message = "The charge does not exist." if operation == "payment" else "Student or section not found."
         elif isinstance(error, psycopg.errors.UniqueViolation):
-            if error.diag.constraint_name == "payment_receipt_code_key":
-                message = "That receipt code is already in use."
+            # When you adapt this file, change these constraint names to the ones your schema uses.
+            if operation == "payment":
+                if error.diag.constraint_name == "payment_receipt_code_key":
+                    message = "That receipt code is already in use."
+                else:
+                    message = "Payment failed. No row changed."
             elif error.diag.constraint_name == "student_course_pkey":
                 message = "The student already takes this course in this term."
             else:
