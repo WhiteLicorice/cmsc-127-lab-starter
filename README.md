@@ -28,9 +28,10 @@ line.
   If the reply is lower, install Python 3.15 from
   <https://www.python.org/downloads/>. On Windows, `py -3.15 --version` selects
   an installed 3.15, and step 1 uses `py -3.15` to create the environment.
-  After step 2 activates it, `python` means the environment's interpreter. If
-  `python` still reports the system version, the environment isn't active.
-  Rerun the activation command from step 2.
+  After step 2 activates it, `python -c "import sys; print(sys.executable)"`
+  prints the path of the interpreter `python` runs. The path sits inside
+  `.venv`. If the path sits elsewhere, the environment isn't active. Rerun the
+  activation command from step 2.
 - Pyright 1.1.414, which type-checks your Python. It installs with the Python
   packages from `requirements.txt`. Check it with `pyright --version`. The reply
   starts with `pyright 1.1.414`. If the check fails, activate the environment and
