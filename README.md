@@ -194,10 +194,11 @@ manifest lists its cases, stages, groups, and kinds. Each case needs an
 when the file sits elsewhere. An optional `.exit` file holds its expected exit
 status. Every case file must appear in a manifest.
 
-Add your own cases in `cases/pair/manifest.json`. Use the same fields, and keep
-the files inside `cases/pair/`. The starter holds each lab's published files
-under `cases/published/<lab>/`. Keep those files unchanged. Your pair manifest
-stays yours.
+Add your own cases in `cases/pair/manifest.json`. Use the same fields. A case
+body and its expected file stay inside `cases/pair/`. A report case names its
+query in `reports/`. The starter holds each lab's published files under
+`cases/published/<lab>/`. Keep those files unchanged. Your pair manifest stays
+yours.
 
 A minimal pair manifest:
 
