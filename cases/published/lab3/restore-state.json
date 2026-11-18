@@ -1,1 +1,1 @@
-{"operation":"restore","check_sql":"SELECT count(*) AS student_rows FROM student"}
+{"operation":"restore","check_sql":"SELECT (xpath('/row/row_count/text()', query_to_xml(format('SELECT count(*) AS row_count FROM %I', mapping.table_name), false, true, '')))[1]::text::bigint AS row_count FROM column_mapping AS mapping WHERE mapping.fact = 'student_id'"}
