@@ -55,11 +55,29 @@
       "role_env": "CMSC127_ROLE_REGISTRAR"
     },
     {
+      "id": "lab3/registrar-can-enroll",
+      "stage": 3,
+      "group": "SQL Craft",
+      "kind": "allow",
+      "file": "cases/published/lab3/registrar-can-enroll.sql",
+      "role": "registrar",
+      "role_env": "CMSC127_ROLE_REGISTRAR"
+    },
+    {
       "id": "lab3/cashier-cannot-enroll",
       "stage": 3,
       "group": "SQL Craft",
       "kind": "reject",
       "file": "cases/published/lab3/cashier-cannot-enroll.sql",
+      "role": "cashier",
+      "role_env": "CMSC127_ROLE_CASHIER"
+    },
+    {
+      "id": "lab3/cashier-can-pay",
+      "stage": 3,
+      "group": "SQL Craft",
+      "kind": "allow",
+      "file": "cases/published/lab3/cashier-can-pay.sql",
       "role": "cashier",
       "role_env": "CMSC127_ROLE_CASHIER"
     },

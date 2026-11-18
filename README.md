@@ -99,7 +99,7 @@ below.
   system provides.
 
 Add a password to the URL only in your local shell when your server needs one.
-Do not save a password in this folder.
+Don't save a password in this folder.
 
 ### Run the Checks
 
@@ -233,13 +233,14 @@ and their order must match. Row order must match unless the manifest sets
 `ordered` to `false`. Set `ordered` to `false` when the result has no required
 row order. The runner compares duplicate rows too.
 
-The runner supports nine case kinds:
+The runner supports ten case kinds:
 
 | Kind | What it checks |
 |:--|:--|
 | `output` | The JSON from `./run`. |
 | `schema` | The ERD against the live schema. |
 | `reject` | That SQL fails. |
+| `allow` | That SQL succeeds under a named role, then rolls it back. |
 | `state` | The rows after an operation. |
 | `race` | Ordered steps on two sessions, each one an open connection to the database. |
 | `query` | A SQL file, run directly. |
