@@ -53,6 +53,8 @@ line.
    PostgreSQL role, its password, and your database. The password is the one
    you set for the role when you installed PostgreSQL. On macOS, the URL uses
    your account name and no password. Platform Differences gives that form.
+   If the password contains URL punctuation, percent-encode it before putting
+   it in the URL. For example, write `@` as `%40`.
 5. Generate the data file. Write `answers/load.py` to read
    `registration_export.csv` and write `load.sql` in this folder. Run
    `python answers/load.py` whenever you change the loader. The checks load
@@ -88,6 +90,9 @@ below.
   ```bash
   export CMSC127_DATABASE_URL='postgresql://postgres:your_password@127.0.0.1:5432/your_database'
   ```
+
+  If the password contains URL punctuation, percent-encode it before putting
+  it in the URL. For example, write `@` as `%40`.
 
   Homebrew's PostgreSQL on macOS runs `initdb` as your own account and creates
   no `postgres` role. The URL uses your account name and no password. Run
