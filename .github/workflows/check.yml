@@ -40,7 +40,7 @@ jobs:
       - name: Fetch the pinned harness
         shell: bash
         run: |
-          git clone --quiet --depth 1 --single-branch --branch v1.26 \
+          git clone --quiet --depth 1 --single-branch --branch v1.27 \
             https://github.com/WhiteLicorice/cmsc-127-harness.git \
             "$RUNNER_TEMP/cmsc127-runner"
           echo "CMSC127_RUNNER_DIR=$RUNNER_TEMP/cmsc127-runner" >> "$GITHUB_ENV"
@@ -167,7 +167,7 @@ jobs:
       - name: Fetch the pinned harness
         shell: bash
         run: |
-          git clone --quiet --depth 1 --single-branch --branch v1.26 \
+          git clone --quiet --depth 1 --single-branch --branch v1.27 \
             https://github.com/WhiteLicorice/cmsc-127-harness.git \
             "$RUNNER_TEMP/cmsc127-runner"
           echo "CMSC127_RUNNER_DIR=$RUNNER_TEMP/cmsc127-runner" >> "$GITHUB_ENV"
