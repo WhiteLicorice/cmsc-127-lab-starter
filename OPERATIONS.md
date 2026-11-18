@@ -60,22 +60,22 @@ The lock migration grants the registrar access to one fixed-search-path function
 
 ## SQL Files
 
-The application reads these files, except `operations/payment/unsafe/insert.sql`, which shows the contrast and never runs. Each file holds one statement. The `%s` marks a parameter, in the order the application passes it.
+Two programs read these files. `answers/operations.py` runs the enroll and payment commands. `race/race.py` runs the race. The command layer opens each transaction through `psycopg`'s `connection.transaction()`, so it never reads `begin.sql`, `commit.sql`, or `rollback.sql`. Each file holds one statement. The `%s` marks a parameter, in the order the program passes it.
 
-| File | The statement it holds | Parameters |
-|:--|:--|:--|
-| `operations/enroll/unsafe/count.sql` | The count without a lock | section ID |
-| `operations/enroll/unsafe/insert.sql` | The insert without a transaction | student ID, term, instructor ID, date |
-| `operations/enroll/safe/begin.sql` | `BEGIN;` | none |
-| `operations/enroll/safe/lock_timeout.sql` | `SET LOCAL lock_timeout = '2s';` | none |
-| `operations/enroll/safe/statement_timeout.sql` | `SET LOCAL statement_timeout = '10s';` | none |
-| `operations/enroll/safe/lock.sql` | The section lock | section ID |
-| `operations/enroll/safe/count.sql` | The count after the lock | section ID |
-| `operations/enroll/safe/insert.sql` | The insert | student ID, term, instructor ID, date |
-| `operations/enroll/safe/commit.sql` | `COMMIT;` | none |
-| `operations/enroll/safe/rollback.sql` | `ROLLBACK;` | none |
-| `operations/payment/unsafe/insert.sql` | The insert without a transaction | student ID, term, number, amount, date, receipt code |
-| `operations/payment/safe/insert.sql` | The insert inside a transaction | student ID, term, number, amount, date, receipt code |
+| File | The statement it holds | Parameters | Read by |
+|:--|:--|:--|:--|
+| `operations/enroll/unsafe/count.sql` | The count without a lock | section ID | race |
+| `operations/enroll/unsafe/insert.sql` | The insert without a transaction | student ID, term, instructor ID, date | race |
+| `operations/enroll/safe/begin.sql` | `BEGIN;` | none | race |
+| `operations/enroll/safe/lock_timeout.sql` | `SET LOCAL lock_timeout = '2s';` | none | command and race |
+| `operations/enroll/safe/statement_timeout.sql` | `SET LOCAL statement_timeout = '10s';` | none | command and race |
+| `operations/enroll/safe/lock.sql` | The section lock | section ID | command and race |
+| `operations/enroll/safe/count.sql` | The count after the lock | section ID | command and race |
+| `operations/enroll/safe/insert.sql` | The insert | student ID, term, instructor ID, date | command and race |
+| `operations/enroll/safe/commit.sql` | `COMMIT;` | none | race |
+| `operations/enroll/safe/rollback.sql` | `ROLLBACK;` | none | race |
+| `operations/payment/unsafe/insert.sql` | The insert without a transaction | student ID, term, number, amount, date, receipt code | never |
+| `operations/payment/safe/insert.sql` | The insert inside a transaction | student ID, term, number, amount, date, receipt code | command |
 
 The race driver reads the enrollment files and the four files under `variants/race/`. It runs the two sessions in a fixed order, so the wrong result is repeatable. It sets `lock_timeout`, `statement_timeout`, and `connect_timeout`, so a lock wait cannot hold the driver indefinitely.
 
