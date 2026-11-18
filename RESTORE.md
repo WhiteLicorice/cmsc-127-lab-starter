@@ -1,6 +1,6 @@
 # Dump and Restore
 
-Run these commands from your repository root in Git Bash on Windows. Add the PostgreSQL 18 `bin` directory to `PATH`. Set `DB` to the name of your database. Set `PGPASSWORD` in the shell, and do not save the password in the repository. Change the host, port, and user in `CONN` to match your cluster.
+Run these commands from your repository root in Git Bash on Windows. Add the PostgreSQL 18 `bin` directory to `PATH`. Set `DB` to your database. Set `PGPASSWORD` in the shell, and don't save the password in the repository. Change the host, port, and user in `CONN` to match your cluster.
 
 Write an `answers/rows.sql` file with this query. It counts the rows in every table in `public`, so it works whatever your table names are.
 
@@ -37,12 +37,12 @@ diff -u "$TMP/before.txt" "$TMP/after.txt"
 
 The database must hold the Lab 1 data, the Lab 2 migrations, and the Lab 3 migrations before the count check. `diff -u` prints nothing and exits 0 when the two lists match. A difference prints the table line whose count changed.
 
-That sequence is one of two restore destinations. `./run restore` is the other. It restores into the database named by `CMSC127_DATABASE_URL` with `pg_restore --clean`, which drops only the objects in the archive. A table added after the dump stays, so that route returns a database to the dumped state. The drop and create route above is the one that proves a rebuild from empty.
+That sequence is one of two restore destinations. `./run restore` is the other. It writes into the database named by `CMSC127_DATABASE_URL` with `pg_restore --clean`, so it refreshes the database you already have. `--clean` drops the objects the archive holds and recreates them. A table you added after the dump isn't in the archive, so the wrapper leaves it in place. The drop and create route above is the one that proves a rebuild from empty.
 
 The counts prove that each table kept its row count. They don't prove that each row kept its values. For row equality, `bash check.sh 3` runs `lab3/restore-state`: it records every row, dumps, empties the tables, restores, and compares the rows.
 
 `pg_dump` saves the database and its grant statements. It doesn't save cluster role definitions or memberships, tablespace definitions, or cluster settings. This command also omits database-level settings because it doesn't use `--create`. PostgreSQL 18 documents these limits in [`pg_dump`](https://www.postgresql.org/docs/18/app-pgdump.html) and its [backup guide](https://www.postgresql.org/docs/18/backup-dump.html). The `--create` option includes database-level settings. Cluster settings live in files such as `postgresql.conf` and `postgresql.auto.conf`, which `pg_dump` doesn't copy. See [PostgreSQL configuration settings](https://www.postgresql.org/docs/18/config-setting.html).
 
-Roles belong to the cluster. This route keeps them when it drops and recreates the database. On a new cluster, run the migration that creates the group roles before the restore. Don't run the grants migration yet, because its tables don't exist. The dump's grant statements can then use those roles. The checks create temporary probe roles. Those roles aren't application roles. They don't belong in the dump.
+Roles belong to the cluster. This route keeps them when it drops and recreates the database. On a new cluster, run the migration that creates the group roles before the restore. Don't run the grants migration yet. Its tables don't exist. The dump's grant statements can then use those roles. The checks create temporary probe roles. Those roles aren't application roles. They don't belong in the dump.
 
 The dump file and comparison files belong in the temporary directory. Keep them out of Git. The dump holds every row. A public repository is the wrong place for that data.
