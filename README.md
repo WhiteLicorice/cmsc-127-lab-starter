@@ -51,10 +51,10 @@ line.
    `export CMSC127_DATABASE_URL='postgresql://your_user:your_password@127.0.0.1:5432/your_database'`.
    Replace `your_user`, `your_password`, and `your_database` with your
    PostgreSQL role, its password, and your database. The password is the one
-   you set for the role when you installed PostgreSQL. On macOS, the URL uses
-   your account name and no password. Platform Differences gives that form.
-   If the password contains URL punctuation, percent-encode it before putting
-   it in the URL. For example, write `@` as `%40`.
+   you set for the role when you installed PostgreSQL. If the password
+   contains URL punctuation, percent-encode it before putting it in the URL.
+   For example, write `@` as `%40`. On macOS, the URL uses your account name
+   and no password. Platform Differences gives that form.
 5. Generate the data file. Write `answers/load.py` to read
    `registration_export.csv` and write `load.sql` in this folder. Run
    `python answers/load.py` whenever you change the loader. The checks load
