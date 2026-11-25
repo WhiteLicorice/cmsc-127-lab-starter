@@ -66,6 +66,40 @@ def _constraint_message(error: psycopg.Error, operation: str) -> str:
     return "Payment failed. No row changed."
 
 
+def _foreign_key_message(error: psycopg.Error, operation: str) -> str:
+    if operation == "payment":
+        return "The charge does not exist."
+    # The enrollment insert has one key to the student table and one key to
+    # the section table. The constraint name names the key that failed, so it
+    # tells the two apart. When you adapt this file, add the constraint names
+    # your schema uses here.
+    constraint = error.diag.constraint_name or ""
+    if "student" in constraint or "learner" in constraint:
+        return "Student not found."
+    return "Section not found."
+
+
+def _digits(text: str, message: str) -> int:
+    try:
+        return int(text)
+    except ValueError:
+        raise ValueError(message) from None
+
+
+def _amount(text: str) -> Decimal:
+    try:
+        return Decimal(text)
+    except InvalidOperation:
+        raise ValueError("Enter the amount as a number.") from None
+
+
+def _date(text: str) -> date:
+    try:
+        return date.fromisoformat(text)
+    except ValueError:
+        raise ValueError("Enter the date as YYYY-MM-DD.") from None
+
+
 def _operation_path(operation: str, mode: str, name: str) -> Path:
     return ROOT / "operations" / operation / mode / f"{name}.sql"
 
@@ -74,9 +108,9 @@ def _enroll(arguments: list[str]) -> int:
     if len(arguments) != 3:
         print("Usage: ./run enroll STUDENT_ID SECTION_ID YYYY-MM-DD", file=sys.stderr)
         return 2
-    student_id = int(arguments[0])
-    section_id = int(arguments[1])
-    enrolled_on = date.fromisoformat(arguments[2])
+    student_id = _digits(arguments[0], "Enter the student number as digits.")
+    section_id = _digits(arguments[1], "Enter the section number as digits.")
+    enrolled_on = _date(arguments[2])
     with psycopg.connect(_url("enroll")) as connection:
         with connection.transaction():
             student_sql = "SELECT student_id FROM student WHERE student_id = %s"
@@ -138,11 +172,11 @@ def _payment(arguments: list[str]) -> int:
     if len(arguments) != 6:
         print("Usage: ./run payment STUDENT_ID TERM NUMBER AMOUNT YYYY-MM-DD RECEIPT_CODE", file=sys.stderr)
         return 2
-    student_id = int(arguments[0])
+    student_id = _digits(arguments[0], "Enter the student number as digits.")
     term = arguments[1]
-    number = int(arguments[2])
-    amount = Decimal(arguments[3])
-    paid_on = date.fromisoformat(arguments[4])
+    number = _digits(arguments[2], "Enter the payment number as digits.")
+    amount = _amount(arguments[3])
+    paid_on = _date(arguments[4])
     receipt_code = arguments[5]
     if not receipt_code:
         raise ValueError("Enter a receipt code.")
@@ -227,7 +261,7 @@ def main() -> int:
             return _race(sys.argv[2:])
     except (OSError, ValueError, InvalidOperation, psycopg.Error) as error:
         if isinstance(error, psycopg.errors.ForeignKeyViolation):
-            message = "The charge does not exist." if operation == "payment" else "Student or section not found."
+            message = _foreign_key_message(error, operation)
         elif isinstance(error, psycopg.errors.UniqueViolation):
             # When you adapt this file, change these constraint names to the ones your schema uses.
             if operation == "payment":
