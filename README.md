@@ -143,7 +143,7 @@ prints no expected answer.
 `./lint` exits 0 when the form is clean and 1 when it finds a fault. Each fault
 gives the file, the line where one exists, and the change to make. `bash
 check.sh` runs the same checks first and prints them under a `== form ==`
-heading. Read that heading first when it appears. Each line under it names the
+heading. Read that heading first when it appears. Each line under it gives the
 file and the change. The change is a typing mistake, a missing file, or a
 changed protected file.
 
