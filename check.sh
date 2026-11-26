@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-runner_tag="v1.37"
+runner_tag="v1.38"
 runner_url="https://github.com/WhiteLicorice/cmsc-127-harness.git"
 cache_root="${CMSC127_RUNNER_CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/cmsc127-runner}"
 runner_dir="$cache_root/$runner_tag"
