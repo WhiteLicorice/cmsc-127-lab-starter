@@ -12,6 +12,9 @@ Success: `Student <student id> enrolled in section <section id>.`
 
 Errors:
 
+- `Enter the student number as digits.`
+- `Enter the section number as digits.`
+- `Enter the date as YYYY-MM-DD.`
 - `Student not found.`
 - `Section not found.`
 - `The section is full.`
@@ -38,6 +41,10 @@ Success: `Payment <receipt code> recorded.`
 
 Errors:
 
+- `Enter the student number as digits.`
+- `Enter the payment number as digits.`
+- `Enter the amount as a number.`
+- `Enter the date as YYYY-MM-DD.`
 - `The charge does not exist.`
 - `Payment number must be from 1 to 99.`
 - `Payment amount must be greater than zero.`
