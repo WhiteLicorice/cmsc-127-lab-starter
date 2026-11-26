@@ -144,7 +144,7 @@ prints no expected answer.
 gives the file, the line where one exists, and the change to make. `bash
 check.sh` runs the same checks first and prints them under a `== form ==`
 heading. Read that heading first when it appears. Each line under it gives the
-file and the change. The change is a typing mistake, a missing file, or a
+file and the change. The fault can be a typing mistake, a missing file, or a
 changed protected file.
 
 #### Test the Runner
