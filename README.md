@@ -21,12 +21,15 @@ line.
   <https://git-scm.com/downloads>.
 - PostgreSQL 18, the database server that holds your tables. The runner creates
   a scratch database on it. Start the server before you run the checks. Check it
-  with `pg_isready`. The reply is `accepting connections`. If the command is
-  missing, add the PostgreSQL `bin` folder to `PATH`.
-- Python 3.15 or newer, which runs the runner and your code. On Windows, check
-  it with `py -3.15 --version`. On macOS and Linux, check it with
-  `python3.15 --version`. The reply starts with `Python 3.15` or a later
-  version. If the reply is lower, install Python 3.15 from
+  with `pg_isready -h 127.0.0.1`. If your server uses another port, add `-p` and
+  that number. The reply is `accepting connections`. If the command is missing,
+  add the PostgreSQL `bin` folder to `PATH`. The database doctor reads the server
+  version and fails when the server is not version 18.
+- Python 3.15.x, which runs the runner and your code. The doctors and the Block 1
+  checker accept the 3.15 series and reject a later series, such as 3.16. On
+  Windows, check it with `py -3.15 --version`. On macOS and Linux, check it with
+  `python3.15 --version`. The reply starts with `Python 3.15`. If the command is
+  missing or the reply shows another version, install Python 3.15 from
   <https://www.python.org/downloads/>. Step 1 uses `py -3.15` on Windows and
   `python3.15` on macOS and Linux to create the environment. After step 2
   activates it, `python -c "import sys; print(sys.executable)"`
