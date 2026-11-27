@@ -37,24 +37,7 @@ diff -u "$TMP/before.txt" "$TMP/after.txt"
 
 The database must hold the Lab 1 data, the Lab 2 migrations, and the Lab 3 migrations before the count check. `diff -u` prints nothing and exits 0 when the two lists match. A difference prints the table line whose count changed.
 
-That sequence is one of two restore destinations. `./run restore` is the other. It writes into the database named by `CMSC127_DATABASE_URL` with `pg_restore --clean --single-transaction`. `--clean` drops the objects the archive holds and recreates them. `--single-transaction` runs the whole restore as one transaction, so an error rolls every change back. A common error starts with a child table whose foreign key points at a table in the dump. The child is a newer object that depends on an archived one, so PostgreSQL won't drop the archived table while the child exists. The restore stops. The wrapper prints one line that states the cause.
-
-When the in-place restore fails, recover from the archive you already made. Create an empty database and restore that archive into it. This route reads your existing dump file. It takes no new dump of the current database, so the rows that come back are the rows the archive holds.
-
-```bash
-set -euo pipefail
-export PATH="/c/Program Files/PostgreSQL/18/bin:$PATH"
-export PGPASSWORD='your-password'
-DB=your_database
-ARCHIVE="$CMSC127_BACKUP_FILE"
-CONN=(-h 127.0.0.1 -p 5432 -U postgres -w)
-
-dropdb "${CONN[@]}" --if-exists --force "$DB"
-createdb "${CONN[@]}" "$DB"
-pg_restore "${CONN[@]}" --no-owner --dbname "$DB" "$ARCHIVE"
-```
-
-The archive is the custom-format file that `./run dump` wrote, named by `CMSC127_BACKUP_FILE`. Run the count query again after the restore. A dependent table that blocked `--clean` doesn't block this route, because the new database starts empty.
+That sequence is one of two restore destinations. `./run restore` is the other. It writes into the database named by `CMSC127_DATABASE_URL` with `pg_restore --clean --single-transaction`. `--clean` drops the objects the archive holds and recreates them. `--single-transaction` runs the whole restore as one transaction, so an error rolls every change back. A common error starts with a child table whose foreign key points at a table in the dump. The child is a newer object that depends on an archived one, so PostgreSQL won't drop the archived table while the child exists. The restore stops. The wrapper prints one line that states the cause. When that happens, use the drop and create route above to restore into an empty database.
 
 The counts prove that each table kept its row count. They don't prove that each row kept its values. For row equality, `bash check.sh 3` runs `lab3/restore-state`: it records every row, dumps, empties the tables, restores, and compares the rows.
 

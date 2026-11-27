@@ -196,6 +196,27 @@ objects, rows, and grant statements. It doesn't hold role definitions,
 memberships, tablespace definitions, or cluster settings. Without `--create`,
 it also doesn't hold database-level settings.
 
+When `./run restore` fails because a newer object depends on an archived one,
+the database stays unchanged. Restore the archive into an empty database
+instead. This route reads the dump you already made, named by
+`CMSC127_BACKUP_FILE`.
+
+```bash
+set -euo pipefail
+export PATH="/c/Program Files/PostgreSQL/18/bin:$PATH"
+export PGPASSWORD='your-password'
+DB=your_database
+ARCHIVE="$CMSC127_BACKUP_FILE"
+CONN=(-h 127.0.0.1 -p 5432 -U postgres -w)
+
+dropdb "${CONN[@]}" --if-exists --force "$DB"
+createdb "${CONN[@]}" "$DB"
+pg_restore "${CONN[@]}" --no-owner --dbname "$DB" "$ARCHIVE"
+```
+
+Run the count query after the restore. A dependent table does not block this
+route. The new database starts empty.
+
 Write the two No-SQL responses in `answers/nosql.md` under its headings. The
 check confirms that both sections contain text. It doesn't grade the answers.
 

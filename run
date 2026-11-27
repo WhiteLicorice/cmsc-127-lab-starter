@@ -44,7 +44,7 @@ case "$mode" in
       if [[ "$restore_output" == *"depend on it"* ||
             "$restore_output" == *"depends on it"* ]]; then
         printf '%s\n' \
-          'Restore failed: a newer object depends on an archived one, so PostgreSQL dropped nothing and the database is unchanged. Restore the original archive into an empty database with the empty-database route in RESTORE.md.' >&2
+          'Restore failed: a newer object depends on an archived one, so PostgreSQL dropped nothing and the database is unchanged. Restore into an empty database with the drop and create route in RESTORE.md.' >&2
       else
         first_line="$(printf '%s\n' "$restore_output" | head -n 1)"
         printf 'Restore failed and the database is unchanged: %s\n' "$first_line" >&2
