@@ -67,7 +67,7 @@ The lock migration grants the registrar access to one fixed-search-path function
 
 ## SQL Files
 
-Two programs read these files. `answers/operations.py` runs the enroll and payment commands. `race/race.py` runs the race. The command layer opens each transaction through `psycopg`'s `connection.transaction()`, so it never reads `begin.sql`, `commit.sql`, or `rollback.sql`. Each file holds one statement. The `%s` marks a parameter, in the order the program passes it.
+Two programs read these files. `answers/operations.py` runs the enroll and payment subcommands. `race/race.py` runs the race. The command layer opens each transaction through `psycopg`'s `connection.transaction()`, so it never reads `begin.sql`, `commit.sql`, or `rollback.sql`. Each file holds one statement. The `%s` marks a parameter, in the order the program passes it.
 
 | File | The statement it holds | Parameters | Read by |
 |:--|:--|:--|:--|
