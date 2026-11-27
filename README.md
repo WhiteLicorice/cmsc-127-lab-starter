@@ -183,7 +183,7 @@ matching `registrar` or `cashier` group role.
 
 Run `./run enroll STUDENT_ID SECTION_ID YYYY-MM-DD` to enroll a student. Run
 `./run payment STUDENT_ID TERM NUMBER AMOUNT YYYY-MM-DD RECEIPT_CODE` to record
-a payment. Both commands use parameterized SQL and a transaction.
+a payment. Both subcommands use parameterized SQL and a transaction.
 
 Run `bash check.sh 3 --case lab3/race-driver` to compare the unsafe and safe
 enrollment schedules. The check creates the scratch database the race needs. To
