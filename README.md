@@ -23,12 +23,13 @@ line.
   a scratch database on it. Start the server before you run the checks. Check it
   with `pg_isready`. The reply is `accepting connections`. If the command is
   missing, add the PostgreSQL `bin` folder to `PATH`.
-- Python 3.15 or newer, which runs the runner and your code. Check it with
-  `python --version`. The reply starts with `Python 3.15` or a later version.
-  If the reply is lower, install Python 3.15 from
-  <https://www.python.org/downloads/>. On Windows, `py -3.15 --version` selects
-  an installed 3.15, and step 1 uses `py -3.15` to create the environment.
-  After step 2 activates it, `python -c "import sys; print(sys.executable)"`
+- Python 3.15 or newer, which runs the runner and your code. On Windows, check
+  it with `py -3.15 --version`. On macOS and Linux, check it with
+  `python3.15 --version`. The reply starts with `Python 3.15` or a later
+  version. If the reply is lower, install Python 3.15 from
+  <https://www.python.org/downloads/>. Step 1 uses `py -3.15` on Windows and
+  `python3.15` on macOS and Linux to create the environment. After step 2
+  activates it, `python -c "import sys; print(sys.executable)"`
   prints the path of the interpreter `python` runs. The path sits inside
   `.venv`. If the path sits elsewhere, the environment isn't active. Rerun the
   activation command from step 2.
@@ -39,9 +40,9 @@ line.
 
 ### Steps
 
-1. Create the Python environment. Run `python -m venv .venv`. On Windows, run
-   `py -3.15 -m venv .venv`. Skip this step when the folder already holds
-   `.venv`.
+1. Create the Python environment. On Windows, run `py -3.15 -m venv .venv`. On
+   macOS and Linux, run `python3.15 -m venv .venv`. Skip this step when the
+   folder already holds `.venv`.
 2. Activate it. Run `source .venv/Scripts/activate`. On macOS and Linux, run
    `source .venv/bin/activate`.
 3. Install the Python packages into the environment. Run
