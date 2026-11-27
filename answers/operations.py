@@ -88,9 +88,12 @@ def _digits(text: str, message: str) -> int:
 
 def _amount(text: str) -> Decimal:
     try:
-        return Decimal(text)
+        amount = Decimal(text)
     except InvalidOperation:
         raise ValueError("Enter the amount as a number.") from None
+    if not amount.is_finite():
+        raise ValueError("Enter the amount as a number.")
+    return amount
 
 
 def _date(text: str) -> date:
